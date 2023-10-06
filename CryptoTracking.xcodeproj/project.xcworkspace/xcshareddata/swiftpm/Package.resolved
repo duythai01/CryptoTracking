@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "pure-swift-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CodeSlicing/pure-swift-ui.git",
+      "state" : {
+        "revision" : "f3cf6c8e49b19ce5076d06ad0ace841ef8f78092",
+        "version" : "3.1.0"
+      }
+    },
+    {
+      "identity" : "pure-swift-ui-design",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CodeSlicing/pure-swift-ui-design.git",
+      "state" : {
+        "revision" : "40489273ee4703032c7d4d185ac25743f604e158",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
