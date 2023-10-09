@@ -42,114 +42,69 @@ enum TimeFilter: String, CaseIterable {
     }
 }
 
-enum Filter: String, CaseIterable {
+enum FilterTransaction: String, CaseIterable, Identifiable {
+    case latest
     case increase
     case decrease
     case coin
     case network
+
+    var id: Self {
+        return self
+    }
+
+    var displayName: String {
+        switch self {
+        case .latest:
+            return "Latest"
+        case .increase:
+            return "Increase"
+        case .decrease:
+            return "Decrease"
+        case .coin:
+            return "Coin"
+        case .network:
+            return "NetWork"
+        }
+    }
 }
 
 struct HistoryView: View {
     @State private var searchText = ""
     @State private var searchIsActive = false
     @State private var selectedTab: Int = 1
+    @State private var dateSelection = Date()
+    @State private var filterSelection: FilterTransaction = .latest
+    @State private var isExpandedFilter: Bool = false
+    @State private var heightDropmenu: CGFloat = 295
 
-    let transactionsSend: [Int] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
-    let transactionsReceive: [Int] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+
     var body: some View{
         ZStack {
             Color.theme.mainColor.ignoresSafeArea()
-            VStack {
-                HistoryHeaderView(searchQuery: $searchText)
-                HStack {
-                    tabButton(title: "All", tag: 1)
-
-                    tabButton(title: "Send", tag: 2)
-
-                    tabButton(title: "Receive", tag: 3)
+                .onTapGesture {
+                    withAnimation {
+                        isExpandedFilter = false
+                    }
                 }
-                .padding(.top)
-                .font(.headline)
-                HStack {
+            ZStack {
+                VStack {
+                    HistoryHeaderView(searchQuery: $searchText)
                     HStack {
-                        Image("ic_filter")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.white)
+                        tabButton(title: "All", tag: 1)
 
-                        Text("Filter")
-                            .foregroundColor(.white)
-                            .font(.system(size: 16, weight: .bold))
+                        tabButton(title: "Send", tag: 2)
+
+                        tabButton(title: "Receive", tag: 3)
                     }
+                    .padding(.top)
+                    .font(.headline)
+                    FilterAndDatePicker(dateSelection: $dateSelection, selection: $filterSelection, isShowMenu: $isExpandedFilter, heightDropmenu: $heightDropmenu)
+
+                    ListCoinPageView(selectedTab: $selectedTab)
+                        .padding(.top,  isExpandedFilter ? -heightDropmenu : 0)
                     Spacer()
-                    Text("2023/09/06")
-                        .foregroundColor(.white)
-                        .font(.system(size: 14, weight: .bold))
                 }
-                .padding(.horizontal, 16)
-                .padding(.top)
-                HStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: [GridItem(.flexible())], spacing: 25) {
-                            ForEach(TimeFilter.allCases.indices, id: \.self) { index in
-                                let category = TimeFilter.allCases[index]
-                                HStack {
-                                    HStack(alignment: .center) {
-                                        Text(category.displayName)
-                                            .font(.system(size: 13, weight: .medium))
-                                            .foregroundColor(.white)
-                                    }.padding(.horizontal, 8)
-                                        .padding(.vertical, 4)
-                                }
-                                .background(
-                                    Capsule()
-
-                                )
-                            }
-                        }
-
-                    }
-                    .background(Color.red)
-                }.fixedSize(horizontal: false, vertical: true)
-                TabView(selection: $selectedTab) {
-                    VStack {
-                        List {
-                            ForEach(transactionsSend, id:\.self) { transactionsSend in
-                                CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
-                            }
-
-                        }
-                        .listStyle(.plain)
-
-
-                    }
-                    .padding(.horizontal, 16).tag(1)
-                    VStack {
-                        List {
-                            ForEach(transactionsSend, id:\.self) { transactionsSend in
-                                CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
-                            }
-
-                        }
-                        .listStyle(.plain)
-                    }
-                    .padding(.horizontal, 16).tag(2)
-                    VStack {
-                        List {
-                            ForEach(transactionsSend, id:\.self) { transactionsSend in
-                                CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
-                            }
-
-                        }
-                        .listStyle(.plain)
-
-
-                    }
-                    .padding(.horizontal, 16).tag(3)
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                Spacer()
             }
         }
     }
@@ -160,7 +115,7 @@ struct HistoryView: View {
                 .font(.system(size: 18, weight: .bold))
                 .onTapGesture { withAnimation(.easeIn) { selectedTab = tag } }
                 .frame(maxWidth: .infinity)
-                .foregroundColor(selectedTab == tag ? .white : .secondary)
+                .foregroundColor(selectedTab == tag ? .white : .white.opacity(0.5))
 
             Color(selectedTab == tag ? .purple : .clear)
                 .frame(height: 4)
@@ -180,51 +135,12 @@ struct HistoryHeaderView : View {
     @State var animation: Bool = false
     var body: some View {
         VStack {
-            HStack {
-                ZStack {
-                    Circle()
-                        .foregroundColor(Color.purpleView)
-                        .frame(width: 50, height: 50)
-                        .shadow(color: .white, radius: 4)
-
-                    Image(systemName: "calendar.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                        .frame(width: 28, height: 28)
-                }
-                Spacer()
-                Text("History" )
-                    .font(.system(size: 28
-                                  , weight: .bold))
-                    .foregroundColor(.white)
-                    .shadow(color: .white, radius: 2)
-                Spacer()
-                ZStack {
-                    Circle()
-                        .foregroundColor(Color.purpleView)
-                        .frame(width: 50, height: 50)
-                        .shadow(color: .white, radius: 4)
-
-                    Image(systemName: "doc.text.magnifyingglass")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                        .frame(width: 28, height: 28)
-                }
-                .onTapGesture {
-                    withAnimation(.easeInOut.delay(0.1)) {
-                        animation.toggle()
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-            .frame(width: nil)
-
-            if animation {
-                SearchField(searchQuery: $searchQuery)
-            }
-
+            Text("History" )
+                .font(.system(size: 28
+                              , weight: .bold))
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .frame(width: nil)
         }
     }
 }
@@ -252,5 +168,152 @@ struct SearchField: View {
         )
         .padding(.horizontal, 24)
         .transition(.scale.combined(with: .opacity))
+    }
+}
+
+struct FilterAndDatePicker: View {
+    @Binding var dateSelection: Date
+    @Binding var selection: FilterTransaction
+    @Binding var isShowMenu: Bool
+    @Binding var heightDropmenu: CGFloat
+
+    var body: some View {
+        VStack {
+            ZStack {
+                HStack {
+                    HStack {
+                        Image("ic_filter")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.purple)
+
+                        Text(selection.displayName)
+                            .foregroundColor(.white)
+                            .font(.system(size: 16, weight: .medium))
+                        Image(systemName: "chevron.backward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:  12 , height: 12)
+                            .rotationEffect(Angle(degrees: isShowMenu ? -90 : 0))
+                            .foregroundColor(.white)
+                    }
+                    .background(Color.theme.mainColor)
+                    .onTapGesture {
+                        withAnimation() {
+                            isShowMenu.toggle()
+                        }
+                    }
+
+                    Spacer()
+                }
+
+                DatePicker(selection: $dateSelection, in: ...Date(), displayedComponents: .date) {
+                    Button(action: {}){
+                    }
+                }
+                .datePickerStyle(.compact)
+                .accentColor(.purple)
+                .environment(\.colorScheme,.dark)
+            }
+            .padding(.horizontal, 16)
+            if isShowMenu {
+                GeometryReader { geometry in
+                    HStack {
+                        ScrollView{
+                            LazyVStack(alignment: .leading, spacing: 2) {
+                                ForEach(FilterTransaction.allCases) { item in
+                                    HStack {
+                                        Text(item.displayName)
+                                            .foregroundColor( selection == item ? .purple : .white)
+                                            .font(.system(size: 16, weight: .medium))
+                                        .padding(.all, 8)
+                                        Spacer()
+                                        if selection == item {
+                                            Image(systemName: "arrowtriangle.left.fill")
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundColor(.purple)
+                                                .padding(.trailing, 8)
+                                        }
+                                    }
+                                    .onTapGesture {
+                                        withAnimation(.easeIn(duration: 0.2)) {
+                                            selection = item
+                                            isShowMenu = false
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        .frame(width: 140)
+                        .fixedSize(horizontal: true, vertical: true)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .foregroundColor(Color.theme.mainColor.opacity(0.9))
+                                .shadow(color: .white, radius: 2)
+                    )
+                        Spacer()
+                    }
+                    .onAppear {
+                        heightDropmenu =  geometry.size.height
+                        print("@@: \(heightDropmenu)")
+
+                    }
+                    .padding(.horizontal, 20)
+
+                }
+            }
+
+        }
+        .zIndex(20)
+
+    }
+}
+
+struct ListCoinPageView: View {
+    @Binding var selectedTab: Int
+    let transactionsSend: [Int] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+    let transactionsReceive: [Int] = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            VStack {
+                List {
+                    ForEach(transactionsSend, id:\.self) { transactionsSend in
+                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                    }
+
+                }
+                .listStyle(.plain)
+
+
+            }
+            .padding(.horizontal, 16).tag(1)
+            VStack {
+                List {
+                    ForEach(transactionsSend, id:\.self) { transactionsSend in
+                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                    }
+
+                }
+                .listStyle(.plain)
+            }
+            .padding(.horizontal, 16).tag(2)
+            VStack {
+                List {
+                    ForEach(transactionsSend, id:\.self) { transactionsSend in
+                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                    }
+
+                }
+                .listStyle(.plain)
+
+
+            }
+            .padding(.horizontal, 16).tag(3)
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
     }
 }
