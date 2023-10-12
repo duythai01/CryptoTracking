@@ -25,8 +25,8 @@ struct ContentView: View {
                         HistoryView().tag(tab)
                     case .qr:
                          QrView().tag(tab)
-                    case .transaction:
-                         TransactionView().tag(tab)
+                    case .market:
+                         MarketView().tag(tab)
                     case .setting:
                          SettingView().tag(tab)
                     }

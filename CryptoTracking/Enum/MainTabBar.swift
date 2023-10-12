@@ -11,7 +11,7 @@ enum MainTabBar: String, CaseIterable {
     case home
     case history
     case qr
-    case transaction
+    case market
     case setting
 
     var displayName: String {
@@ -22,8 +22,8 @@ enum MainTabBar: String, CaseIterable {
             return "History"
         case .qr:
             return "Qr"
-        case .transaction:
-            return "Transaction"
+        case .market:
+            return "Market"
         case .setting:
             return "Setting"
         }
@@ -37,8 +37,8 @@ enum MainTabBar: String, CaseIterable {
             return "list.bullet.clipboard.fill"
         case .qr:
             return "qrcode.viewfinder"
-        case .transaction:
-            return "arrow.up.arrow.down"
+        case .market:
+            return "chart.pie.fill"
         case .setting:
             return "gearshape"
         }

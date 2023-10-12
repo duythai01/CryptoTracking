@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingView: View {
     var body: some View {
         ZStack {
-            Color.green.ignoresSafeArea()
+            Color.theme.mainColor.ignoresSafeArea()
             Text("Setting View")
                 .foregroundColor(.white)
                 .font(.system(size: 30, weight: .bold))

@@ -16,5 +16,5 @@ extension Color {
 }
 
 struct ColorTheme {
-    let mainColor = Color(#colorLiteral(red: 0.09411428124, green: 0.09412030131, blue: 0.1866875887, alpha: 1))
+    let mainColor = Color(#colorLiteral(red: 0.002543299226, green: 0.032367412, blue: 0.1521972418, alpha: 1))
 }
