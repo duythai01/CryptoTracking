@@ -31,7 +31,7 @@ struct CreditCardView: View {
                 Spacer(minLength: 12)
                 GeometryReader { geometry in
                     HStack {
-                        Text("0x1jh123aj1239kmsabashf91329319")
+                        Text("0x111CecD9618D45Cb0f94fdb4801D01c91bBAF0Ba")
                             .font(.system(size: 14, weight: .medium))
                             .frame(width: geometry.size.width / 1.8)
                             .lineLimit(1)

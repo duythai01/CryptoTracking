@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA12AD8F546003AAFA1 /* Setting.swift */; };
 		1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */; };
 		1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */; };
 		1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A2A2AA12AD8F546003AAFA1 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndDatePicker.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */,
 				1A86CC0A2ACE5D5100CDD0B5 /* Home.swift */,
 				1A86CC152ACE8CF000CDD0B5 /* API.swift */,
+				1A2A2AA12AD8F546003AAFA1 /* Setting.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				1A86CC0D2ACE70DC00CDD0B5 /* HomeHeaderView.swift in Sources */,
 				1A86CC0B2ACE5D5100CDD0B5 /* Home.swift in Sources */,
 				1AB6AC422ACC1F0400A0A6E2 /* HomeView.swift in Sources */,
+				1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */,
 				1AB6AC462ACC204800A0A6E2 /* QrView.swift in Sources */,
 				1A86CC112ACE712C00CDD0B5 /* CreditCardView.swift in Sources */,
 				1A86CC1F2ACEADE900CDD0B5 /* CoinCard.swift in Sources */,
