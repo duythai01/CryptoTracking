@@ -18,9 +18,10 @@ struct MyAssetsView: View {
                     .font(.system(size: 18, weight: .bold))
                 Spacer()
             }
+            .padding(.leading, 16)
             List {
                 ForEach(coins, id:\.self) { coin in
-                    CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "BitCoin", symbol: "BTC", moneyAmount: "$ 12312.22", status: "+ 2.32%", isHistory: false)
+                    CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "BitCoin", symbol: "BTC", moneyAmount: "$ 12312.22", status: "+ 2.32%", isHistory: false)
                 }
 
             }
@@ -28,6 +29,6 @@ struct MyAssetsView: View {
 
 
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
     }
 }

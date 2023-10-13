@@ -18,7 +18,7 @@ struct ListCoinPageView: View {
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
                     }
 
                 }
@@ -26,21 +26,21 @@ struct ListCoinPageView: View {
 
 
             }
-            .padding(.horizontal, 16).tag(1)
+            .padding(.horizontal, 8).tag(1)
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
                     }
 
                 }
                 .listStyle(.plain)
             }
-            .padding(.horizontal, 16).tag(2)
+            .padding(.horizontal, 8).tag(2)
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoin: Image("ic_bitcoin"), nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
                     }
 
                 }
@@ -48,7 +48,7 @@ struct ListCoinPageView: View {
 
 
             }
-            .padding(.horizontal, 16).tag(3)
+            .padding(.horizontal, 8).tag(3)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
     }

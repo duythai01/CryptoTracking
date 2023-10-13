@@ -41,6 +41,6 @@ struct SearchField: View {
                 .stroke(.white.opacity(0.5), lineWidth: 2)
         )
         .padding(.horizontal, 24)
-        .transition(.scale.combined(with: .opacity))
+        .transition(.scale)
     }
 }

@@ -7,31 +7,30 @@
 
 import Foundation
 
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let coinMarket = try? JSONDecoder().decode(CoinMarket.self, from: jsonData)
+
+import Foundation
+
 // MARK: - CoinMarketElement
-struct CoinMarketElement: Codable {
+struct Coin: Codable {
     let id, symbol, name: String?
     let image: String?
     let currentPrice: Double?
-    let marketCap: Int?
-    let marketCapRank: Int?
+    let marketCap, marketCapRank: Int?
     let fullyDilutedValuation: Int?
-    let totalVolume: Double?
-    let high24H: Double?
-    let low24H: Double?
-    let priceChange24H: Double?
-    let priceChangePercentage24H: Double?
-    let marketCapChange24H: Double?
-    let marketCapChangePercentage24H: Double?
-    let circulatingSupply: Double?
-    let totalSupply: Double?
-    let maxSupply: Double?
-    let ath: Double?
-    let athChangePercentage: Double?
+    let totalVolume, high24H, low24H, priceChange24H: Double?
+    let priceChangePercentage24H, marketCapChange24H, marketCapChangePercentage24H, circulatingSupply: Double?
+    let totalSupply, maxSupply: Double?
+    let ath, athChangePercentage: Double?
     let athDate: String?
     let atl, atlChangePercentage: Double?
     let atlDate: String?
     let roi: Roi?
     let lastUpdated: String?
+    let sparklineIn7D: SparklineIn7D?
     let priceChangePercentage1HInCurrency: Double?
 
     enum CodingKeys: String, CodingKey {
@@ -58,6 +57,7 @@ struct CoinMarketElement: Codable {
         case atlDate = "atl_date"
         case roi
         case lastUpdated = "last_updated"
+        case sparklineIn7D = "sparkline_in_7d"
         case priceChangePercentage1HInCurrency = "price_change_percentage_1h_in_currency"
     }
 }
@@ -75,4 +75,9 @@ enum Currency: String, Codable {
     case usd = "usd"
 }
 
-typealias CoinMarket = [CoinMarketElement]
+// MARK: - SparklineIn7D
+struct SparklineIn7D: Codable {
+    let price: [Double]?
+}
+
+typealias CoinMarket = [Coin]

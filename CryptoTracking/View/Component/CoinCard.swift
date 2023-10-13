@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CoinCard: View {
-    let imageCoin: Image
+    let imageCoinUrl: String
     let nameCoin: String
     let symbol: String
     let moneyAmount: String
@@ -17,7 +18,12 @@ struct CoinCard: View {
     let isHistory: Bool
     var body: some View {
         HStack(alignment: .center) {
-            imageCoin
+//            WebImage(url: URL(string: imageCoinUrl))
+                Text("1")
+                .font(.system(size: 18, weight: .medium))
+                    .foregroundColor(.white)
+                    .frame(minWidth: 20)
+            Image("ic_bitcoin")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 42, height: 42)

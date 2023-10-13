@@ -8,20 +8,48 @@
 import SwiftUI
 
 struct SettingView: View {
-
+    @State private var scrollOffset: CGFloat = 0
     var body: some View {
         ZStack {
             Color.theme.mainColor.ignoresSafeArea()
-            ScrollView(.vertical) {
-                VStack(spacing: 22) {
-                    SettingHeaderView()
-                        ForEach(SettingSection.allCases, id: \.self) { section in
-                            buildSettingSection(section: section.items)
+                ScrollView(.vertical) {
 
-                    }.padding(.horizontal, 16)
+                    VStack(spacing: 22) {
+                        SettingHeaderView()
+                            ForEach(SettingSection.allCases, id: \.self) { section in
+                                buildSettingSection(section: section.items)
 
-                    Spacer()
+                        }.padding(.horizontal, 16)
+
+                        Spacer()
+                    }
                 }
+                .onChange(of: scrollOffset) { newValue in
+                    // The scroll offset has changed
+                    print("Scroll offset: \(scrollOffset)")
+                }
+                .onAppear {
+                    print("On Appear")
+                }
+
+            VStack {
+                HStack {
+                    Button(action: {}, label: {
+                            HStack {
+                                Image(systemName: "qrcode")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(.white)
+                                    .frame(width: 20, height: 20)
+                            }
+                    })
+                    Spacer()
+                    Button("Edit", action: {})
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 16)
+                Spacer()
             }
         }
     }

@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA12AD8F546003AAFA1 /* Setting.swift */; };
+		1A2A2AA42AD92631003AAFA1 /* PreviewProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */; };
+		1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA62AD92D64003AAFA1 /* BuyView.swift */; };
+		1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA82AD92FDA003AAFA1 /* LoadImage.swift */; };
 		1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */; };
 		1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */; };
 		1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */; };
-		1A5FBA432AD40DE400BD339A /* ListCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA422AD40DE400BD339A /* ListCoinView.swift */; };
+		1A5FBA432AD40DE400BD339A /* ListCoinPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */; };
 		1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */; };
 		1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */; };
 		1A86CC082ACD4B8B00CDD0B5 /* PureSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1A86CC072ACD4B8B00CDD0B5 /* PureSwiftUI */; };
@@ -38,14 +41,18 @@
 		1AB6AC482ACC207600A0A6E2 /* MarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB6AC472ACC207600A0A6E2 /* MarketView.swift */; };
 		1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB6AC492ACC208000A0A6E2 /* SettingView.swift */; };
 		1AB6AC4C2ACD02E000A0A6E2 /* TabBarCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB6AC4B2ACD02E000A0A6E2 /* TabBarCustom.swift */; };
+		2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A2A2AA12AD8F546003AAFA1 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewProvider+.swift"; sourceTree = "<group>"; };
+		1A2A2AA62AD92D64003AAFA1 /* BuyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyView.swift; sourceTree = "<group>"; };
+		1A2A2AA82AD92FDA003AAFA1 /* LoadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImage.swift; sourceTree = "<group>"; };
 		1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndDatePicker.swift; sourceTree = "<group>"; };
-		1A5FBA422AD40DE400BD339A /* ListCoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoinView.swift; sourceTree = "<group>"; };
+		1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoinPageView.swift; sourceTree = "<group>"; };
 		1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInCircleView.swift; sourceTree = "<group>"; };
 		1A86CC0A2ACE5D5100CDD0B5 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -72,6 +79,9 @@
 		1AB6AC472ACC207600A0A6E2 /* MarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketView.swift; sourceTree = "<group>"; };
 		1AB6AC492ACC208000A0A6E2 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		1AB6AC4B2ACD02E000A0A6E2 /* TabBarCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCustom.swift; sourceTree = "<group>"; };
+		C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.release.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.release.xcconfig"; sourceTree = "<group>"; };
+		CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D97D88B6BAE69516DB94387F /* Pods-CryptoTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.debug.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,12 +90,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A86CC082ACD4B8B00CDD0B5 /* PureSwiftUI in Frameworks */,
+				2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A2A2AA52AD92D48003AAFA1 /* BuyView */ = {
+			isa = PBXGroup;
+			children = (
+				1A2A2AA62AD92D64003AAFA1 /* BuyView.swift */,
+			);
+			path = BuyView;
+			sourceTree = "<group>";
+		};
 		1A5FBA3A2AD40B5900BD339A /* History */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,7 +140,7 @@
 				1A86CC1E2ACEADE900CDD0B5 /* CoinCard.swift */,
 				1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */,
 				1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */,
-				1A5FBA422AD40DE400BD339A /* ListCoinView.swift */,
+				1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -150,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				1A86CC172ACE8DE300CDD0B5 /* APICaller.swift */,
+				1A2A2AA82AD92FDA003AAFA1 /* LoadImage.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -168,6 +188,8 @@
 			children = (
 				1AB6AC282ACC1B1700A0A6E2 /* CryptoTracking */,
 				1AB6AC272ACC1B1700A0A6E2 /* Products */,
+				FC91D002DF872D32ECE82CF1 /* Pods */,
+				AF0A78CE455153FB9D20BEE5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				1AB6AC3D2ACC1C6C00A0A6E2 /* Color+.swift */,
+				1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -216,6 +239,7 @@
 		1AB6AC3F2ACC1D9200A0A6E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A2A2AA52AD92D48003AAFA1 /* BuyView */,
 				1A86CC002ACD04BC00CDD0B5 /* Component */,
 				1AB6AC402ACC1EBD00A0A6E2 /* Main */,
 			);
@@ -235,6 +259,23 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		AF0A78CE455153FB9D20BEE5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FC91D002DF872D32ECE82CF1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D97D88B6BAE69516DB94387F /* Pods-CryptoTracking.debug.xcconfig */,
+				C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -242,9 +283,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AB6AC392ACC1B1A00A0A6E2 /* Build configuration list for PBXNativeTarget "CryptoTracking" */;
 			buildPhases = (
+				E63308FD6B054D0AA63671B0 /* [CP] Check Pods Manifest.lock */,
 				1AB6AC222ACC1B1700A0A6E2 /* Sources */,
 				1AB6AC232ACC1B1700A0A6E2 /* Frameworks */,
 				1AB6AC242ACC1B1700A0A6E2 /* Resources */,
+				E8179747F3D6101847392704 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -306,6 +349,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E63308FD6B054D0AA63671B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoTracking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8179747F3D6101847392704 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1AB6AC222ACC1B1700A0A6E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -315,6 +400,7 @@
 				1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */,
 				1A86CC162ACE8CF000CDD0B5 /* API.swift in Sources */,
 				1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */,
+				1A2A2AA42AD92631003AAFA1 /* PreviewProvider+.swift in Sources */,
 				1AB6AC332ACC1B1A00A0A6E2 /* Persistence.swift in Sources */,
 				1A86CC182ACE8DE300CDD0B5 /* APICaller.swift in Sources */,
 				1A86CC1D2ACEA09600CDD0B5 /* CoinMarketParam.swift in Sources */,
@@ -323,7 +409,8 @@
 				1AB6AC3E2ACC1C6C00A0A6E2 /* Color+.swift in Sources */,
 				1AB6AC2C2ACC1B1700A0A6E2 /* ContentView.swift in Sources */,
 				1AB6AC442ACC1FB000A0A6E2 /* HistoryView.swift in Sources */,
-				1A5FBA432AD40DE400BD339A /* ListCoinView.swift in Sources */,
+				1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */,
+				1A5FBA432AD40DE400BD339A /* ListCoinPageView.swift in Sources */,
 				1A86CC0F2ACE711900CDD0B5 /* CategoryListView.swift in Sources */,
 				1A86CC1B2ACE9BC300CDD0B5 /* CoinMarket.swift in Sources */,
 				1A86CC0D2ACE70DC00CDD0B5 /* HomeHeaderView.swift in Sources */,
@@ -337,6 +424,7 @@
 				1AB6AC362ACC1B1A00A0A6E2 /* CryptoTracking.xcdatamodeld in Sources */,
 				1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */,
 				1A86CC132ACE714400CDD0B5 /* MyAssetsView.swift in Sources */,
+				1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */,
 				1AB6AC482ACC207600A0A6E2 /* MarketView.swift in Sources */,
 				1AB6AC4C2ACD02E000A0A6E2 /* TabBarCustom.swift in Sources */,
 			);
@@ -461,6 +549,7 @@
 		};
 		1AB6AC3A2ACC1B1A00A0A6E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D97D88B6BAE69516DB94387F /* Pods-CryptoTracking.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -494,6 +583,7 @@
 		};
 		1AB6AC3B2ACC1B1A00A0A6E2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -7,4 +7,7 @@ target 'CryptoTracking' do
 
   # Pods for CryptoTracking
 
+   pod 'SDWebImageSwiftUI'
+
+
 end
