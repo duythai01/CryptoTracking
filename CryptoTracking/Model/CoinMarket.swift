@@ -15,10 +15,10 @@ import Foundation
 import Foundation
 
 // MARK: - CoinMarketElement
-struct Coin: Codable {
+struct Coin: Codable, Identifiable {
     let id, symbol, name: String?
     let image: String?
-    let currentPrice: Double?
+    let currentPrice: Double
     let marketCap, marketCapRank: Int?
     let fullyDilutedValuation: Int?
     let totalVolume, high24H, low24H, priceChange24H: Double?
@@ -32,6 +32,7 @@ struct Coin: Codable {
     let lastUpdated: String?
     let sparklineIn7D: SparklineIn7D?
     let priceChangePercentage1HInCurrency: Double?
+    let currentHoldings: Double?
 
     enum CodingKeys: String, CodingKey {
         case id, symbol, name, image
@@ -59,6 +60,16 @@ struct Coin: Codable {
         case lastUpdated = "last_updated"
         case sparklineIn7D = "sparkline_in_7d"
         case priceChangePercentage1HInCurrency = "price_change_percentage_1h_in_currency"
+        case currentHoldings
+
+    }
+
+    func updateHoldings(amount: Double) -> Coin{
+        return Coin(id: id, symbol: symbol, name: name, image: image, currentPrice: currentPrice, marketCap: marketCap, marketCapRank: marketCapRank, fullyDilutedValuation: fullyDilutedValuation, totalVolume: totalVolume, high24H: high24H, low24H: low24H, priceChange24H: priceChange24H, priceChangePercentage24H: priceChangePercentage24H, marketCapChange24H: marketCapChange24H, marketCapChangePercentage24H: marketCapChangePercentage24H, circulatingSupply: circulatingSupply, totalSupply: totalSupply, maxSupply: maxSupply, ath: ath, athChangePercentage: athChangePercentage, athDate: athDate, atl: atl, atlChangePercentage: atlChangePercentage, atlDate: atlDate, roi: roi, lastUpdated: lastUpdated, sparklineIn7D: sparklineIn7D, priceChangePercentage1HInCurrency: priceChangePercentage1HInCurrency, currentHoldings: amount)
+    }
+
+    var currentHoldingsValue: Double {
+        return (currentHoldings ?? 0) * currentPrice
     }
 }
 

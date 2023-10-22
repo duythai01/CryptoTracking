@@ -213,5 +213,5 @@ class DeveloperPreview {
                                             26729.137205815106,
                                             26803.279034641575
                           ]),
-                          priceChangePercentage1HInCurrency: 0.1834080225255728)
+                    priceChangePercentage1HInCurrency: 0.1834080225255728, currentHoldings: 0.2345)
 }

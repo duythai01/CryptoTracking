@@ -24,7 +24,7 @@ struct ContentView: View {
                     case .history:
                         HistoryView().tag(tab)
                     case .qr:
-                         QrView().tag(tab)
+                        BuyView().tag(tab)
                     case .market:
                          MarketView().tag(tab)
                     case .setting:

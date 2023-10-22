@@ -36,7 +36,7 @@ struct CoinCard: View {
                     Spacer()
                     HStack{
                         Text(moneyAmount)
-                            .foregroundColor( isHistory ? (checkIsIncrease(moneyAmount) ? .green : .red) :  .white)
+                            .foregroundColor( isHistory ? (moneyAmount.checkIsIncrease() ? .green : .red) :  .white)
                             .font(.system(size: 14, weight: .bold))
                     }
                 }
@@ -61,10 +61,6 @@ struct CoinCard: View {
         .listRowBackground(Color.theme.mainColor)
         .listRowInsets(EdgeInsets())
         .padding(.all, 8)
-    }
-
-    func checkIsIncrease(_ text: String) -> Bool {
-        return text.prefix(1) == "+"
     }
 }
 

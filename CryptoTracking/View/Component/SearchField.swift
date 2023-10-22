@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SearchField: View {
     @Binding var searchQuery: String
-
+    var placeHolder: String?
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -23,16 +23,38 @@ struct SearchField: View {
 
             ZStack(alignment: .leading) {
                 if searchQuery == "" {
-                         Text("Search or enter website url")
+
+                    Text(placeHolder ?? "")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(Color.gray.opacity(0.7))
-                     }
+                }
+
                 TextField("", text: $searchQuery) {
                     UIApplication.shared.endEditing()
 
                 }
-                    .font(.system(size: 16, weight: .medium))
+                .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.white)
+                HStack {
+
+                    Spacer()
+                    if searchQuery != "" {
+                        Button(action: {
+                            withAnimation {
+                                searchQuery = ""
+                            }
+                        }, label: {
+                            Image(systemName: "multiply.circle.fill")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.purple)
+
+                        })
+                        .padding(.horizontal, 16)
+
+                    }
+
+                }
+
 
             }
         }
