@@ -23,7 +23,7 @@ class BuyViewModel: ObservableObject {
     @Published var filterHoldingStatus: StatusFilter = .off
     @Published var filterPriceStatus: StatusFilter = .off
     @Published var filterType: FilterCoinType = .rank(statusFilter: .off)
-    @Published var showLoadingCoins: Bool = false
+    @Published var showLoadingCoins: Bool = true
 
     private let coinServices = CoinDataService.shared
     private var cancellables = Set<AnyCancellable>()

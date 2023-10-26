@@ -12,6 +12,7 @@ extension Double {
         let formater = NumberFormatter()
         formater.usesGroupingSeparator = true
         formater.numberStyle = .currency
+        formater.locale = Locale(identifier: "usa")
         formater.maximumFractionDigits = 6
         formater.minimumFractionDigits = 2
         return formater

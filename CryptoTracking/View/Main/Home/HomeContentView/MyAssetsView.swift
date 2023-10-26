@@ -21,7 +21,7 @@ struct MyAssetsView: View {
             .padding(.leading, 16)
             List {
                 ForEach(coins, id:\.self) { coin in
-                    CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "BitCoin", symbol: "BTC", moneyAmount: "$ 12312.22", status: "+ 2.32%", isHistory: false)
+                    CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "BitCoin", symbol: "BTC", moneyAmount: "$ 12312.22", status: "+ 2.32%", isHistory: false, showIndex: true)
                 }
 
             }

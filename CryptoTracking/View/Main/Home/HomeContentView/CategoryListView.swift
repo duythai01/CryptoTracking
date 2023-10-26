@@ -8,63 +8,63 @@
 import Foundation
 import SwiftUI
 
-struct CategoryListView: View {
-    @State private var animations: [Bool] = Array(repeating: false, count: HomeCategory.allCases.count)
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Category")
-                    .foregroundColor(.white)
-                    .font(.system(size: 18, weight: .bold))
+extension HomeView {
+    var categoryListView: some View {
+        HStack{
+            ForEach(HomeCategory.allCases.indices, id: \.self) { index in
+                let category = HomeCategory.allCases[index]
+                let isAnimating = categoryAnimations[index]
                 Spacer()
-                Text("See more")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 16, weight: .medium))
-            }
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: [GridItem(.flexible())], spacing: 25) {
-                    ForEach(HomeCategory.allCases.indices, id: \.self) { index in
-                        let category = HomeCategory.allCases[index]
-                        let isAnimating = animations[index]
+                VStack(alignment: .center) {
 
-                        VStack(alignment: .center) {
+                    Circle()
+                        .frame(width: isAnimating ? 58 : 42, height: isAnimating ? 58 : 42)
+                        .foregroundColor(.purpleView)
+                        .overlay(
+                            category.image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.all, 13)
+                                .foregroundColor(Color.white))
+                        .onTapGesture(){
+                            switch category {
+                            case .buy:
+                                self.destinationView = BuyView()
+                            case .exchange:
+                                self.destinationView = BuyView()
+                            case .receive:
+                                self.destinationView = BuyView()
+                            case .withdraw:
+                                self.destinationView = BuyView()
+                            case .swap:
+                                self.destinationView = BuyView()
+                            }
+                            isNavigate = true
+                            withAnimation(.easeOut(duration: 0.1)) {
+                                categoryAnimations[index] = true
+                            }
 
-                            Circle()
-                                .frame(width: isAnimating ? 60 : 45, height: isAnimating ? 60 : 45)
-                                .foregroundColor(.purpleView)
-                                .overlay(
-                                    category.image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(.all, 16)
-                                        .foregroundColor(Color.white))
-                                .onTapGesture(){
-                                    withAnimation(.easeOut(duration: 0.2)) {
-                                        animations[index] = true
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                        withAnimation(.easeIn(duration: 0.2)) {
-                                            animations[index] = false
-                                        }
-
-                                    }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                withAnimation(.easeIn(duration: 0.1)) {
+                                    categoryAnimations[index] = false
                                 }
-                                .background(
-                                    Circle()
-                                        .opacity(isAnimating ? 1 : 0)
-                                        .foregroundColor(.white)
-                                        .frame(width: isAnimating ? 65 : 50, height: isAnimating ? 65 : 50))
 
-                            Text(category.displayName)
-                                .font(.system(size: 13))
+                            }
+                        }
+                        .background(
+                            Circle()
+                                .opacity(isAnimating ? 1 : 0)
                                 .foregroundColor(.white)
+                                .frame(width: isAnimating ? 65 : 50, height: isAnimating ? 65 : 50))
 
-                        }.padding(.vertical, 8)
-                    }
-                }
+                    Text(category.displayName)
+                        .font(.system(size: 13))
+                        .foregroundColor(.white)
 
+                }.padding(.vertical, 8)
+                Spacer()
             }
+
         }
     }
 }

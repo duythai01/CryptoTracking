@@ -8,66 +8,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-enum CategoryBuy: CaseIterable {
-    case spot
-    case futures
-    case gainners
-    case earn
-    case new
-
-    var name: String {
-        switch self {
-        case .spot:
-            return "Spot"
-        case .futures:
-            return "Futures"
-        case .gainners:
-            return "Gainer"
-        case .earn:
-            return "Earn"
-        case .new:
-            return "New"
-        }
-    }
-}
-
-enum CoinDefault: CaseIterable {
-    case usdt
-    case usdts
-    case btc
-    case eth
-    case etf
-    case new
-    case zone
-
-    var name: String {
-        switch self {
-        case .usdt:
-            return "USDT"
-        case .usdts:
-            return "USDT©"
-        case .btc:
-            return "BTC"
-        case .eth:
-            return "ETH"
-        case .etf:
-            return "ETF"
-        case .new:
-            return "New"
-        case .zone:
-            return "Zones"
-        }
-    }
-}
-
-enum StatusFilter {
-    case up
-    case down
-    case off
-}
-
 struct BuyView: View {
-//    let coin: Coin
     @StateObject private var viewModel = BuyViewModel()
     @State private var searchQuerry = ""
     @State private var showSearchField = false
@@ -75,49 +16,57 @@ struct BuyView: View {
     @State private var coinDefaultSelected: CoinDefault  = .usdt
 
 
-    var body: some View {
-        ZStack {
-            Color.theme.mainColor.ignoresSafeArea()
-            VStack(spacing: 16){
-                HStack {
-                    Spacer()
-                    Text("Shop")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                    Spacer()
-                    Button(action: {
-                        withAnimation() {
-                            showSearchField.toggle()
-                        }
-                    }, label: {
-                        HStack {
-                            Image(systemName: "qrcode")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
-                        }
-                    })
-                }
-                .padding(.horizontal, 16)
-                // Banner
-                RotationBanner()
-
-                SearchField(searchQuery:  $viewModel.searchText, placeHolder: "Enter name coin")
-                    .padding(.top, 16)
-
-                categoryBuy
-                lisCoinView
-                Spacer()
-            }
-        }
-        .onAppear {
-//            viewModel.filterType = .rank(statusFilter: .up)
-            viewModel.showLoadingCoins = true
-        }
-
-
+    init() {
+        // Customize the UINavigationBar appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        appearance.buttonAppearance.normal
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 26, weight: .bold)] // Set the text
+        UINavigationBar.appearance().standardAppearance = appearance
     }
+
+    var body: some View {
+//        NavigationView {
+
+            ZStack {
+                Color.theme.mainColor.ignoresSafeArea()
+                VStack(spacing: 16){
+                    // Banner
+                    RotationBanner()
+
+                    SearchField(searchQuery:  $viewModel.searchText, placeHolder: "Enter name coin")
+                        .padding(.top, 16)
+
+                    categoryBuy
+                    filterCoins
+                    lisCoinView
+                    Spacer()
+                }
+            }
+            .onAppear {
+                viewModel.showLoadingCoins = true
+            }
+            .navigationTitle(Text("BUY"))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button(action: {
+                withAnimation() {
+                    showSearchField.toggle()
+                }
+            }, label: {
+                HStack {
+                    Image(systemName: "qrcode")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.white)
+                        .frame(width: 24, height: 24)
+                }
+            }))
+
+        .edgesIgnoringSafeArea(.bottom)
+        }
+
+
+//    }
 
     func configPriceChangePercent(percent: Double?) -> String {
         guard let percent = percent else { return "0"}
@@ -129,127 +78,128 @@ struct BuyView: View {
 
 extension BuyView {
 
-    private var lisCoinView: some View {
+    private var filterCoins: some View {
+        HStack{
+            HStack {
+                Text("Ranking")
+                    .foregroundColor(.white.opacity((viewModel.filterType == .rank(statusFilter: .down) || viewModel.filterType == .rank(statusFilter: .up)) ? 1 : 0.6))
+                    .font(.system(size: 16, weight: .bold))
+                .padding(.leading, 35)
 
-        VStack {
-            HStack{
-                HStack {
-                    Text("Ranking")
-                        .foregroundColor(.white.opacity((viewModel.filterType == .rank(statusFilter: .down) || viewModel.filterType == .rank(statusFilter: .up)) ? 1 : 0.6))
-                        .font(.system(size: 16, weight: .bold))
-                    .padding(.leading, 35)
+                VStack(spacing: 2) {
+                    Image(systemName: "arrowtriangle.up.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(viewModel.filterType == .rank(statusFilter: .up) ? .yellow : .gray)
 
-                    VStack(spacing: 2) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor(viewModel.filterType == .rank(statusFilter: .up) ? .yellow : .gray)
+                    Image(systemName: "arrowtriangle.down.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(viewModel.filterType == .rank(statusFilter: .down) ? .yellow : .gray)
+                }
+            }.onTapGesture {
+                withAnimation {
 
-                        Image(systemName: "arrowtriangle.down.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor(viewModel.filterType == .rank(statusFilter: .down) ? .yellow : .gray)
-                    }
-                }.onTapGesture {
-                print("@@@: Ranking")
-                    withAnimation {
-
-                            switch viewModel.filterType {
-                            case .rank(let status):
-                                switch status {
-                                case .up:
-                                    viewModel.filterType = .rank(statusFilter: .down)
-                                case .down:
-                                    viewModel.filterType = .rank(statusFilter: .off)
-                                case .off:
-                                    viewModel.filterType = .rank(statusFilter: .up)
-
-                                }
-                            default:
+                        switch viewModel.filterType {
+                        case .rank(let status):
+                            switch status {
+                            case .up:
+                                viewModel.filterType = .rank(statusFilter: .down)
+                            case .down:
+                                viewModel.filterType = .rank(statusFilter: .off)
+                            case .off:
                                 viewModel.filterType = .rank(statusFilter: .up)
 
                             }
-                        }
-
-                }
-
-                Spacer()
-
-                HStack {
-                    Text("Holding")
-                        .foregroundColor(.white.opacity((viewModel.filterType == .holding(statusFilter: .up) || viewModel.filterType == .holding(statusFilter: .down))  ? 1 : 0.6))
-                    .font(.system(size: 16, weight: .bold))
-                    VStack(spacing: 2) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor( viewModel.filterType == .holding(statusFilter: .up) ? .yellow : .gray)
-
-                        Image(systemName: "arrowtriangle.down.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor(viewModel.filterType == .holding(statusFilter: .down) ? .yellow : .gray)
-                    }
-                }
-                .onTapGesture {
-                    withAnimation {
-                        print("@@@: HOLDING")
-                        switch viewModel.filterType {
-                        case .holding(let status):
-                            switch status {
-                            case .up:
-                                viewModel.filterType = .holding(statusFilter: .off)
-                            case .down:
-                                viewModel.filterType = .holding(statusFilter: .up)
-                            case .off:
-                                viewModel.filterType = .holding(statusFilter: .down)
-                            }
                         default:
-                            viewModel.filterType = .holding(statusFilter: .down)
+                            viewModel.filterType = .rank(statusFilter: .up)
 
                         }
                     }
-                }
-
-                Spacer()
-
-                HStack() {
-                    Text("Price")
-                        .foregroundColor(.white.opacity((viewModel.filterType == .price(statusFilter: .down) || viewModel.filterType == .price(statusFilter: .up)) ? 1 : 0.6))
-                        .font(.system(size: 16, weight: .bold))
-                    VStack(spacing: 2) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor(viewModel.filterType == .price(statusFilter: .up)  ? .yellow : .gray)
-
-                        Image(systemName: "arrowtriangle.down.fill")
-                            .resizable()
-                            .frame(width: 8, height: 8)
-                            .foregroundColor(viewModel.filterType == .price(statusFilter: .down)  ? .yellow : .gray)
-                    }
-                }
-                .padding(.trailing, 16)
-                .onTapGesture {
-                    print("@@@: PRICE")
-                    withAnimation {
-                        switch viewModel.filterType {
-                        case .price(let status):
-                            switch status {
-                            case .up:
-                                viewModel.filterType = .price(statusFilter: .off)
-                            case .down:
-                                viewModel.filterType = .price(statusFilter: .up)
-                            case .off:
-                                viewModel.filterType = .price(statusFilter: .down)
-                            }
-                        default:
-                            viewModel.filterType = .price(statusFilter: .down)
-                        }
-                    }
-                }
 
             }
+
+            Spacer()
+
+            HStack {
+                Text("Holding")
+                    .foregroundColor(.white.opacity((viewModel.filterType == .holding(statusFilter: .up) || viewModel.filterType == .holding(statusFilter: .down))  ? 1 : 0.6))
+                .font(.system(size: 16, weight: .bold))
+                VStack(spacing: 2) {
+                    Image(systemName: "arrowtriangle.up.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor( viewModel.filterType == .holding(statusFilter: .up) ? .yellow : .gray)
+
+                    Image(systemName: "arrowtriangle.down.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(viewModel.filterType == .holding(statusFilter: .down) ? .yellow : .gray)
+                }
+            }
+            .onTapGesture {
+                withAnimation {
+                    print("@@@: HOLDING")
+                    switch viewModel.filterType {
+                    case .holding(let status):
+                        switch status {
+                        case .up:
+                            viewModel.filterType = .holding(statusFilter: .off)
+                        case .down:
+                            viewModel.filterType = .holding(statusFilter: .up)
+                        case .off:
+                            viewModel.filterType = .holding(statusFilter: .down)
+                        }
+                    default:
+                        viewModel.filterType = .holding(statusFilter: .down)
+
+                    }
+                }
+            }
+
+            Spacer()
+
+            HStack() {
+                Text("Price")
+                    .foregroundColor(.white.opacity((viewModel.filterType == .price(statusFilter: .down) || viewModel.filterType == .price(statusFilter: .up)) ? 1 : 0.6))
+                    .font(.system(size: 16, weight: .bold))
+                VStack(spacing: 2) {
+                    Image(systemName: "arrowtriangle.up.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(viewModel.filterType == .price(statusFilter: .up)  ? .yellow : .gray)
+
+                    Image(systemName: "arrowtriangle.down.fill")
+                        .resizable()
+                        .frame(width: 8, height: 8)
+                        .foregroundColor(viewModel.filterType == .price(statusFilter: .down)  ? .yellow : .gray)
+                }
+            }
+            .padding(.trailing, 16)
+            .onTapGesture {
+                withAnimation {
+                    switch viewModel.filterType {
+                    case .price(let status):
+                        switch status {
+                        case .up:
+                            viewModel.filterType = .price(statusFilter: .off)
+                        case .down:
+                            viewModel.filterType = .price(statusFilter: .up)
+                        case .off:
+                            viewModel.filterType = .price(statusFilter: .down)
+                        }
+                    default:
+                        viewModel.filterType = .price(statusFilter: .down)
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    private var lisCoinView: some View {
+        VStack {
             ZStack(alignment: .center) {
                 ScrollView(.vertical) {
                     LazyVStack {
@@ -317,6 +267,8 @@ extension BuyView {
                     .listStyle(.plain)
                     .fixedSize(horizontal: false, vertical: true)
                 }
+
+
                 if viewModel.showLoadingCoins {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: Color.white))

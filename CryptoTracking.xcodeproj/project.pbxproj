@@ -15,6 +15,11 @@
 		1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */; };
 		1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */; };
 		1A5FBA432AD40DE400BD339A /* ListCoinPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */; };
+		1A609A592AE6C6940089C8FF /* Buy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A582AE6C6940089C8FF /* Buy.swift */; };
+		1A609A5B2AE6D0390089C8FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A5A2AE6D0390089C8FF /* HomeViewModel.swift */; };
+		1A609A5F2AE7DAF80089C8FF /* CameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A5E2AE7DAF70089C8FF /* CameraViewRepresentable.swift */; };
+		1A609A612AE82B330089C8FF /* QRScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A602AE82B330089C8FF /* QRScannerViewModel.swift */; };
+		1A609A642AE8D1600089C8FF /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A632AE8D1600089C8FF /* WithdrawView.swift */; };
 		1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */; };
 		1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */; };
 		1A86CC082ACD4B8B00CDD0B5 /* PureSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1A86CC072ACD4B8B00CDD0B5 /* PureSwiftUI */; };
@@ -57,6 +62,11 @@
 		1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndDatePicker.swift; sourceTree = "<group>"; };
 		1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoinPageView.swift; sourceTree = "<group>"; };
+		1A609A582AE6C6940089C8FF /* Buy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buy.swift; sourceTree = "<group>"; };
+		1A609A5A2AE6D0390089C8FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		1A609A5E2AE7DAF70089C8FF /* CameraViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresentable.swift; sourceTree = "<group>"; };
+		1A609A602AE82B330089C8FF /* QRScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewModel.swift; sourceTree = "<group>"; };
+		1A609A632AE8D1600089C8FF /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
 		1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInCircleView.swift; sourceTree = "<group>"; };
 		1A86CC0A2ACE5D5100CDD0B5 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -131,6 +141,24 @@
 			path = HistoryContentView;
 			sourceTree = "<group>";
 		};
+		1A609A5D2AE7DA870089C8FF /* QrView */ = {
+			isa = PBXGroup;
+			children = (
+				1AB6AC452ACC204800A0A6E2 /* QrView.swift */,
+				1A609A5E2AE7DAF70089C8FF /* CameraViewRepresentable.swift */,
+				1A609A602AE82B330089C8FF /* QRScannerViewModel.swift */,
+			);
+			path = QrView;
+			sourceTree = "<group>";
+		};
+		1A609A622AE8D1490089C8FF /* WithdrawView */ = {
+			isa = PBXGroup;
+			children = (
+				1A609A632AE8D1600089C8FF /* WithdrawView.swift */,
+			);
+			path = WithdrawView;
+			sourceTree = "<group>";
+		};
 		1A86CBFC2ACD044F00CDD0B5 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +166,7 @@
 				1A86CC0A2ACE5D5100CDD0B5 /* Home.swift */,
 				1A86CC152ACE8CF000CDD0B5 /* API.swift */,
 				1A2A2AA12AD8F546003AAFA1 /* Setting.swift */,
+				1A609A582AE6C6940089C8FF /* Buy.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -159,6 +188,7 @@
 			children = (
 				1A86CC092ACE5D0E00CDD0B5 /* HomeContentView */,
 				1AB6AC412ACC1F0400A0A6E2 /* HomeView.swift */,
+				1A609A5A2AE6D0390089C8FF /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -251,6 +281,7 @@
 		1AB6AC3F2ACC1D9200A0A6E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A609A622AE8D1490089C8FF /* WithdrawView */,
 				1A2A2AA52AD92D48003AAFA1 /* BuyView */,
 				1A86CC002ACD04BC00CDD0B5 /* Component */,
 				1AB6AC402ACC1EBD00A0A6E2 /* Main */,
@@ -261,9 +292,9 @@
 		1AB6AC402ACC1EBD00A0A6E2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1A609A5D2AE7DA870089C8FF /* QrView */,
 				1A5FBA3A2AD40B5900BD339A /* History */,
 				1A86CC032ACD1D7E00CDD0B5 /* Home */,
-				1AB6AC452ACC204800A0A6E2 /* QrView.swift */,
 				1AB6AC472ACC207600A0A6E2 /* MarketView.swift */,
 				1AB6AC492ACC208000A0A6E2 /* SettingView.swift */,
 				1AB6AC4B2ACD02E000A0A6E2 /* TabBarCustom.swift */,
@@ -417,6 +448,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A609A592AE6C6940089C8FF /* Buy.swift in Sources */,
 				1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */,
 				1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */,
 				1A86CC162ACE8CF000CDD0B5 /* API.swift in Sources */,
@@ -426,6 +458,7 @@
 				1AB6AC332ACC1B1A00A0A6E2 /* Persistence.swift in Sources */,
 				1A86CC182ACE8DE300CDD0B5 /* APICaller.swift in Sources */,
 				1A86CC1D2ACEA09600CDD0B5 /* CoinMarketParam.swift in Sources */,
+				1A609A5B2AE6D0390089C8FF /* HomeViewModel.swift in Sources */,
 				1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */,
 				1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */,
 				1AD2BFB72AE2EA0A006711FB /* String+.swift in Sources */,
@@ -441,12 +474,15 @@
 				1A86CC0B2ACE5D5100CDD0B5 /* Home.swift in Sources */,
 				1AB6AC422ACC1F0400A0A6E2 /* HomeView.swift in Sources */,
 				1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */,
+				1A609A612AE82B330089C8FF /* QRScannerViewModel.swift in Sources */,
 				1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */,
 				1AB6AC462ACC204800A0A6E2 /* QrView.swift in Sources */,
 				1A86CC112ACE712C00CDD0B5 /* CreditCardView.swift in Sources */,
 				1A86CC1F2ACEADE900CDD0B5 /* CoinCard.swift in Sources */,
 				1AB6AC2A2ACC1B1700A0A6E2 /* CryptoTrackingApp.swift in Sources */,
 				1AB6AC362ACC1B1A00A0A6E2 /* CryptoTracking.xcdatamodeld in Sources */,
+				1A609A5F2AE7DAF80089C8FF /* CameraViewRepresentable.swift in Sources */,
+				1A609A642AE8D1600089C8FF /* WithdrawView.swift in Sources */,
 				1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */,
 				1A86CC132ACE714400CDD0B5 /* MyAssetsView.swift in Sources */,
 				1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */,
@@ -584,6 +620,7 @@
 				DEVELOPMENT_TEAM = BZD66Y59V5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -618,6 +655,7 @@
 				DEVELOPMENT_TEAM = BZD66Y59V5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

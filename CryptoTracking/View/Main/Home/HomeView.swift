@@ -8,25 +8,33 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var animate: Bool = true
+    @StateObject var viewModel = HomeViewModel()
 
-    @State var mockCoinData = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+    @State var categoryAnimations: [Bool] = Array(repeating: false, count: HomeCategory.allCases.count)
+    @State var mockCoinData = [1, 2]
+    @State var isNavigate: Bool = false
+    @State var destinationView = BuyView()
     var body: some View {
-        NavigationView {
+        GeometryReader { geometry in
             ZStack {
-                Color.theme.mainColor.ignoresSafeArea()
-                VStack {
-                    HomeHeaderView().padding(.horizontal, 16)
-                    CreditCardView()
-                    CategoryListView().padding(.horizontal, 16)
-                        .fixedSize(horizontal: false, vertical: true)
-                    MyAssetsView(coins: $mockCoinData)
-                    Spacer()
-                    Text("Header").foregroundColor(.white)
-                    Spacer()
-                }
-            }
+                            Color.theme.mainColor.ignoresSafeArea()
+                            VStack {
+                                HomeHeaderView().padding(.horizontal, 16)
+                                CreditCardView()
+                                categoryListView.padding(.horizontal, 16)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                MyAssetsView(coins: $mockCoinData)
+                                    .padding(.bottom, geometry.safeAreaInsets.bottom)
+                                Spacer()
+                            }
+                        }
+                        .background(
+                            NavigationLink("", destination: destinationView, isActive: $isNavigate).opacity(0))
+                        .onAppear {
+                            isNavigate = false
+                    }
         }
+
     }
 }
 
@@ -35,3 +43,5 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
+
+

@@ -15,30 +15,31 @@ struct ContentView: View {
         UITabBar.appearance().isHidden = true
     }
     var body: some View {
-        ZStack {
-            TabView(selection: $tabBarSelected)  {
-                ForEach(MainTabBar.allCases, id: \.rawValue) { tab in
-                    switch tab {
-                    case .home:
-                        HomeView().tag(tab)
-                    case .history:
-                        HistoryView().tag(tab)
-                    case .qr:
-                        BuyView().tag(tab)
-                    case .market:
-                         MarketView().tag(tab)
-                    case .setting:
-                         SettingView().tag(tab)
+            ZStack {
+                TabView(selection: $tabBarSelected)  {
+                    ForEach(MainTabBar.allCases, id: \.rawValue) { tab in
+                        switch tab {
+                        case .home:
+                            HomeView().tag(tab)
+                        case .history:
+                            HistoryView().tag(tab)
+                        case .qr:
+                            QrView().tag(tab)
+                        case .market:
+                             MarketView().tag(tab)
+                        case .setting:
+                             SettingView().tag(tab)
+                        }
                     }
                 }
-            }
 
-            VStack {
-                Spacer()
-                TabarCustom(tabBarSelected: $tabBarSelected)
-            }
+                VStack {
+                    Spacer()
+                    TabarCustom(tabBarSelected: $tabBarSelected)
+                }
 
-        }.ignoresSafeArea()
+            }.ignoresSafeArea()
+
     }
 
 }

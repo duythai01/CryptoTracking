@@ -18,7 +18,7 @@ struct ListCoinPageView: View {
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: (transactionsSend.isMultiple(of: 2) ? "+" : "-") + "$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true, showIndex: false)
                     }
 
                 }
@@ -30,7 +30,7 @@ struct ListCoinPageView: View {
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.004 BTC", symbol: "Bitcoin", moneyAmount: "-$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true, showIndex: false)
                     }
 
                 }
@@ -40,7 +40,7 @@ struct ListCoinPageView: View {
             VStack {
                 List {
                     ForEach(transactionsSend, id:\.self) { transactionsSend in
-                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true)
+                        CoinCard(imageCoinUrl: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400", nameCoin: "0.009 BTC", symbol: "Bitcoin", moneyAmount: "+$ 5,432.002", status: "2023/09/06, 9:07 AM", isHistory: true, showIndex: false)
                     }
 
                 }

@@ -80,30 +80,33 @@ struct HistoryView: View {
 
 
     var body: some View{
-        ZStack {
-            Color.theme.mainColor.ignoresSafeArea()
-                .onTapGesture {
-                    withAnimation {
-                        isExpandedFilter = false
-                    }
-                }
+        GeometryReader { geometry in
             ZStack {
-                VStack {
-                    HistoryHeaderView(searchQuery: $searchText)
-                    HStack {
-                        tabButton(title: "All", tag: 1)
-
-                        tabButton(title: "Send", tag: 2)
-
-                        tabButton(title: "Receive", tag: 3)
+                Color.theme.mainColor.ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation {
+                            isExpandedFilter = false
+                        }
                     }
-                    .padding(.top)
-                    .font(.headline)
-                    FilterAndDatePicker(dateSelection: $dateSelection, selection: $filterSelection, isShowMenu: $isExpandedFilter, heightDropmenu: $heightDropmenu)
+                ZStack {
+                    VStack {
+                        HistoryHeaderView(searchQuery: $searchText)
+                        HStack {
+                            tabButton(title: "All", tag: 1)
 
-                    ListCoinPageView(selectedTab: $selectedTab)
-                        .padding(.top,  isExpandedFilter ? -heightDropmenu : 0)
-                    Spacer()
+                            tabButton(title: "Send", tag: 2)
+
+                            tabButton(title: "Receive", tag: 3)
+                        }
+                        .padding(.top)
+                        .font(.headline)
+                        FilterAndDatePicker(dateSelection: $dateSelection, selection: $filterSelection, isShowMenu: $isExpandedFilter, heightDropmenu: $heightDropmenu)
+
+                        ListCoinPageView(selectedTab: $selectedTab)
+                            .padding(.top,  isExpandedFilter ? -heightDropmenu : 0)
+                            .padding(.bottom, geometry.safeAreaInsets.bottom)
+                        Spacer()
+                    }
                 }
             }
         }

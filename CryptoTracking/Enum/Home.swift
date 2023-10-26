@@ -13,33 +13,22 @@ enum HomeCategory: String, CaseIterable, Identifiable {
 
     case buy
     case swap
-    case send
+    case withdraw
     case receive
     case exchange
-    case test1
-    case test2
-    case test3
-    case test4
     var displayName: String {
         switch self {
         case .buy:
             return "Buy"
         case .swap:
-            return "Swap"
-        case .send:
+            return "Withdraw"
+        case .withdraw:
             return "Send"
         case .receive:
             return "Receive"
         case .exchange:
             return "Exchange"
-        case .test1:
-            return "Exchange"
-        case .test2:
-            return "Exchange"
-        case .test3:
-            return "Exchange"
-        case .test4:
-            return "Exchange"
+
         }
     }
 
@@ -48,22 +37,13 @@ enum HomeCategory: String, CaseIterable, Identifiable {
         case .buy:
             return Image(systemName: "cart.fill")
         case .swap:
-            return Image(systemName: "repeat.circle.fill")
-        case .send:
+            return Image("ic_withdraw")
+        case .withdraw:
             return Image(systemName:"square.and.arrow.up.fill")
         case .receive:
             return Image(systemName:"square.and.arrow.down.fill")
         case .exchange:
             return Image(systemName: "arrow.up.arrow.down.circle.fill")
-        case .test1:
-            return Image(systemName: "arrow.up.arrow.down.circle.fill")
-        case .test2:
-            return Image(systemName: "arrow.up.arrow.down.circle.fill")
-        case .test3:
-            return Image(systemName: "arrow.up.arrow.down.circle.fill")
-        case .test4:
-            return Image(systemName: "arrow.up.arrow.down.circle.fill")
-
         }
     }
 }

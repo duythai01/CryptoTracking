@@ -16,27 +16,30 @@ struct MarketView: View {
         Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
     ]
     var body: some View {
-        ZStack {
-            Color.theme.mainColor.ignoresSafeArea()
-            VStack(spacing: 26) {
-                Text("NFT Market")
-                    .foregroundColor(.white)
-                    .font(.system(size: 24, weight: .bold))
-                SearchField(searchQuery: $searchQuery)
-                ScrollView(.vertical) {
-                    VStack(alignment: .center, spacing: 20) {
-                        buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
-                        buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
-                        buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
+        GeometryReader { geometry in
+            ZStack {
+                Color.theme.mainColor.ignoresSafeArea()
+                VStack(spacing: 26) {
+                    Text("NFT Market")
+                        .foregroundColor(.white)
+                        .font(.system(size: 24, weight: .bold))
+                    SearchField(searchQuery: $searchQuery)
+                    ScrollView(.vertical) {
+                        VStack(alignment: .center, spacing: 20) {
+                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
+                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
+                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
 
+                        }
                     }
-                }
-                Spacer()
+                    .padding(.bottom, geometry.safeAreaInsets.bottom)
+                    Spacer()
 
+                }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
         }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
         }
     }
 

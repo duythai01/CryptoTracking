@@ -16,13 +16,16 @@ struct CoinCard: View {
     let moneyAmount: String
     let status: String
     let isHistory: Bool
+    let showIndex: Bool
     var body: some View {
         HStack(alignment: .center) {
 //            WebImage(url: URL(string: imageCoinUrl))
+            if showIndex {
                 Text("1")
-                .font(.system(size: 18, weight: .medium))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.white)
                     .frame(minWidth: 20)
+            }
             Image("ic_bitcoin")
                 .resizable()
                 .scaledToFit()

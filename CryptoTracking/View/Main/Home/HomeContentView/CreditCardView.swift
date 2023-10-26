@@ -9,56 +9,153 @@ import Foundation
 import SwiftUI
 
 struct CreditCardView: View {
+    @State private var selectedTabBanner: Int = 0
+    let advertismentBanner = ["banner1", "banner2", "banner3", "banner4"]
+    let timer = Timer.publish(every: 6, on: .main, in: .common).autoconnect()
     var body: some View {
         HStack {
-            VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Text("CURRENT BALANCE")
-                        .font(.system(size: 20, weight: .thin))
-                        .foregroundColor(.white)
+                    Text("Portfolio")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.yellow)
                     Spacer()
+                    Text("")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.yellow)
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
-                HStack {
-                    Text("$ 9999.99")
-                        .font(.system(size: 28, weight: .bold))
+
+                VStack(spacing: 4) {
+                    Text("$10,231.91")
+                        .font(.title2)
                         .foregroundColor(.white)
-                    Spacer()
-                }.padding(.horizontal, 16)
-                    .padding(.top, 6)
+                    HStack(spacing: 5) {
+                        Text("+0.87")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(.green)
+                        Color.white.frame(width: 3 / UIScreen.main.scale)
+                            .padding(.vertical, 3)
 
-                Spacer(minLength: 12)
-                GeometryReader { geometry in
-                    HStack {
-                        Text("0x111CecD9618D45Cb0f94fdb4801D01c91bBAF0Ba")
-                            .font(.system(size: 14, weight: .medium))
-                            .frame(width: geometry.size.width / 1.8)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                            .foregroundColor(.white)
-
-                        Image(systemName: "rectangle.on.rectangle")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(.white)
-                            .frame(width: 20, height: 20)
-                        Spacer()
+                        Text("1.53%")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.green)
                     }
-                }.padding(.horizontal, 16)
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.horizontal, 12)
+
+                HStack {
+                    Text("Last 24h")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(.white)
+                        .padding(.all, 4)
+                        .background(
+                            Color.gray
+                                .opacity(0.5)
+                            .cornerRadius(6))
+                    Spacer()
+                    Text("15 minutes ago")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.gray)
+                }
+                .padding(.horizontal, 12)
+                .padding(.bottom, 16)
+
             }
-            Image("icon_money_bag")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 80, height: 80)
+            .background(
+                Color.black)
+            .cornerRadius(16)
+            .shadow( color: .purple ,radius: 3)
+
             Spacer()
+            VStack() {
+                ZStack {
+                    TabView(selection: $selectedTabBanner) {
+                        ForEach(0..<advertismentBanner.count, id: \.self) { index in
+                            HStack {
+                                Image(advertismentBanner[index])
+                                    .resizable()
+                            }
+                            .tag(index)
+                        }
+
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .onReceive(timer) { _ in
+                        selectedTabBanner = (selectedTabBanner + 1) % advertismentBanner.count
+                    }
+                .overlay(Color.black.opacity(0.6))
+                    VStack(alignment: .leading, spacing: 6){
+                        Spacer()
+                        Text("Binance Announces Exit from Canada, Citing Regulatory Binance Announces Exit from Canada, Citing Regulatory")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.white)
+                            .lineLimit(2)
+                            .padding(.horizontal, 8)
+                        Text("2 minutes ago")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.bottom, 16)
+
+                    }
+                }
+                }
+
+            .background(
+                Color.black)
+            .cornerRadius(16)
+            .shadow( color: .purple ,radius: 3)
+
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.6421564817, green: 0.04904890805, blue: 0.9898528457, alpha: 1)), Color(#colorLiteral(red: 0.3530189991, green: 0.4136217237, blue: 0.9337115884, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.8479173779, blue: 0.8667754531, alpha: 1))]), startPoint: .leading, endPoint: .trailing))
-        .cornerRadius(16)
-        .frame(maxHeight: UIScreen.main.bounds.size.height / 7)
+
+        .frame(maxHeight: UIScreen.main.bounds.size.height / 6)
         .padding(.horizontal, 16)
 
     }
 }
 
+
+//            VStack(spacing: 0) {
+//                HStack {
+//                    Text("CURRENT BALANCE")
+//                        .font(.system(size: 20, weight: .thin))
+//                        .foregroundColor(.white)
+//                    Spacer()
+//                }
+//                .padding(.horizontal, 16)
+//                .padding(.top, 12)
+//                HStack {
+//                    Text("$ 9999.99")
+//                        .font(.system(size: 28, weight: .bold))
+//                        .foregroundColor(.white)
+//                    Spacer()
+//                }.padding(.horizontal, 16)
+//                    .padding(.top, 6)
+//
+//                Spacer(minLength: 12)
+//                GeometryReader { geometry in
+//                    HStack {
+//                        Text("0x111CecD9618D45Cb0f94fdb4801D01c91bBAF0Ba")
+//                            .font(.system(size: 14, weight: .medium))
+//                            .frame(width: geometry.size.width / 1.8)
+//                            .lineLimit(1)
+//                            .truncationMode(.middle)
+//                            .foregroundColor(.white)
+//
+//                        Image(systemName: "rectangle.on.rectangle")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .foregroundColor(.white)
+//                            .frame(width: 20, height: 20)
+//                        Spacer()
+//                    }
+//                }.padding(.horizontal, 16)
+//            }
+//            Image("icon_money_bag")
+//                .resizable()
+//                .scaledToFill()
+//                .frame(width: 80, height: 80)
+//            Spacer()
