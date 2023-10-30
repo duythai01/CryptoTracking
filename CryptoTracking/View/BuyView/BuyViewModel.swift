@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 enum FilterCoinType: Equatable {
     case rank(statusFilter: StatusFilter)
@@ -36,6 +37,17 @@ class BuyViewModel: ObservableObject {
 //        }
     }
 
+    func log() {
+        print("================================================================================================================================")
+        print("[")
+        for coin in allCoinsDisplay.prefix(16) {
+            print("Coin(id: \"\(coin.id ?? "0")\", symbol: \"\(coin.symbol ?? "kk")\", name: \"\(coin.name ?? "N/A")\", image: \"\(coin.image ?? "N/A")\", currentPrice: \(coin.currentPrice ), marketCap: \(coin.marketCap ?? 0), marketCapRank: \(coin.marketCapRank ?? 0), fullyDilutedValuation: nil, totalVolume: nil, high24H: nil, low24H: nil, priceChange24H: nil, priceChangePercentage24H: nil, marketCapChange24H: nil, marketCapChangePercentage24H: nil, circulatingSupply: nil, totalSupply: nil, maxSupply: nil, ath: nil, athChangePercentage: nil, athDate: \"\(coin.athDate ?? "N/A")\", atl: nil, atlChangePercentage: nil, atlDate: nil, roi: nil, lastUpdated: \"\(coin.lastUpdated ?? "N/A")\", sparklineIn7D: nil, priceChangePercentage1HInCurrency: nil, currentHoldings: nil)")
+            print(", \n")
+        }
+        print("]")
+        print("================================================================================================================================")
+
+    }
     private func addSubscriber() {
         coinServices.$allCoins
             .sink(receiveValue: { [weak self] coins in
@@ -43,6 +55,7 @@ class BuyViewModel: ObservableObject {
                 self?.allCoins = coins
                 self?.allCoinsDisplay = coins
                 self?.showLoadingCoins = false
+
                }
             })
             .store(in: &cancellables)
@@ -102,6 +115,7 @@ class BuyViewModel: ObservableObject {
                 allCoinsDisplay = allCoins
             }
         case .holding(let statusFilter):
+            log() 
             switch statusFilter {
             case .up:
                 allCoinsDisplay = allCoins.sorted {$0.currentHoldings ?? 0 < $1.currentHoldings ?? 0}

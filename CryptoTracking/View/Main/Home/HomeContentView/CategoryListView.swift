@@ -29,15 +29,15 @@ extension HomeView {
                         .onTapGesture(){
                             switch category {
                             case .buy:
-                                self.destinationView = BuyView()
+                                self.destinationView = AnyView(BuyView())
                             case .exchange:
-                                self.destinationView = BuyView()
+                                self.destinationView = AnyView(BuyView())
                             case .receive:
-                                self.destinationView = BuyView()
+                                self.destinationView = AnyView(BuyView())
                             case .withdraw:
-                                self.destinationView = BuyView()
-                            case .swap:
-                                self.destinationView = BuyView()
+                                self.destinationView = AnyView(WithdrawView())
+                            case .send:
+                                self.destinationView = AnyView(BuyView())
                             }
                             isNavigate = true
                             withAnimation(.easeOut(duration: 0.1)) {
@@ -48,7 +48,6 @@ extension HomeView {
                                 withAnimation(.easeIn(duration: 0.1)) {
                                     categoryAnimations[index] = false
                                 }
-
                             }
                         }
                         .background(

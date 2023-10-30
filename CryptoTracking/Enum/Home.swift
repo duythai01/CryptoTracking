@@ -12,17 +12,17 @@ enum HomeCategory: String, CaseIterable, Identifiable {
     var id: Int { self.hashValue }
 
     case buy
-    case swap
     case withdraw
+    case send
     case receive
     case exchange
     var displayName: String {
         switch self {
         case .buy:
             return "Buy"
-        case .swap:
-            return "Withdraw"
         case .withdraw:
+            return "Withdraw"
+        case .send:
             return "Send"
         case .receive:
             return "Receive"
@@ -36,7 +36,7 @@ enum HomeCategory: String, CaseIterable, Identifiable {
         switch self {
         case .buy:
             return Image(systemName: "cart.fill")
-        case .swap:
+        case .send:
             return Image("ic_withdraw")
         case .withdraw:
             return Image(systemName:"square.and.arrow.up.fill")

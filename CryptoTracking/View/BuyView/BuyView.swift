@@ -34,7 +34,7 @@ struct BuyView: View {
                     // Banner
                     RotationBanner()
 
-                    SearchField(searchQuery:  $viewModel.searchText, placeHolder: "Enter name coin")
+                    SearchField(searchQuery:  $viewModel.searchText, placeHolder: "Enter name coin", texSize: 16, iconSize: 20)
                         .padding(.top, 16)
 
                     categoryBuy
@@ -63,6 +63,10 @@ struct BuyView: View {
             }))
 
         .edgesIgnoringSafeArea(.bottom)
+        .onTapGesture {
+                // End editing mode when tapping outside of the text field
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
         }
 
 

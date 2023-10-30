@@ -13,7 +13,7 @@ struct HomeView: View {
     @State var categoryAnimations: [Bool] = Array(repeating: false, count: HomeCategory.allCases.count)
     @State var mockCoinData = [1, 2]
     @State var isNavigate: Bool = false
-    @State var destinationView = BuyView()
+    @State var destinationView: AnyView = AnyView(BuyView())
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -36,6 +36,7 @@ struct HomeView: View {
         }
 
     }
+
 }
 
 struct HomeView_Previews: PreviewProvider {

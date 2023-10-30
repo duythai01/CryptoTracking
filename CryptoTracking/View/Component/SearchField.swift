@@ -11,29 +11,32 @@ import SwiftUI
 struct SearchField: View {
     @Binding var searchQuery: String
     var placeHolder: String?
+    var texSize: CGFloat
+    var iconSize: CGFloat
+    
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .resizable()
                 .scaledToFit()
-                .font(.system(size: 28, weight: .bold))
+                .font(.system(size: iconSize, weight: .bold))
                 .foregroundColor(.white)
-                .frame(width: 28, height: 28)
+                .frame(width: iconSize, height: iconSize)
                 .padding(10)
 
             ZStack(alignment: .leading) {
                 if searchQuery == "" {
 
                     Text(placeHolder ?? "")
-                        .font(.system(size: 16, weight: .medium))
+                        .font(.system(size: texSize, weight: .medium))
                         .foregroundColor(Color.gray.opacity(0.7))
                 }
 
                 TextField("", text: $searchQuery) {
-                    UIApplication.shared.endEditing()
+                    UIApplication.shared.dismissKeyboard()
 
                 }
-                .font(.system(size: 16, weight: .medium))
+                .font(.system(size: texSize, weight: .medium))
                 .foregroundColor(.white)
                 HStack {
 
@@ -45,7 +48,7 @@ struct SearchField: View {
                             }
                         }, label: {
                             Image(systemName: "multiply.circle.fill")
-                                .font(.system(size: 20, weight: .medium))
+                                .font(.system(size: texSize, weight: .medium))
                                 .foregroundColor(.purple)
 
                         })
@@ -60,9 +63,8 @@ struct SearchField: View {
         }
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(.white.opacity(0.5), lineWidth: 2)
+                .stroke(.white.opacity(0.5), lineWidth: 1.5)
         )
-        .padding(.horizontal, 24)
         .transition(.scale)
     }
 }

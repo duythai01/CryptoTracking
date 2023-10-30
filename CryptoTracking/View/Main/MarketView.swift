@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MarketView: View {
     @State var searchQuery: String = ""
+    @State var paddingBottom: CGFloat = 200
     let testListMarket = [
         Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
         Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
@@ -23,24 +24,25 @@ struct MarketView: View {
                     Text("NFT Market")
                         .foregroundColor(.white)
                         .font(.system(size: 24, weight: .bold))
-                    SearchField(searchQuery: $searchQuery)
+                    SearchField(searchQuery: $searchQuery,  texSize: 16, iconSize: 20)
                     ScrollView(.vertical) {
-                        VStack(alignment: .center, spacing: 20) {
+                        LazyVStack(alignment: .center, spacing: 20) {
                             buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
                             buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
                             buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
 
                         }
                     }
-                    .padding(.bottom, geometry.safeAreaInsets.bottom)
-                    Spacer()
-
+                    .padding(.bottom, geometry.safeAreaInsets.bottom + 16)
                 }
             }
-            .onTapGesture {
-                UIApplication.shared.endEditing()
+
         }
-        }
+        .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+                // End editing mode when tapping outside of the text field
+            UIApplication.shared.dismissKeyboard()
+            }
     }
 
     func buildMarketList(sectionLabel: String, markets: [Market]) -> some View {
@@ -115,7 +117,7 @@ struct Market: Identifiable {
 }
 
 extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
+    func dismissKeyboard() {
+           self.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+        }
 }

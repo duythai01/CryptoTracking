@@ -50,6 +50,8 @@
 		1AD2BFB92AE403EA006711FB /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BFB82AE403EA006711FB /* Double+.swift */; };
 		1AD2BFBB2AE42D82006711FB /* BuyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BFBA2AE42D82006711FB /* BuyViewModel.swift */; };
 		1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */; };
+		1AE1AF6A2AEBC0E0002AAC7D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF692AEBC0E0002AAC7D /* View+.swift */; };
+		1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */; };
 		2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +99,8 @@
 		1AD2BFB82AE403EA006711FB /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		1AD2BFBA2AE42D82006711FB /* BuyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyViewModel.swift; sourceTree = "<group>"; };
 		1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
+		1AE1AF692AEBC0E0002AAC7D /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCustom.swift; sourceTree = "<group>"; };
 		C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.release.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.release.xcconfig"; sourceTree = "<group>"; };
 		CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97D88B6BAE69516DB94387F /* Pods-CryptoTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.debug.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 				1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */,
 				1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */,
 				1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */,
+				1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */,
 				1AD2BFB62AE2EA0A006711FB /* String+.swift */,
 				1AD2BFB82AE403EA006711FB /* Double+.swift */,
+				1AE1AF692AEBC0E0002AAC7D /* View+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 				1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */,
 				1AD2BFB72AE2EA0A006711FB /* String+.swift in Sources */,
 				1AB6AC3E2ACC1C6C00A0A6E2 /* Color+.swift in Sources */,
+				1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */,
 				1AB6AC2C2ACC1B1700A0A6E2 /* ContentView.swift in Sources */,
 				1AB6AC442ACC1FB000A0A6E2 /* HistoryView.swift in Sources */,
 				1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */,
@@ -481,6 +488,7 @@
 				1A86CC1F2ACEADE900CDD0B5 /* CoinCard.swift in Sources */,
 				1AB6AC2A2ACC1B1700A0A6E2 /* CryptoTrackingApp.swift in Sources */,
 				1AB6AC362ACC1B1A00A0A6E2 /* CryptoTracking.xcdatamodeld in Sources */,
+				1AE1AF6A2AEBC0E0002AAC7D /* View+.swift in Sources */,
 				1A609A5F2AE7DAF80089C8FF /* CameraViewRepresentable.swift in Sources */,
 				1A609A642AE8D1600089C8FF /* WithdrawView.swift in Sources */,
 				1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */,
