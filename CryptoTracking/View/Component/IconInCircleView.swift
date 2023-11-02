@@ -16,7 +16,7 @@ struct IconInCircleView: View {
             .foregroundColor(Color(#colorLiteral(red: 0.6186000705, green: 0.1361145377, blue: 0.9404763579, alpha: 1)))
             .overlay(
                 Image(systemName: iconName)
-                    .font(.system(size: 28))
+                    .font(.system(size: 24))
                     .foregroundColor(Color.white)
             )
     }

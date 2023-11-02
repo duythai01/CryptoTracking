@@ -281,4 +281,16 @@ class DeveloperPreview {
         Coin(id: "ripple", symbol: "xrp", name: "XRP", image: "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1696501442", currentPrice: 0.517994, marketCap: 27654350308, marketCapRank: 5, fullyDilutedValuation: nil, totalVolume: nil, high24H: nil, low24H: nil, priceChange24H: nil, priceChangePercentage24H: nil, marketCapChange24H: nil, marketCapChangePercentage24H: nil, circulatingSupply: nil, totalSupply: nil, maxSupply: nil, ath: nil, athChangePercentage: nil, athDate: "2018-01-07T00:00:00.000Z", atl: nil, atlChangePercentage: nil, atlDate: nil, roi: nil, lastUpdated: "2023-10-22T13:38:03.292Z", sparklineIn7D: nil, priceChangePercentage1HInCurrency: nil, currentHoldings: nil)
         ,
     ]
+
+    let recommendedChanel = [PaymentChanel(name: "BINANCE", image: "", exchangeRate: "1 USDT ≈ 1.04 USD", tag: ["HOT"], paymentSupport: [.masterCard, .applePay, .visa])]
+
+    let otherChanel = [
+        PaymentChanel(name: "BINANCE", image: "", exchangeRate: "1 USDT ≈ 1 USD", tag: ["HOT"], paymentSupport: [ .applePay, .visa]),
+        PaymentChanel(name: "Gate", image: "", exchangeRate: "1 USDT ≈ 1.05 USD", tag: ["HOT"], paymentSupport: [.masterCard, .applePay, .visa]),
+        PaymentChanel(name: "BANXA", image: "", exchangeRate: "1 USDT ≈ 1.02 USD", tag: ["HOT"], paymentSupport: [.masterCard, .visa]),
+        PaymentChanel(name: "Mercuryo", image: "", exchangeRate: "1 USDT ≈ 1.01 USD", tag: ["HOT"], paymentSupport: [.applePay, .googlePay]),
+        PaymentChanel(name: "Coinify", image: "", exchangeRate: "1 USDT ≈ 1.04 USD", tag: ["HOT"], paymentSupport: [.masterCard,]),
+        PaymentChanel(name: "MoonPay", image: "", exchangeRate: "1 USDT ≈ 1.02 USD", tag: ["HOT"], paymentSupport: PaymentSuportType.allCases),
+        PaymentChanel(name: "Simplex", image: "", exchangeRate: "1 USDT ≈ 1.02  USD", tag: ["HOT"], paymentSupport: [.masterCard, .payPal, .visa])
+    ]
 }

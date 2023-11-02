@@ -13,7 +13,6 @@ struct SearchField: View {
     var placeHolder: String?
     var texSize: CGFloat
     var iconSize: CGFloat
-    
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
@@ -39,13 +38,10 @@ struct SearchField: View {
                 .font(.system(size: texSize, weight: .medium))
                 .foregroundColor(.white)
                 HStack {
-
                     Spacer()
                     if searchQuery != "" {
                         Button(action: {
-                            withAnimation {
-                                searchQuery = ""
-                            }
+                            searchQuery = ""
                         }, label: {
                             Image(systemName: "multiply.circle.fill")
                                 .font(.system(size: texSize, weight: .medium))

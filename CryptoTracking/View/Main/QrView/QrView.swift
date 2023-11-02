@@ -26,7 +26,7 @@ struct QrView: View {
     var body: some View {
         GeometryReader { geometryEntire in
                 ZStack {
-                    CameraViewRepresentable(session: $session, frameSize: CGSize(width: geometryEntire.size.width, height: geometryEntire.size.height)).edgesIgnoringSafeArea(.vertical)
+                    CameraViewRepresentable(session: $session, frameSize: CGSize(width: geometryEntire.size.width, height: geometryEntire.size.height)).edgesIgnoringSafeArea(.bottom)
 //                    Color.red
 
                 VStack (alignment: .center){

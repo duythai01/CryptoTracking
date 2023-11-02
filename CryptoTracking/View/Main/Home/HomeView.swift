@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
+    @EnvironmentObject var coordinator: Coordinator<AppRouter>
 
     @State var categoryAnimations: [Bool] = Array(repeating: false, count: HomeCategory.allCases.count)
     @State var mockCoinData = [1, 2]
@@ -17,22 +18,18 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                            Color.theme.mainColor.ignoresSafeArea()
-                            VStack {
-                                HomeHeaderView().padding(.horizontal, 16)
-                                CreditCardView()
-                                categoryListView.padding(.horizontal, 16)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                MyAssetsView(coins: $mockCoinData)
-                                    .padding(.bottom, geometry.safeAreaInsets.bottom)
-                                Spacer()
-                            }
-                        }
-                        .background(
-                            NavigationLink("", destination: destinationView, isActive: $isNavigate).opacity(0))
-                        .onAppear {
-                            isNavigate = false
-                    }
+                Color.theme.mainColor.ignoresSafeArea()
+                VStack(spacing: 16) {
+                    HomeHeaderView().padding(.horizontal, 16)
+                    CreditCardView()
+                    categoryListView.padding(.horizontal, 16)
+                        .fixedSize(horizontal: false, vertical: true)
+                    MyAssetsView(coins: $mockCoinData)
+                        .padding(.bottom, geometry.safeAreaInsets.bottom)
+                    Spacer()
+                }
+                .padding(.top, 8)
+            }
         }
 
     }

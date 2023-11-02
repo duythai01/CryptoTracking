@@ -80,8 +80,7 @@ struct HistoryView: View {
 
 
     var body: some View{
-        GeometryReader { geometry in
-            ZStack {
+        ZStack {
                 Color.theme.mainColor.ignoresSafeArea()
                     .onTapGesture {
                         withAnimation {
@@ -104,11 +103,9 @@ struct HistoryView: View {
 
                         ListCoinPageView(selectedTab: $selectedTab)
                             .padding(.top,  isExpandedFilter ? -heightDropmenu : 0)
-                            .padding(.bottom, geometry.safeAreaInsets.bottom)
                         Spacer()
                     }
                 }
-            }
         }
     }
 
@@ -116,7 +113,7 @@ struct HistoryView: View {
         VStack {
             Text(title)
                 .font(.system(size: 18, weight: .bold))
-                .onTapGesture { withAnimation(.easeIn) { selectedTab = tag } }
+                .onTapGesture {selectedTab = tag }
                 .frame(maxWidth: .infinity)
                 .foregroundColor(selectedTab == tag ? .white : .white.opacity(0.5))
 

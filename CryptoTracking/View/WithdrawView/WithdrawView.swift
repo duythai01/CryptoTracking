@@ -8,82 +8,173 @@
 import SwiftUI
 import UIKit
 import SDWebImageSwiftUI
-
-enum WithDrawMethodType {
-    case card
-    case p2pExpresee
-    case p2p
-    case bank
-
-    var name: String {
-        switch self {
-        case .card:
-            return "Debit/Credit Card"
-        case .p2pExpresee:
-            return "P2P Express"
-        case .p2p:
-            return "P2P"
-        case .bank:
-            return "Bank Transfer"
-        }
-    }
-
-    var icon: Image {
-        switch self {
-        case .card:
-            return Image(systemName: "person.2.fill")
-        case .p2pExpresee:
-            return Image(systemName: "person.2.gobackward")
-        case .p2p:
-            return Image(systemName: "person.line.dotted.person.fill")
-        case .bank:
-            return Image(systemName: "creditcard.fill")
-        }
-    }
-}
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 struct WithdrawView: View {
-    @State var isBuySelection: Bool = true
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var coordinator: Coordinator<AppRouter>
+
     @State var hideMoney: Bool = true
     @State var amountStr: String = ""
     @State var changeCoin: Coin? = DeveloperPreview.shared.conins15[0]
     @State var receiveCoin: Coin? = DeveloperPreview.shared.conins15[1]
+    @State var depositeCoin: Coin? = DeveloperPreview.shared.conins15[1]
     @State var onEditingChangedAmounTextField: Bool = false
     @State var bottomSheetMode: BottomSheetViewMode = .none
     @State var modalViewOpacity: CGFloat = 0
     @State var searchCoin: String = ""
     @State var isShowChangeBottomView: Bool = false
+    @State var heightSwitchButton: CGFloat = 0
+    @State var isReadPolicy: Bool = false
+    @State var isLoadPaymentDetailDone: Bool = false
+    @State var methodType: WithDrawMethodType = .card
+    @State var showBottomSheetType: WithdrawSheetSelection = .none
+    @State var mainScrollProxy: ScrollViewProxy?
+    @State var methodWithdrawType: WithDrawMethodType = .card
+    @State var paymentChanelSelected: PaymentChanel?
+    @State var isDeposit: Bool = true
+    @State var depositNetworkName = "BSC/BEP20"
+
+    let context = CIContext()
+    let filter = CIFilter.qrCodeGenerator()
+    let depositNework = ["ETH/ERC20", "BSC/BEP20", "Arabitrum One", "Arabitrum Nova", "ZkSync Era", "Optimism"]
+
     init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 26, weight: .bold)] // Set the text
-        UINavigationBar.appearance().standardAppearance = appearance
+//        let appearance = UINavigationBarAppearance()
+//        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white,]
+//        appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 22, weight: .bold)] // Set the text
+//        appearance.backgroundColor = UIColor(#colorLiteral(red: 0.003328499288, green: 0.02456522346, blue: 0.1299790061, alpha: 1))
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        UINavigationBar.appearance().tintColor = .white
+
     }
 
     var body: some View {
         ZStack {
             Color.theme.mainColor.ignoresSafeArea()
+            VStack (spacing: 16){
+                ScrollViewReader { proxy in
+                    ScrollView(.vertical) {
+                        VStack(spacing: 16) {
+//                            if $bottomSheetMode.wrappedValue != .custom(heightRatio: 0.7) {
+//                                currenceAssets
+//                                    .animation(.easeIn(duration: 0.2))
+//                                    .transition(.scale)
+//                                    .id("currenceAssets")
+//                            }
+                            switchButton
+                                .id("switchButton")
 
-            ScrollView(.vertical) {
-                VStack {
-                    if $bottomSheetMode.wrappedValue == .none {
-                        currenceAssets
-                            .id(1)
-                            .animation(.easeIn(duration: 0.2))
-                            .transition(.scale)
+                            if isDeposit {
+                                VStack(alignment: .leading, spacing: 16) {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("Coin")
+                                            .font(.system(size: 18, weight: .bold))
+                                            .foregroundColor(.white)
+                                        Button(action: {
+                                            showBottomSheet(type: .depositCoin)
+                                            isShowChangeBottomView = true
+                                        }, label: {
+                                            HStack{
+                                                WebImage(url: URL(string: depositeCoin?.image ?? ""))
+                                                    .resizable()
+                                                    .frame(width: 26, height: 26)
+
+                                                Text(depositeCoin?.name ?? "N/A")
+                                                    .font(.system(size: 18, weight: .medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                                Image(systemName: "chevron.down")
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .foregroundColor(.white)
+                                                    .padding(.horizontal, 8)
+                                            }
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical,8)
+                                        })
+                                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.5), lineWidth: 1))
+                                    }
+
+                                    //Network
+                                    VStack(alignment: .leading, spacing: 8){
+                                        Text("Network")
+                                            .font(.system(size: 18, weight: .bold))
+                                            .foregroundColor(.white)
+
+                                        Button(action: {
+                                            showBottomSheet(type: .depositNetwork)
+                                            isShowChangeBottomView = true
+                                        }, label: {
+                                            HStack{
+                                                Text(depositNetworkName)
+                                                    .font(.system(size: 18, weight: .medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                                Image(systemName: "chevron.down")
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .foregroundColor(.white)
+                                                    .padding(.horizontal, 8)
+                                            }
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical,8)
+                                        })
+                                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.5), lineWidth: 1))
+                                }
+
+                                    // Address
+                                    VStack(alignment: .center, spacing: 20){
+                                        HStack {
+                                            Text("Address")
+                                                .font(.system(size: 18, weight: .bold))
+                                            .foregroundColor(.white)
+                                            Spacer()
+                                        }
+
+                                        Image(uiImage: genenrateQRCode(from: "\(depositeCoin?.name ?? "N/A")-\(depositNetworkName)"))
+                                            .resizable()
+                                            .interpolation(.none)
+                                            .scaledToFit()
+                                            .frame(width: 200, height: 200)
+                                        HStack {
+                                            Text("0x0c1968cd2Ff3Eb0Dc2bEe3ED4679035789ecc720")
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white.opacity(0.7))
+                                                .lineLimit(.none)
+                                            Image(systemName: "rectangle.on.rectangle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .foregroundColor(.white.opacity(0.8))
+                                                .frame(width: 20, height: 20)
+                                        }
+                                        .padding(16)
+                                        .background(Color.gray.opacity(0.4).cornerRadius(12))
+
+                                }
+
+                                }
+                            } else {
+                                selectionChangeType
+                                    .id("selectionChangeType")
+
+                                paymentChannel
+                                    .padding(.vertical, 8)
+                                    .id("paymentChannel")
+
+                                paymentDetail
+                                    .id("paymentDetail")
+                            }
+
+                            Spacer()
+                        }
+                        .padding(.horizontal, 16)
                     }
-                    switchButton
-                        .padding(.bottom, 48)
-                        .id(2)
-                    selectionChangeType
-                        .id(3)
-
-
-                    Spacer()
+                    .onAppear{
+                        mainScrollProxy = proxy
+                    }
                 }
-                .padding(.horizontal, 16)
             }
-
             //Modal layer
             if bottomSheetMode != .none {
                 Color.black.opacity(modalViewOpacity).ignoresSafeArea()
@@ -96,240 +187,17 @@ struct WithdrawView: View {
             BottomSheetView(mode: $bottomSheetMode) {
                 bottomSheet
             }
-
         }
+        .navigationTitle(Text("WITHDRAW"))
+        .navigationBarTitleDisplayMode(.inline)
         .onTapGesture {
             UIApplication.shared.dismissKeyboard()
         }
-        .navigationTitle(Text("Withdraw"))
-        .navigationBarTitleDisplayMode(.inline)
-
-    }
-
-}
-//  Withdraw View child
-extension WithdrawView {
-    var switchButton: some View {
-        GeometryReader { geometryH in
-            HStack {
-                HStack {
-                    Image(systemName: "line.diagonal.arrow")
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundColor(isBuySelection ? .white : .purple)
-
-                    Text("Withdraw")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(isBuySelection ? .white : .purple)
-                }
-                .frame(width: geometryH.size.width / 2 - 6)
-                .padding(.vertical, 16)
-                .onTapGesture {
-                    withAnimation() {
-                        isBuySelection = true
-                    }
-                }
-                Spacer()
-                HStack {
-                    Image(systemName: "line.diagonal.arrow")
-                        .font(.system(size: 18, weight: .bold))
-                        .rotationEffect(Angle(degrees: 90))
-                        .foregroundColor(isBuySelection ? .purple : .white)
-
-                    Text("Deposit")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(isBuySelection ? .purple : .white)
-                }
-                .frame(width: geometryH.size.width / 2 - 6)
-                .padding(.vertical, 16)
-                .onTapGesture {
-                    withAnimation() {
-                        isBuySelection = false
-                    }
-                }
-            }
-            .background(
-                Color.white.opacity(0.2)
-                    .cornerRadius(12)
-                    .background(HStack{
-                        if !isBuySelection {
-                            Spacer()
-                        }
-                        Color.purple
-                            .frame(width: geometryH.size.width / 2 - 6)
-                            .cornerRadius(6)
-                            .padding(.all, 5)
-                        if isBuySelection {
-                            Spacer()
-                        }
-                    })
-            )
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .padding(.horizontal, 42)
-    }
-
-    var currenceAssets: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack{
-                HStack{
-                    Text("Total Assets Value")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.8))
-                    Image(systemName: hideMoney ? "eye.slash.circle.fill" : "eye.circle.fill")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white.opacity(0.8))
-                        .onTapGesture {
-                            hideMoney.toggle()
-                        }
-                }
-                Spacer()
-
-                Button(action: {}, label: {
-                    HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white.opacity(0.8))
-                        Text("Analysis")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    .padding(.all, 6)
-                })
-                .background(Color.white.opacity(0.2)
-                    .cornerRadius(4))
-            }
-            HStack(alignment: .center) {
-                Text(hideMoney ? "******": "0.00")
-                    .font(Font(UIFont(name: "HelveticaNeue-Medium", size: 36)! as CTFont))
-                    .foregroundColor(.white) +
-                Text(hideMoney ? "" : " USD")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.white) +
-                Text(hideMoney ? "" : " ▼")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.white)
-            }
-            Text(hideMoney ? "******" : "≈0.000000 BTC")
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundColor(.white.opacity(0.5))
-            HStack {
-                Text("Today's PNL")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.7))
-                Image(systemName: "info.circle.fill")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.white.opacity(0.8))
-                Text(hideMoney ? "*******" : "+0.12 USD(+0.01%)")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(
-                        hideMoney ? .white.opacity(0.6) : ("+0.12".checkIsIncrease() ? .green : .red)
-                    )
-                    .padding(.leading, 12)
-                Spacer()
-            }
-            .padding(.vertical, 16)
-            //                VStack(spacing: 6) {
-            //                    Image("ic_wallet")
-            //                    Text("Your account has no assets.")
-            //                        .font(.system(size: 16, weight: .bold))
-            //                        .foregroundColor(.white.opacity(0.7))
-            //                    Text("Deposit now to start.")
-            //                        .font(.system(size: 14, weight: .bold))
-            //                        .foregroundColor(.white.opacity(0.5))
-            //                }
+        .onAppear {
+            depositNetworkName = depositNework[0]
         }
     }
 
-    var selectionChangeType: some View {
-        VStack(alignment: .center) {
-            HStack {
-                Spacer()
-                Text ("Withdraw with Debit/Credit Card")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.white )
-                Image(systemName: "arrowtriangle.down.fill")
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundColor(.white)
-                Spacer()
-            }
-            .padding(12)
-            .background(Color.blue.opacity(0.4).cornerRadius(8))
-
-            GeometryReader { geometry in
-                HStack{
-                    // Change
-                    VStack(alignment: .leading) {
-                        Text("I want to change")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white.opacity(0.7))
-                        HStack {
-                            HStack {
-                                // TextField
-                                CustomTextField(text: $amountStr, onEditingChanged: $onEditingChangedAmounTextField)
-                                    .padding(.leading, 8)
-                                // Select coin
-                                HStack{
-                                    WebImage(url: URL(string: changeCoin?.image ?? ""))
-                                        .resizable()
-                                        .frame(width: 16, height: 16)
-
-                                    Text(changeCoin?.name ?? "N/A")
-                                        .font(.system(size: 12, weight: .medium))
-                                        .foregroundColor(.white)
-
-                                    Image(systemName: "chevron.down")
-                                        .font(.system(size: 11, weight: .medium))
-                                        .foregroundColor(.white)
-                                        .padding(.leading, 4)
-                                }
-                                .padding(.vertical, 8)
-                                .padding(.trailing, 8)
-                                .onTapGesture {
-                                    showBottomSheet(isShowChangeBottomView: true)
-                                }
-                            }
-                            .overlay(RoundedRectangle(cornerRadius: 4).stroke(onEditingChangedAmounTextField ? .blue : .white.opacity(0.5), lineWidth: 1))
-
-                            Image(systemName: "arrow.right")
-                                .font(.system(size: 15, weight:  .bold))
-                                .foregroundColor(.white.opacity(0.6))
-                        }
-
-                    }
-
-                    // Receive
-                    VStack(alignment: .leading) {
-                        Text("Receive")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white.opacity(0.7))
-
-
-                            HStack{
-                                WebImage(url: URL(string: receiveCoin?.image ?? ""))
-                                    .resizable()
-                                    .frame(width: 16, height: 16)
-
-                                Text(receiveCoin?.name ?? "N/A")
-                                    .font(.system(size: 12, weight: .medium))
-                                    .foregroundColor(.white)
-
-                                Image(systemName: "chevron.down")
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(.white)
-                                    .padding(.leading, 8)
-                            }
-                            .padding(.all, 8)
-                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.5), lineWidth: 1))
-                        .onTapGesture {
-                            showBottomSheet(isShowChangeBottomView: false)
-                        }
-
-                    }
-                }
-            }
-        }
-        .padding([.horizontal, .top], 10)
-    }
 }
 
 // Withdraw Bottom sheet
@@ -340,7 +208,7 @@ extension WithdrawView {
                 .cornerRadius(16, corners: [.topLeft, .topRight])
             VStack {
                 HStack {
-                    Text("Select Currency")
+                    Text(showBottomSheetType.sectionTitle)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
                     Spacer()
@@ -352,8 +220,9 @@ extension WithdrawView {
                         }
                 }
                 .padding(.top, 16)
-                SearchField(searchQuery: $searchCoin, placeHolder: "Search", texSize: 13, iconSize: 16)
-                showListCoin()
+
+                buildBodyViewSheet()
+
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -363,88 +232,172 @@ extension WithdrawView {
     }
 
     @ViewBuilder
-    func showListCoin() -> some View {
+    func buildListCoin() -> some View {
         ScrollView(.vertical) {
             LazyVStack() {
                 ForEach(DeveloperPreview.shared.conins15){ coin in
-                    let isSelected = (isShowChangeBottomView ? changeCoin?.name ?? "" : receiveCoin?.name ?? "") == coin.name ?? ""
-                    VStack {
-                        Button(action: {
-                                if isShowChangeBottomView {
-                                    changeCoin = coin
-                                } else {
-                                    receiveCoin = coin
-                                }
-                        }, label: {
-                            HStack {
-                                WebImage(url: URL(string: coin.image ?? ""))
-                                    .resizable()
-                                    .frame(width: 18, height: 18)
+                    var isSelected: Bool = showBottomSheetType == .depositCoin
+                                                                    ? depositeCoin?.name ?? "" == coin.name ?? ""
+                                                                    : (showBottomSheetType == .changeCoin
+                                                                    ? changeCoin?.name ?? "" == coin.name ?? ""
+                                                                    :receiveCoin?.name ?? "" == coin.name ?? "" )
 
-                                Text(coin.name ?? "N/A")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(.white)
-                                Spacer()
-                            }
 
-                            .padding(.all, 16)
-                            .background(
-                                Color.theme.mainColor.opacity(isSelected ? 1 : 0)
-                                    .cornerRadius(6, corners: .allCorners)
 
-                            )
-
-                    })
-                    }
-
+                    CoinRow(coin: coin, isSelected: isSelected) {
+                        if showBottomSheetType == .depositCoin {
+                            depositeCoin = coin
+                        } else if showBottomSheetType == .changeCoin {
+                            changeCoin = coin
+                        }  else if showBottomSheetType ==  .receiveCoin{
+                            receiveCoin = coin
+                        }
+                   }
                 }
             }
         }
     }
-}
 
+    func CoinRow(coin: Coin, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                WebImage(url: URL(string: coin.image ?? ""))
+                    .resizable()
+                    .frame(width: 18, height: 18)
+
+                Text(coin.name ?? "N/A")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            .padding(.all, 16)
+            .background(
+                Color.theme.mainColor.opacity(isSelected ? 1 : 0)
+                    .cornerRadius(6, corners: .allCorners)
+            )
+        }
+    }
+
+
+    @ViewBuilder
+    func buildBodyViewSheet() -> some View {
+        switch showBottomSheetType {
+        case .changeCoin, .receiveCoin, .depositCoin:
+            VStack {
+                SearchField(searchQuery: $searchCoin, placeHolder: "Search", texSize: 13, iconSize: 16)
+                buildListCoin()
+            }
+        case .paymentMethod:
+            ForEach(WithDrawMethodType.allCases, id: \.self) { method in
+                Button(action: {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        methodWithdrawType = method
+                        showBottomSheet(type: .none)
+                    }
+                }, label: {
+                    HStack {
+                        method.icon
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.all, 8)
+                            .background(Circle()
+                                .foregroundColor(.purple))
+                        Text(method.name)
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    .padding(.all, 16)
+                })
+                .background( methodWithdrawType == method ? Color.blue.opacity(0.4).cornerRadius(12) :  Color.theme.mainColor.cornerRadius(12))
+            }
+        case .depositMethod:
+            EmptyView()
+        case .none:
+            EmptyView()
+        case .depositNetwork:
+            ForEach(depositNework, id: \.self) { name in
+                Button(action: {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        depositNetworkName = name
+                        showBottomSheet(type: .none)
+                    }
+                }, label: {
+                    HStack {
+                        Text(name)
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    .padding(.all, 16)
+                })
+                .background( depositNetworkName == name ? Color.blue.opacity(0.4).cornerRadius(12) :  Color.theme.mainColor.cornerRadius(12))
+
+            }
+        }
+    }
+}
 // Withdraw View func
 extension WithdrawView {
-    func showBottomSheet(isShowChangeBottomView: Bool) {
-        if bottomSheetMode != .none {
-            bottomSheetMode = .none
-        } else {
+    func showBottomSheet(type: WithdrawSheetSelection) {
             modalViewOpacity = 0.5
-            bottomSheetMode = .custom(heightRatio: 0.75)
-            self.isShowChangeBottomView = isShowChangeBottomView
+            showBottomSheetType = type
+            switch type {
+            case .changeCoin:
+                bottomSheetMode = .custom(heightRatio: 0.75)
+//                if let mainScrollProxy = mainScrollProxy {
+//                    withAnimation {
+//                        mainScrollProxy.scrollTo("selectionChangeType")
+//                    }
+//                }
+
+            case .receiveCoin:
+                bottomSheetMode = .custom(heightRatio: 0.75)
+//                if let mainScrollProxy = mainScrollProxy {
+//                    withAnimation {
+//                        mainScrollProxy.scrollTo("selectionChangeType")
+//                    }
+//                }
+            case .paymentMethod:
+                bottomSheetMode = .custom(heightRatio: 0.4)
+//                if let mainScrollProxy = mainScrollProxy {
+//                    withAnimation {
+//                        mainScrollProxy.scrollTo("paymentChannel")
+//                    }
+//                }
+            case .depositMethod:
+                bottomSheetMode = .custom(heightRatio: 0.75)
+//                if let mainScrollProxy = mainScrollProxy {
+//                    withAnimation {
+//                        mainScrollProxy.scrollTo("paymentChannel")
+//                    }
+//                }
+            case .none:
+                bottomSheetMode = .none
+                break
+            case .depositCoin:
+                bottomSheetMode = .custom(heightRatio: 0.75)
+
+            case .depositNetwork:
+                bottomSheetMode = .custom(heightRatio: 0.7)
+            }
+    }
+
+    func genenrateQRCode(from string: String) -> UIImage {
+        filter.message = Data(string.utf8)
+
+        if let outputImage = filter.outputImage {
+            if let cgimg = context.createCGImage(outputImage, from: outputImage.extent){
+                return UIImage(cgImage: cgimg)
+            }
         }
+        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
 }
 
 struct WithdrawView_Previews: PreviewProvider {
     static var previews: some View {
         WithdrawView()
-    }
-}
-
-struct CustomTextField: View {
-    @Binding var text: String
-    @Binding var onEditingChanged: Bool
-    var body: some View {
-        ZStack(alignment: .leading) {
-            if text == "" {
-
-                Text("0")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(Color.gray.opacity(0.5))
-            }
-
-            TextField("", text: $text, onEditingChanged: { changed in
-                onEditingChanged = changed
-            }) {
-                UIApplication.shared.dismissKeyboard()
-
-            }
-            .keyboardType(.decimalPad)
-            .font(.system(size: 13, weight: .medium))
-            .foregroundColor(.white.opacity(0.8))
-            .accentColor(.white.opacity(0.8))
-        }
     }
 }
 

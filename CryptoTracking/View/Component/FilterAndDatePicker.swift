@@ -75,10 +75,8 @@ struct FilterAndDatePicker: View {
                                         }
                                     }
                                     .onTapGesture {
-                                        withAnimation(.easeIn(duration: 0.2)) {
-                                            selection = item
-                                            isShowMenu = false
-                                        }
+                                        selection = item
+                                        isShowMenu = false
                                     }
                                 }
                             }

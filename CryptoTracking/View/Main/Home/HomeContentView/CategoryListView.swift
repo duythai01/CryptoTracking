@@ -29,26 +29,23 @@ extension HomeView {
                         .onTapGesture(){
                             switch category {
                             case .buy:
-                                self.destinationView = AnyView(BuyView())
+                                coordinator.navigationController.isNavigationBarHidden = false
+                                coordinator.show(.buy)
                             case .exchange:
-                                self.destinationView = AnyView(BuyView())
+                                coordinator.navigationController.isNavigationBarHidden = false
+                                coordinator.show(.exchange)
                             case .receive:
-                                self.destinationView = AnyView(BuyView())
+                                coordinator.navigationController.isNavigationBarHidden = false
+                                coordinator.show(.receive)
                             case .withdraw:
-                                self.destinationView = AnyView(WithdrawView())
+                                coordinator.navigationController.isNavigationBarHidden = false
+                                coordinator.show(.withdraw)
                             case .send:
-                                self.destinationView = AnyView(BuyView())
+                                coordinator.navigationController.isNavigationBarHidden = false
+                                coordinator.show(.send)
                             }
-                            isNavigate = true
-                            withAnimation(.easeOut(duration: 0.1)) {
                                 categoryAnimations[index] = true
-                            }
-
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                withAnimation(.easeIn(duration: 0.1)) {
-                                    categoryAnimations[index] = false
-                                }
-                            }
+                                categoryAnimations[index] = false
                         }
                         .background(
                             Circle()

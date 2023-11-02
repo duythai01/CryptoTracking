@@ -11,6 +11,13 @@
 		1A2A2AA42AD92631003AAFA1 /* PreviewProvider+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */; };
 		1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA62AD92D64003AAFA1 /* BuyView.swift */; };
 		1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A2AA82AD92FDA003AAFA1 /* LoadImage.swift */; };
+		1A4827A62AF3924100DDCC81 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 1A4827A52AF3924100DDCC81 /* SwiftUINavigation */; };
+		1A4827AA2AF39A4300DDCC81 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827A92AF39A4300DDCC81 /* Coordinator.swift */; };
+		1A4827AC2AF39B5400DDCC81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827AB2AF39B5400DDCC81 /* AppDelegate.swift */; };
+		1A4827B02AF39E8E00DDCC81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827AF2AF39E8E00DDCC81 /* SceneDelegate.swift */; };
+		1A4827B22AF3A22900DDCC81 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B12AF3A22900DDCC81 /* AppRouter.swift */; };
+		1A4827B42AF3AAB600DDCC81 /* WithdrawRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */; };
+		1A4827B62AF3EC4700DDCC81 /* UINavigation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B52AF3EC4700DDCC81 /* UINavigation+.swift */; };
 		1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */; };
 		1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */; };
 		1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */; };
@@ -52,6 +59,9 @@
 		1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */; };
 		1AE1AF6A2AEBC0E0002AAC7D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF692AEBC0E0002AAC7D /* View+.swift */; };
 		1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */; };
+		1AE1AF6E2AF1578C002AAC7D /* WithDrawViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */; };
+		1AE1AF702AF206EF002AAC7D /* Withdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6F2AF206EF002AAC7D /* Withdraw.swift */; };
+		1AE1AF722AF20727002AAC7D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF712AF20727002AAC7D /* CustomTextField.swift */; };
 		2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +70,12 @@
 		1A2A2AA32AD92631003AAFA1 /* PreviewProvider+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewProvider+.swift"; sourceTree = "<group>"; };
 		1A2A2AA62AD92D64003AAFA1 /* BuyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyView.swift; sourceTree = "<group>"; };
 		1A2A2AA82AD92FDA003AAFA1 /* LoadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImage.swift; sourceTree = "<group>"; };
+		1A4827A92AF39A4300DDCC81 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		1A4827AB2AF39B5400DDCC81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1A4827AF2AF39E8E00DDCC81 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		1A4827B12AF3A22900DDCC81 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawRouter.swift; sourceTree = "<group>"; };
+		1A4827B52AF3EC4700DDCC81 /* UINavigation+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+.swift"; sourceTree = "<group>"; };
 		1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndDatePicker.swift; sourceTree = "<group>"; };
@@ -101,6 +117,9 @@
 		1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
 		1AE1AF692AEBC0E0002AAC7D /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCustom.swift; sourceTree = "<group>"; };
+		1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithDrawViewUI.swift; sourceTree = "<group>"; };
+		1AE1AF6F2AF206EF002AAC7D /* Withdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Withdraw.swift; sourceTree = "<group>"; };
+		1AE1AF712AF20727002AAC7D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.release.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.release.xcconfig"; sourceTree = "<group>"; };
 		CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97D88B6BAE69516DB94387F /* Pods-CryptoTracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.debug.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.debug.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +132,7 @@
 			files = (
 				1A86CC082ACD4B8B00CDD0B5 /* PureSwiftUI in Frameworks */,
 				2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */,
+				1A4827A62AF3924100DDCC81 /* SwiftUINavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +146,26 @@
 				1AD2BFBA2AE42D82006711FB /* BuyViewModel.swift */,
 			);
 			path = BuyView;
+			sourceTree = "<group>";
+		};
+		1A4827A72AF399C700DDCC81 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1AB6AC292ACC1B1700A0A6E2 /* CryptoTrackingApp.swift */,
+				1AB6AC2B2ACC1B1700A0A6E2 /* ContentView.swift */,
+				1A4827AB2AF39B5400DDCC81 /* AppDelegate.swift */,
+				1A4827AF2AF39E8E00DDCC81 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1A4827A82AF399E500DDCC81 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1A4827B12AF3A22900DDCC81 /* AppRouter.swift */,
+				1A4827A92AF39A4300DDCC81 /* Coordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		1A5FBA3A2AD40B5900BD339A /* History */ = {
@@ -159,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				1A609A632AE8D1600089C8FF /* WithdrawView.swift */,
+				1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */,
+				1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */,
 			);
 			path = WithdrawView;
 			sourceTree = "<group>";
@@ -171,6 +213,7 @@
 				1A86CC152ACE8CF000CDD0B5 /* API.swift */,
 				1A2A2AA12AD8F546003AAFA1 /* Setting.swift */,
 				1A609A582AE6C6940089C8FF /* Buy.swift */,
+				1AE1AF6F2AF206EF002AAC7D /* Withdraw.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -184,6 +227,7 @@
 				1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */,
 				1A5FBA422AD40DE400BD339A /* ListCoinPageView.swift */,
 				1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */,
+				1AE1AF712AF20727002AAC7D /* CustomTextField.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -248,14 +292,14 @@
 		1AB6AC282ACC1B1700A0A6E2 /* CryptoTracking */ = {
 			isa = PBXGroup;
 			children = (
+				1A4827A82AF399E500DDCC81 /* Coordinator */,
+				1A4827A72AF399C700DDCC81 /* App */,
 				1AD2BFBC2AE43EF3006711FB /* Service */,
 				1A86CC192ACE9AAF00CDD0B5 /* Model */,
 				1A86CC142ACE8CD100CDD0B5 /* Network */,
 				1A86CBFC2ACD044F00CDD0B5 /* Enum */,
 				1AB6AC3F2ACC1D9200A0A6E2 /* View */,
 				1AB6AC3C2ACC1C5600A0A6E2 /* Extension */,
-				1AB6AC292ACC1B1700A0A6E2 /* CryptoTrackingApp.swift */,
-				1AB6AC2B2ACC1B1700A0A6E2 /* ContentView.swift */,
 				1AB6AC2D2ACC1B1A00A0A6E2 /* Assets.xcassets */,
 				1AB6AC322ACC1B1A00A0A6E2 /* Persistence.swift */,
 				1AB6AC342ACC1B1A00A0A6E2 /* CryptoTracking.xcdatamodeld */,
@@ -280,6 +324,7 @@
 				1AD2BFB62AE2EA0A006711FB /* String+.swift */,
 				1AD2BFB82AE403EA006711FB /* Double+.swift */,
 				1AE1AF692AEBC0E0002AAC7D /* View+.swift */,
+				1A4827B52AF3EC4700DDCC81 /* UINavigation+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -354,6 +399,7 @@
 			name = CryptoTracking;
 			packageProductDependencies = (
 				1A86CC072ACD4B8B00CDD0B5 /* PureSwiftUI */,
+				1A4827A52AF3924100DDCC81 /* SwiftUINavigation */,
 			);
 			productName = CryptoTracking;
 			productReference = 1AB6AC262ACC1B1700A0A6E2 /* CryptoTracking.app */;
@@ -385,6 +431,7 @@
 			mainGroup = 1AB6AC1D2ACC1B1700A0A6E2;
 			packageReferences = (
 				1A86CC062ACD4B8B00CDD0B5 /* XCRemoteSwiftPackageReference "pure-swift-ui" */,
+				1A4827A42AF3924100DDCC81 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 			);
 			productRefGroup = 1AB6AC272ACC1B1700A0A6E2 /* Products */;
 			projectDirPath = "";
@@ -457,6 +504,7 @@
 				1A609A592AE6C6940089C8FF /* Buy.swift in Sources */,
 				1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */,
 				1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */,
+				1AE1AF702AF206EF002AAC7D /* Withdraw.swift in Sources */,
 				1A86CC162ACE8CF000CDD0B5 /* API.swift in Sources */,
 				1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */,
 				1AD2BFB92AE403EA006711FB /* Double+.swift in Sources */,
@@ -465,6 +513,7 @@
 				1A86CC182ACE8DE300CDD0B5 /* APICaller.swift in Sources */,
 				1A86CC1D2ACEA09600CDD0B5 /* CoinMarketParam.swift in Sources */,
 				1A609A5B2AE6D0390089C8FF /* HomeViewModel.swift in Sources */,
+				1A4827AC2AF39B5400DDCC81 /* AppDelegate.swift in Sources */,
 				1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */,
 				1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */,
 				1AD2BFB72AE2EA0A006711FB /* String+.swift in Sources */,
@@ -481,21 +530,28 @@
 				1A86CC0B2ACE5D5100CDD0B5 /* Home.swift in Sources */,
 				1AB6AC422ACC1F0400A0A6E2 /* HomeView.swift in Sources */,
 				1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */,
+				1A4827B62AF3EC4700DDCC81 /* UINavigation+.swift in Sources */,
 				1A609A612AE82B330089C8FF /* QRScannerViewModel.swift in Sources */,
+				1AE1AF6E2AF1578C002AAC7D /* WithDrawViewUI.swift in Sources */,
 				1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */,
 				1AB6AC462ACC204800A0A6E2 /* QrView.swift in Sources */,
 				1A86CC112ACE712C00CDD0B5 /* CreditCardView.swift in Sources */,
+				1A4827B42AF3AAB600DDCC81 /* WithdrawRouter.swift in Sources */,
 				1A86CC1F2ACEADE900CDD0B5 /* CoinCard.swift in Sources */,
+				1A4827B02AF39E8E00DDCC81 /* SceneDelegate.swift in Sources */,
 				1AB6AC2A2ACC1B1700A0A6E2 /* CryptoTrackingApp.swift in Sources */,
 				1AB6AC362ACC1B1A00A0A6E2 /* CryptoTracking.xcdatamodeld in Sources */,
+				1A4827B22AF3A22900DDCC81 /* AppRouter.swift in Sources */,
 				1AE1AF6A2AEBC0E0002AAC7D /* View+.swift in Sources */,
 				1A609A5F2AE7DAF80089C8FF /* CameraViewRepresentable.swift in Sources */,
 				1A609A642AE8D1600089C8FF /* WithdrawView.swift in Sources */,
 				1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */,
+				1A4827AA2AF39A4300DDCC81 /* Coordinator.swift in Sources */,
 				1A86CC132ACE714400CDD0B5 /* MyAssetsView.swift in Sources */,
 				1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */,
 				1AB6AC482ACC207600A0A6E2 /* MarketView.swift in Sources */,
 				1AB6AC4C2ACD02E000A0A6E2 /* TabBarCustom.swift in Sources */,
+				1AE1AF722AF20727002AAC7D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +766,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1A4827A42AF3924100DDCC81 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		1A86CC062ACD4B8B00CDD0B5 /* XCRemoteSwiftPackageReference "pure-swift-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CodeSlicing/pure-swift-ui.git";
@@ -721,6 +785,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1A4827A52AF3924100DDCC81 /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A4827A42AF3924100DDCC81 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			productName = SwiftUINavigation;
+		};
 		1A86CC072ACD4B8B00CDD0B5 /* PureSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1A86CC062ACD4B8B00CDD0B5 /* XCRemoteSwiftPackageReference "pure-swift-ui" */;
