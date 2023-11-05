@@ -21,12 +21,11 @@ struct TabarCustom: View {
                         withAnimation(.easeIn(duration: 0.2)){
                             tabBarSelected = tab
                         }
-                    }.scaleEffect(tab == tabBarSelected ? 1.2 : 1)
+                    }
 
                 } else {
                     Image(systemName: tab.icon).foregroundColor(tabBarSelected == tab ? .tabBarSelected : .gray)
                         .font(.system(size: 20))
-                        .scaleEffect(tab == tabBarSelected ? 1.25 : 1)
                         .onTapGesture {
                             withAnimation(.easeIn(duration: 0.2)){
                                 tabBarSelected = tab
@@ -38,7 +37,7 @@ struct TabarCustom: View {
             }
         }.frame(width: nil, height: 80
                 , alignment: .top)
-        .padding(.top, 16)
+        .padding(.top, 8)
         .background(Color.tabBarBackground)
     }
 }

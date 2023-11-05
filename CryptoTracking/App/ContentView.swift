@@ -11,7 +11,6 @@ import CoreData
 struct ContentView: View {
     @State var tabBarSelected: MainTabBar = .home
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
-
     init () {
     }
     var body: some View {

@@ -23,6 +23,10 @@ struct QrView: View {
     @Environment(\.openURL) private var openURL
 
     let viewModel = QRScannerViewModel()
+
+    init() {
+        checkCameraPermission()
+    }
     var body: some View {
         GeometryReader { geometryEntire in
                 ZStack {
@@ -123,7 +127,10 @@ struct QrView: View {
             }
             .onAppear {
                 print("@@@: QrView appear")
-                checkCameraPermission()
+                DispatchQueue.global(qos: .background).async {
+                    session.startRunning()
+
+                }
             }
             .onDisappear {
                 print("@@@: QrView disappear")
@@ -204,10 +211,10 @@ extension QrView {
             qrOutput.metadataObjectTypes = [.qr]
             qrOutput.setMetadataObjectsDelegate(viewModel, queue: .main)
             session.commitConfiguration()
-            DispatchQueue.global(qos: .background).async {
-                session.startRunning()
-
-            }
+//            DispatchQueue.global(qos: .background).async {
+//                session.startRunning()
+//
+//            }
         } catch {
             presentError("load camera fail")
         }

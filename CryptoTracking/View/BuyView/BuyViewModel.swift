@@ -40,9 +40,15 @@ class BuyViewModel: ObservableObject {
     func log() {
         print("================================================================================================================================")
         print("[")
-        for coin in allCoinsDisplay.prefix(16) {
-            print("Coin(id: \"\(coin.id ?? "0")\", symbol: \"\(coin.symbol ?? "kk")\", name: \"\(coin.name ?? "N/A")\", image: \"\(coin.image ?? "N/A")\", currentPrice: \(coin.currentPrice ), marketCap: \(coin.marketCap ?? 0), marketCapRank: \(coin.marketCapRank ?? 0), fullyDilutedValuation: nil, totalVolume: nil, high24H: nil, low24H: nil, priceChange24H: nil, priceChangePercentage24H: nil, marketCapChange24H: nil, marketCapChangePercentage24H: nil, circulatingSupply: nil, totalSupply: nil, maxSupply: nil, ath: nil, athChangePercentage: nil, athDate: \"\(coin.athDate ?? "N/A")\", atl: nil, atlChangePercentage: nil, atlDate: nil, roi: nil, lastUpdated: \"\(coin.lastUpdated ?? "N/A")\", sparklineIn7D: nil, priceChangePercentage1HInCurrency: nil, currentHoldings: nil)")
-            print(", \n")
+        for coin in allCoinsDisplay.prefix(9) {
+            print("Coin(id: \"\(coin.id ?? "0")\", symbol: \"\(coin.symbol ?? "kk")\", name: \"\(coin.name ?? "N/A")\", image: \"\(coin.image ?? "N/A")\", currentPrice: \(coin.currentPrice ), marketCap: \(coin.marketCap ?? 0), marketCapRank: \(coin.marketCapRank ?? 0), fullyDilutedValuation: nil, totalVolume: nil, high24H: nil, low24H: nil, priceChange24H: \(coin.priceChange24H ?? 0), priceChangePercentage24H: \(coin.priceChangePercentage24H ?? 0), marketCapChange24H: nil, marketCapChangePercentage24H: nil, circulatingSupply: nil, totalSupply: nil, maxSupply: nil, ath: nil, athChangePercentage: nil, athDate: \"\(coin.athDate ?? "N/A")\", atl: nil, atlChangePercentage: nil, atlDate: nil, roi: nil, lastUpdated: \"\(coin.lastUpdated ?? "N/A")\", sparklineIn7D:  SparklineIn7D(price: [")
+
+            for price in coin.sparklineIn7D?.price ?? [] {
+                print("\(price), ")
+            }
+
+            print("]),priceChangePercentage1HInCurrency: nil, currentHoldings: nil)")
+        print(", \n")
         }
         print("]")
         print("================================================================================================================================")

@@ -14,6 +14,7 @@ enum SettingSection: CaseIterable {
     case setting
     case premium
     case other
+    case logout
 
     var items: [SettingFunc] {
         switch self {
@@ -27,6 +28,8 @@ enum SettingSection: CaseIterable {
             return [.premium]
         case .other:
             return [.ask, .faq, .feature]
+        case .logout:
+            return [.logout]
         }
     }
 }
@@ -46,6 +49,7 @@ enum SettingFunc: CaseIterable {
     case ask
     case faq
     case feature
+    case logout
 
     var displayName: String {
         switch self {
@@ -77,6 +81,8 @@ enum SettingFunc: CaseIterable {
             return "FAQ"
         case .feature:
             return "App Features"
+        case .logout:
+            return "Log out"
         }
     }
 
@@ -110,6 +116,8 @@ enum SettingFunc: CaseIterable {
             return Image(systemName: "questionmark.circle.fill")
         case .feature:
             return Image(systemName: "lightbulb.fill")
+        case .logout:
+            return Image(systemName: "rectangle.portrait.and.arrow.right.fill")
         }
     }
 
@@ -143,6 +151,8 @@ enum SettingFunc: CaseIterable {
             return Color(#colorLiteral(red: 0.3880109242, green: 0.5663196199, blue: 1, alpha: 1))
         case .feature:
             return Color(#colorLiteral(red: 0.01828966004, green: 0.4316078911, blue: 0.07015741416, alpha: 1))
+        case .logout:
+            return .red
         }
     }
 }

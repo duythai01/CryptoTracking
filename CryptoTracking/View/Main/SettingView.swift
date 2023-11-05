@@ -18,7 +18,7 @@ struct SettingView: View {
                 VStack(spacing: 22) {
                     SettingHeaderView()
                     ForEach(SettingSection.allCases, id: \.self) { section in
-                        buildSettingSection(section: section.items)
+                        buildSettingSection(section: section)
 
                     }.padding(.horizontal, 16)
 
@@ -55,13 +55,13 @@ struct SettingView: View {
         }
     }
 
-    func buildSettingSection(section: [SettingFunc]) -> some View {
+    func buildSettingSection(section: SettingSection) -> some View {
         VStack(spacing: 12) {
-            ForEach(0..<section.count, id: \.self) { index in
-                ItemSetting(image: section[index].displayIcon, label: section[index].displayName, iconBackgroundColor: section[index].iconBackgroundColor) {
+            ForEach(0..<section.items.count, id: \.self) { index in
+                ItemSetting(image: section.items[index].displayIcon, label: section.items[index].displayName, iconBackgroundColor: section.items[index].iconBackgroundColor) {
                     print("action")
                 }.padding(.horizontal, 16)
-                if index != section.count - 1 {
+                if index != section.items.count - 1 {
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(Color.theme.mainColor)
@@ -71,7 +71,7 @@ struct SettingView: View {
         }
         .listStyle(.inset)
         .padding(.vertical, 16)
-        .background(Color.white.opacity(0.2))
+        .background(section == .logout ? Color.red.opacity(0.4) : Color.white.opacity(0.2))
         .cornerRadius(14)
     }
 }

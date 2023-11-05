@@ -12,10 +12,8 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 struct WithdrawView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
 
-    @State var hideMoney: Bool = true
     @State var amountStr: String = ""
     @State var changeCoin: Coin? = DeveloperPreview.shared.conins15[0]
     @State var receiveCoin: Coin? = DeveloperPreview.shared.conins15[1]
@@ -33,8 +31,10 @@ struct WithdrawView: View {
     @State var mainScrollProxy: ScrollViewProxy?
     @State var methodWithdrawType: WithDrawMethodType = .card
     @State var paymentChanelSelected: PaymentChanel?
-    @State var isDeposit: Bool = true
+    @State var isDeposit: Bool = false
     @State var depositNetworkName = "BSC/BEP20"
+    @State var isLoadInformDeposit = true
+
 
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
@@ -68,92 +68,7 @@ struct WithdrawView: View {
                                 .id("switchButton")
 
                             if isDeposit {
-                                VStack(alignment: .leading, spacing: 16) {
-                                    VStack(alignment: .leading, spacing: 8) {
-                                        Text("Coin")
-                                            .font(.system(size: 18, weight: .bold))
-                                            .foregroundColor(.white)
-                                        Button(action: {
-                                            showBottomSheet(type: .depositCoin)
-                                            isShowChangeBottomView = true
-                                        }, label: {
-                                            HStack{
-                                                WebImage(url: URL(string: depositeCoin?.image ?? ""))
-                                                    .resizable()
-                                                    .frame(width: 26, height: 26)
-
-                                                Text(depositeCoin?.name ?? "N/A")
-                                                    .font(.system(size: 18, weight: .medium))
-                                                    .foregroundColor(.white)
-                                                Spacer()
-                                                Image(systemName: "chevron.down")
-                                                    .font(.system(size: 14, weight: .medium))
-                                                    .foregroundColor(.white)
-                                                    .padding(.horizontal, 8)
-                                            }
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical,8)
-                                        })
-                                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.5), lineWidth: 1))
-                                    }
-
-                                    //Network
-                                    VStack(alignment: .leading, spacing: 8){
-                                        Text("Network")
-                                            .font(.system(size: 18, weight: .bold))
-                                            .foregroundColor(.white)
-
-                                        Button(action: {
-                                            showBottomSheet(type: .depositNetwork)
-                                            isShowChangeBottomView = true
-                                        }, label: {
-                                            HStack{
-                                                Text(depositNetworkName)
-                                                    .font(.system(size: 18, weight: .medium))
-                                                    .foregroundColor(.white)
-                                                Spacer()
-                                                Image(systemName: "chevron.down")
-                                                    .font(.system(size: 14, weight: .medium))
-                                                    .foregroundColor(.white)
-                                                    .padding(.horizontal, 8)
-                                            }
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical,8)
-                                        })
-                                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.5), lineWidth: 1))
-                                }
-
-                                    // Address
-                                    VStack(alignment: .center, spacing: 20){
-                                        HStack {
-                                            Text("Address")
-                                                .font(.system(size: 18, weight: .bold))
-                                            .foregroundColor(.white)
-                                            Spacer()
-                                        }
-
-                                        Image(uiImage: genenrateQRCode(from: "\(depositeCoin?.name ?? "N/A")-\(depositNetworkName)"))
-                                            .resizable()
-                                            .interpolation(.none)
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 200)
-                                        HStack {
-                                            Text("0x0c1968cd2Ff3Eb0Dc2bEe3ED4679035789ecc720")
-                                                .font(.system(size: 16, weight: .semibold))
-                                                .foregroundColor(.white.opacity(0.7))
-                                                .lineLimit(.none)
-                                            Image(systemName: "rectangle.on.rectangle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .foregroundColor(.white.opacity(0.8))
-                                                .frame(width: 20, height: 20)
-                                        }
-                                        .padding(16)
-                                        .background(Color.gray.opacity(0.4).cornerRadius(12))
-
-                                }
-
-                                }
+                                depositView
                             } else {
                                 selectionChangeType
                                     .id("selectionChangeType")

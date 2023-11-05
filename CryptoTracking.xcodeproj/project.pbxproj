@@ -18,6 +18,10 @@
 		1A4827B22AF3A22900DDCC81 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B12AF3A22900DDCC81 /* AppRouter.swift */; };
 		1A4827B42AF3AAB600DDCC81 /* WithdrawRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */; };
 		1A4827B62AF3EC4700DDCC81 /* UINavigation+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B52AF3EC4700DDCC81 /* UINavigation+.swift */; };
+		1A4827B82AF4921000DDCC81 /* WithdrawViewExtDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827B72AF4921000DDCC81 /* WithdrawViewExtDeposit.swift */; };
+		1A4827BB2AF4A17B00DDCC81 /* PersonalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827BA2AF4A17B00DDCC81 /* PersonalView.swift */; };
+		1A4827BD2AF4E24100DDCC81 /* PersonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827BC2AF4E24100DDCC81 /* PersonalChart.swift */; };
+		1A4827C12AF7648D00DDCC81 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4827C02AF7648D00DDCC81 /* CoreDataController.swift */; };
 		1A5FBA3D2AD40D0500BD339A /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */; };
 		1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */; };
 		1A5FBA412AD40D9E00BD339A /* FilterAndDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */; };
@@ -59,7 +63,7 @@
 		1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */; };
 		1AE1AF6A2AEBC0E0002AAC7D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF692AEBC0E0002AAC7D /* View+.swift */; };
 		1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */; };
-		1AE1AF6E2AF1578C002AAC7D /* WithDrawViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */; };
+		1AE1AF6E2AF1578C002AAC7D /* WithDrawViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6D2AF1578B002AAC7D /* WithDrawViewExt.swift */; };
 		1AE1AF702AF206EF002AAC7D /* Withdraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF6F2AF206EF002AAC7D /* Withdraw.swift */; };
 		1AE1AF722AF20727002AAC7D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1AF712AF20727002AAC7D /* CustomTextField.swift */; };
 		2B1E8F552F975F14C2C05FCA /* Pods_CryptoTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCACD21C7DFC2B17676327E /* Pods_CryptoTracking.framework */; };
@@ -76,6 +80,10 @@
 		1A4827B12AF3A22900DDCC81 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawRouter.swift; sourceTree = "<group>"; };
 		1A4827B52AF3EC4700DDCC81 /* UINavigation+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigation+.swift"; sourceTree = "<group>"; };
+		1A4827B72AF4921000DDCC81 /* WithdrawViewExtDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewExtDeposit.swift; sourceTree = "<group>"; };
+		1A4827BA2AF4A17B00DDCC81 /* PersonalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalView.swift; sourceTree = "<group>"; };
+		1A4827BC2AF4E24100DDCC81 /* PersonalChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalChart.swift; sourceTree = "<group>"; };
+		1A4827C02AF7648D00DDCC81 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		1A5FBA3C2AD40D0500BD339A /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		1A5FBA3E2AD40D5E00BD339A /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		1A5FBA402AD40D9E00BD339A /* FilterAndDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndDatePicker.swift; sourceTree = "<group>"; };
@@ -117,7 +125,7 @@
 		1AD2BFBD2AE43F34006711FB /* CoinDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataService.swift; sourceTree = "<group>"; };
 		1AE1AF692AEBC0E0002AAC7D /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		1AE1AF6B2AEF4227002AAC7D /* BottomSheetCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCustom.swift; sourceTree = "<group>"; };
-		1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithDrawViewUI.swift; sourceTree = "<group>"; };
+		1AE1AF6D2AF1578B002AAC7D /* WithDrawViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithDrawViewExt.swift; sourceTree = "<group>"; };
 		1AE1AF6F2AF206EF002AAC7D /* Withdraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Withdraw.swift; sourceTree = "<group>"; };
 		1AE1AF712AF20727002AAC7D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		C619D60CF08B99556D19B6A3 /* Pods-CryptoTracking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoTracking.release.xcconfig"; path = "Target Support Files/Pods-CryptoTracking/Pods-CryptoTracking.release.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +176,32 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		1A4827B92AF4A15A00DDCC81 /* PersonalView */ = {
+			isa = PBXGroup;
+			children = (
+				1A4827BA2AF4A17B00DDCC81 /* PersonalView.swift */,
+				1A4827BC2AF4E24100DDCC81 /* PersonalChart.swift */,
+			);
+			path = PersonalView;
+			sourceTree = "<group>";
+		};
+		1A4827BE2AF7646900DDCC81 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				1A4827BF2AF7647500DDCC81 /* Local */,
+				1A86CC142ACE8CD100CDD0B5 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		1A4827BF2AF7647500DDCC81 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				1A4827C02AF7648D00DDCC81 /* CoreDataController.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
 		1A5FBA3A2AD40B5900BD339A /* History */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,8 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				1A609A632AE8D1600089C8FF /* WithdrawView.swift */,
-				1AE1AF6D2AF1578B002AAC7D /* WithDrawViewUI.swift */,
+				1AE1AF6D2AF1578B002AAC7D /* WithDrawViewExt.swift */,
 				1A4827B32AF3AAB600DDCC81 /* WithdrawRouter.swift */,
+				1A4827B72AF4921000DDCC81 /* WithdrawViewExtDeposit.swift */,
 			);
 			path = WithdrawView;
 			sourceTree = "<group>";
@@ -292,11 +327,11 @@
 		1AB6AC282ACC1B1700A0A6E2 /* CryptoTracking */ = {
 			isa = PBXGroup;
 			children = (
+				1A4827BE2AF7646900DDCC81 /* Data */,
 				1A4827A82AF399E500DDCC81 /* Coordinator */,
 				1A4827A72AF399C700DDCC81 /* App */,
 				1AD2BFBC2AE43EF3006711FB /* Service */,
 				1A86CC192ACE9AAF00CDD0B5 /* Model */,
-				1A86CC142ACE8CD100CDD0B5 /* Network */,
 				1A86CBFC2ACD044F00CDD0B5 /* Enum */,
 				1AB6AC3F2ACC1D9200A0A6E2 /* View */,
 				1AB6AC3C2ACC1C5600A0A6E2 /* Extension */,
@@ -332,6 +367,7 @@
 		1AB6AC3F2ACC1D9200A0A6E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A4827B92AF4A15A00DDCC81 /* PersonalView */,
 				1A609A622AE8D1490089C8FF /* WithdrawView */,
 				1A2A2AA52AD92D48003AAFA1 /* BuyView */,
 				1A86CC002ACD04BC00CDD0B5 /* Component */,
@@ -511,17 +547,20 @@
 				1A2A2AA42AD92631003AAFA1 /* PreviewProvider+.swift in Sources */,
 				1AB6AC332ACC1B1A00A0A6E2 /* Persistence.swift in Sources */,
 				1A86CC182ACE8DE300CDD0B5 /* APICaller.swift in Sources */,
+				1A4827BD2AF4E24100DDCC81 /* PersonalChart.swift in Sources */,
 				1A86CC1D2ACEA09600CDD0B5 /* CoinMarketParam.swift in Sources */,
 				1A609A5B2AE6D0390089C8FF /* HomeViewModel.swift in Sources */,
 				1A4827AC2AF39B5400DDCC81 /* AppDelegate.swift in Sources */,
 				1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */,
 				1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */,
 				1AD2BFB72AE2EA0A006711FB /* String+.swift in Sources */,
+				1A4827C12AF7648D00DDCC81 /* CoreDataController.swift in Sources */,
 				1AB6AC3E2ACC1C6C00A0A6E2 /* Color+.swift in Sources */,
 				1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */,
 				1AB6AC2C2ACC1B1700A0A6E2 /* ContentView.swift in Sources */,
 				1AB6AC442ACC1FB000A0A6E2 /* HistoryView.swift in Sources */,
 				1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */,
+				1A4827B82AF4921000DDCC81 /* WithdrawViewExtDeposit.swift in Sources */,
 				1A5FBA432AD40DE400BD339A /* ListCoinPageView.swift in Sources */,
 				1AD2BFBB2AE42D82006711FB /* BuyViewModel.swift in Sources */,
 				1A86CC0F2ACE711900CDD0B5 /* CategoryListView.swift in Sources */,
@@ -529,10 +568,11 @@
 				1A86CC0D2ACE70DC00CDD0B5 /* HomeHeaderView.swift in Sources */,
 				1A86CC0B2ACE5D5100CDD0B5 /* Home.swift in Sources */,
 				1AB6AC422ACC1F0400A0A6E2 /* HomeView.swift in Sources */,
+				1A4827BB2AF4A17B00DDCC81 /* PersonalView.swift in Sources */,
 				1AD2BFBE2AE43F34006711FB /* CoinDataService.swift in Sources */,
 				1A4827B62AF3EC4700DDCC81 /* UINavigation+.swift in Sources */,
 				1A609A612AE82B330089C8FF /* QRScannerViewModel.swift in Sources */,
-				1AE1AF6E2AF1578C002AAC7D /* WithDrawViewUI.swift in Sources */,
+				1AE1AF6E2AF1578C002AAC7D /* WithDrawViewExt.swift in Sources */,
 				1A2A2AA22AD8F546003AAFA1 /* Setting.swift in Sources */,
 				1AB6AC462ACC204800A0A6E2 /* QrView.swift in Sources */,
 				1A86CC112ACE712C00CDD0B5 /* CreditCardView.swift in Sources */,
