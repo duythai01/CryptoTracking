@@ -19,25 +19,29 @@ struct PersonalView: View {
             Color.theme.mainColor.ignoresSafeArea()
             VStack{
                 currenceAssets
-                VStack(spacing: 6) {
-                    Image("ic_wallet")
-                        .resizable()
-                        .frame(width: 42, height: 42)
-                    Text("Your account has no assets.")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.white.opacity(0.7))
-                    Text("Deposit now to start.")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(.white.opacity(0.5))
-                    HStack {
-                        Spacer()
-                    }
+                HStack {
+                    PersonalPieChart(totalAsset: "1000 USD")
                 }
-                .padding(16)
-                .background(
-                    RoundedRectangle(cornerRadius: 12.0)
-                        .foregroundColor(.gray.opacity(0.2))
-                )
+                .frame(height: UIScreen.main.bounds.height / 2.8)
+//                VStack(spacing: 6) {
+//                    Image("ic_wallet")
+//                        .resizable()
+//                        .frame(width: 42, height: 42)
+//                    Text("Your account has no assets.")
+//                        .font(.system(size: 14, weight: .bold))
+//                        .foregroundColor(.white.opacity(0.7))
+//                    Text("Deposit now to start.")
+//                        .font(.system(size: 13, weight: .bold))
+//                        .foregroundColor(.white.opacity(0.5))
+//                    HStack {
+//                        Spacer()
+//                    }
+//                }
+//                .padding(16)
+//                .background(
+//                    RoundedRectangle(cornerRadius: 12.0)
+//                        .foregroundColor(.gray.opacity(0.2))
+//                )
 
                 ScrollView(.horizontal) {
                     LazyHStack {
@@ -60,22 +64,22 @@ struct PersonalView: View {
         let priceChange24h = (coin?.priceChange24H ?? 0).formatTwoNumbeAfterDot(minimumFractionDigits: 2, maximumFractionDigits: 6)
         VStack (alignment: .leading){
             Text("\(coin?.symbol?.uppercased() ?? "") / \(vsCurrency)")
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.top, 8)
                 .padding(.leading, 10)
 
-            Text(percent)
-                .font(.system(size: 16, weight: .bold))
+            Text(percent.addPlusOrMinus())
+                .font(.system(size: 13, weight: .bold))
                 .foregroundColor(percent.checkIsIncrease() ? .green : .red)
                 .padding(.leading, 10)
 
-            Text(priceChange24h)
-                .font(.system(size: 16, weight: .bold))
+            Text("\(priceChange24h)".addPlusOrMinus())
+                .font(.system(size: 13, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.leading, 10)
 
-            PersonalChart(entries:
+            PersonalLineChart(entries:
                             Transaction.mapChartDataEntry(price7D: coin?.sparklineIn7D?.price ?? []),
                           chartColor: percent.checkIsIncrease() ? .green : .red)
             .padding(.horizontal, 8)
@@ -107,10 +111,10 @@ extension PersonalView {
 
                 Button(action: {}, label: {
                     HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Image(systemName: "person.badge.shield.checkmark.fill")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.white.opacity(0.8))
-                        Text("Analysis")
+                        Text("KYC")
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundColor(.white.opacity(0.8))
                     }

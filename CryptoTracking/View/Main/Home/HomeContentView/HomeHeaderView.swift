@@ -8,10 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct HomeHeaderView: View {
-    var body: some View {
+extension HomeView {
+    var headerView: some View {
         HStack {
             Button(action: {
+                coordinator.show(.personal)
+                coordinator.navigationController.isNavigationBarHidden = false
+
             }) {
                 Circle()
                     .frame(width: 50, height: 50)
@@ -49,5 +52,5 @@ struct HomeHeaderView: View {
 
         }.frame(width: nil)
     }
-}
 
+}

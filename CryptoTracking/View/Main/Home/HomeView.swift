@@ -20,7 +20,7 @@ struct HomeView: View {
             ZStack {
                 Color.theme.mainColor.ignoresSafeArea()
                 VStack(spacing: 16) {
-                    HomeHeaderView().padding(.horizontal, 16)
+                    headerView.padding(.horizontal, 16)
                     CreditCardView()
                     categoryListView.padding(.horizontal, 16)
                         .fixedSize(horizontal: false, vertical: true)

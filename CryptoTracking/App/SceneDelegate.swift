@@ -7,32 +7,21 @@
 
 import Foundation
 import SwiftUI
-public enum EntryRouter: NavigationRouter {
-    case appView
-
-    public var transition: NavigationTranisitionStyle {
-        switch self {
-        case .appView:
-            return .push
-        }
-    }
-
-    @ViewBuilder
-    public func view() -> some View {
-        switch self {
-        case .appView:
-            ContentView()
-        }
-    }
-}
-
 
 final class SceneDelegate: NSObject, UIWindowSceneDelegate {
 
-    private let coordinator: Coordinator<AppRouter> = .init(startingRoute: .appView)
+    private var coordinator: Coordinator<AppRouter>!
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        let isFirstLaunch = UserDefaults.standard.bool(forKey: "appTrackingFirstLaunch")
+        if !isFirstLaunch {
+            UserDefaults.standard.set(true, forKey: "appTrackingFirstLaunch")
+            coordinator = .init(startingRoute: .onboarding)
+        } else {
+            coordinator = .init(startingRoute: .appView)
+
+        }
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         UINavigationBar.appearance().tintColor = .white

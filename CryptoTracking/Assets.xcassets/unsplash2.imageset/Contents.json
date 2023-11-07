@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "unsplash_R_6A6CovgIM.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

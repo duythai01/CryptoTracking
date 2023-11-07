@@ -17,18 +17,6 @@ struct BuyView: View {
     @State private var categoryBuySelected: CategoryBuy  = .spot
     @State private var coinDefaultSelected: CoinDefault  = .usdt
 
-
-    init() {
-        // Customize the UINavigationBar appearance
-        //        let appearance = UINavigationBarAppearance()
-        //        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
-        ////        appearance.buttonAppearance.normal
-        //        appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 26, weight: .bold)] // Set the text
-        //        UINavigationBar.appearance().standardAppearance = appearance
-
-    }
-
-
     var body: some View {
         //        NavigationView {
 
@@ -77,11 +65,11 @@ struct BuyView: View {
         }
     }
 
-        func configPriceChangePercent(percent: Double?) -> String {
-            guard let percent = percent else { return "0"}
+    func configPriceChangePercent(percent: Double?) -> String {
+        guard let percent = percent else { return "0"}
 
-            return percent >= 0 ? "+\(percent)%" : "\(percent)%"
-        }
+        return percent >= 0 ? "+\(percent)%" : "\(percent)%"
+    }
 }
 
 

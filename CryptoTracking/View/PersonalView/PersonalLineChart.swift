@@ -73,7 +73,7 @@ struct Transaction {
     }
 }
 
-struct PersonalChart: UIViewRepresentable {
+struct PersonalLineChart: UIViewRepresentable {
     let entries: [ChartDataEntry]
     let chartColor: UIColor
 
@@ -131,7 +131,7 @@ struct PersonalChart: UIViewRepresentable {
 
 struct PersonalChart_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalChart(entries:
+        PersonalLineChart(entries:
                         Transaction.mapChartDataEntry(price7D: DeveloperPreview.shared.coin.sparklineIn7D?.price ?? []),
                       chartColor: .green)
     }

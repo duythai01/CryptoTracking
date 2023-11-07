@@ -1827,4 +1827,12 @@ class DeveloperPreview {
         0.25781643399248155,
         ]),priceChangePercentage1HInCurrency: nil, currentHoldings: nil)
         ]
+
+    let parties = [CoinHolded(id: "BTC", currencyHold: 10),
+                   CoinHolded(id: "ethereum", currencyHold: 20),
+                   CoinHolded(id: "tether", currencyHold: 30),
+                   CoinHolded(id: "ripple", currencyHold: 15),
+                   CoinHolded(id: "dogecoin", currencyHold: 40),
+                   CoinHolded(id: "ton", currencyHold: 22),
+                  CoinHolded(id: "bnb", currencyHold: 30),]
 }
