@@ -41,12 +41,13 @@ open class Coordinator<Router: NavigationRouter>: ObservableObject {
         show(route)
     }
 
-    public func show(_ route: Router, animated: Bool = true) {
+    public func show(_ route: Router, animated: Bool = true, isNavigationBarHidden: Bool = true) {
         let view = route.view()
         let viewWithCoordinator = view.environmentObject(self)
         let viewController = UIHostingController(rootView: viewWithCoordinator)
         switch route.transition {
         case .push:
+            navigationController.isNavigationBarHidden = isNavigationBarHidden
             navigationController.pushViewController(viewController, animated: animated)
         case .presentModally:
             viewController.modalPresentationStyle = .formSheet

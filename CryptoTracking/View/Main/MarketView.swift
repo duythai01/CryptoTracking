@@ -11,10 +11,10 @@ struct MarketView: View {
     @State var searchQuery: String = ""
     @State var paddingBottom: CGFloat = 200
     let testListMarket = [
-        Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        Market(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
+        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
+        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
+        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
+        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
     ]
     var body: some View {
         ZStack {
@@ -42,7 +42,7 @@ struct MarketView: View {
             }
     }
 
-    func buildMarketList(sectionLabel: String, markets: [Market]) -> some View {
+    func buildMarketList(sectionLabel: String, markets: [MarketViewItem]) -> some View {
         return VStack (spacing: 16){
             HStack {
             Text(sectionLabel)
@@ -106,7 +106,7 @@ struct MarketView_Previews: PreviewProvider {
     }
 }
 
-struct Market: Identifiable {
+struct MarketViewItem: Identifiable {
     let id = UUID()
     let name: String
     let image: Image

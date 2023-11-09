@@ -17,6 +17,7 @@ public enum AppRouter: NavigationRouter {
     case exchange
     case personal
     case onboarding
+    case login
 
     public var transition: NavigationTranisitionStyle {
         switch self {
@@ -35,6 +36,8 @@ public enum AppRouter: NavigationRouter {
         case .personal:
             return .push
         case .onboarding:
+            return .push
+        case .login:
             return .push
         }
     }
@@ -58,6 +61,8 @@ public enum AppRouter: NavigationRouter {
             PersonalView(coinsHolded: DeveloperPreview.shared.holdCoins)
         case .onboarding:
             OnboardingView()
+        case .login:
+            LoginView()
         }
     }
 }

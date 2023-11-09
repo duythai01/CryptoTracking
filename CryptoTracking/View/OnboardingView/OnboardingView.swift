@@ -50,7 +50,7 @@ struct OnboardingView: View {
                     Spacer()
                     Button(action: {
                         if currentPage >= 4 {
-                            coordinator.show(.appView)
+                            coordinator.show(.login)
                             
                         } else {
                             withAnimation {

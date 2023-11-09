@@ -19,7 +19,7 @@ final class SceneDelegate: NSObject, UIWindowSceneDelegate {
             UserDefaults.standard.set(true, forKey: "appTrackingFirstLaunch")
             coordinator = .init(startingRoute: .onboarding)
         } else {
-            coordinator = .init(startingRoute: .appView)
+            coordinator = .init(startingRoute: .login)
 
         }
         guard let windowScene = (scene as? UIWindowScene) else { return }

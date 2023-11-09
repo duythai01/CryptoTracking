@@ -33,6 +33,10 @@
 		1A609A5F2AE7DAF80089C8FF /* CameraViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A5E2AE7DAF70089C8FF /* CameraViewRepresentable.swift */; };
 		1A609A612AE82B330089C8FF /* QRScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A602AE82B330089C8FF /* QRScannerViewModel.swift */; };
 		1A609A642AE8D1600089C8FF /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A609A632AE8D1600089C8FF /* WithdrawView.swift */; };
+		1A747ED32AFC7824006BF445 /* CoinÌnfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A747ED22AFC7824006BF445 /* CoinÌnfo.swift */; };
+		1A747ED52AFC7DA8006BF445 /* AssetPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A747ED42AFC7DA8006BF445 /* AssetPlatform.swift */; };
+		1A747ED72AFC8064006BF445 /* NFTInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A747ED62AFC8064006BF445 /* NFTInfo.swift */; };
+		1A747ED92AFC83D5006BF445 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A747ED82AFC83D5006BF445 /* NFT.swift */; };
 		1A86CBFE2ACD046800CDD0B5 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */; };
 		1A86CC022ACD053400CDD0B5 /* IconInCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */; };
 		1A86CC082ACD4B8B00CDD0B5 /* PureSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1A86CC072ACD4B8B00CDD0B5 /* PureSwiftUI */; };
@@ -48,6 +52,7 @@
 		1A86CC1F2ACEADE900CDD0B5 /* CoinCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A86CC1E2ACEADE900CDD0B5 /* CoinCard.swift */; };
 		1AB67C772AF8F25600AC77AB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AB67C762AF8F25600AC77AB /* Launch Screen.storyboard */; };
 		1AB67C7A2AF8F79D00AC77AB /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB67C792AF8F79D00AC77AB /* OnboardingView.swift */; };
+		1AB67C7D2AFA9EDB00AC77AB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB67C7C2AFA9EDB00AC77AB /* LoginView.swift */; };
 		1AB6AC2C2ACC1B1700A0A6E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB6AC2B2ACC1B1700A0A6E2 /* ContentView.swift */; };
 		1AB6AC2E2ACC1B1A00A0A6E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AB6AC2D2ACC1B1A00A0A6E2 /* Assets.xcassets */; };
 		1AB6AC312ACC1B1A00A0A6E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AB6AC302ACC1B1A00A0A6E2 /* Preview Assets.xcassets */; };
@@ -98,6 +103,10 @@
 		1A609A5E2AE7DAF70089C8FF /* CameraViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewRepresentable.swift; sourceTree = "<group>"; };
 		1A609A602AE82B330089C8FF /* QRScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerViewModel.swift; sourceTree = "<group>"; };
 		1A609A632AE8D1600089C8FF /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
+		1A747ED22AFC7824006BF445 /* CoinÌnfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoinÌnfo.swift"; sourceTree = "<group>"; };
+		1A747ED42AFC7DA8006BF445 /* AssetPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPlatform.swift; sourceTree = "<group>"; };
+		1A747ED62AFC8064006BF445 /* NFTInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTInfo.swift; sourceTree = "<group>"; };
+		1A747ED82AFC83D5006BF445 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		1A86CBFD2ACD046800CDD0B5 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		1A86CC012ACD053400CDD0B5 /* IconInCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInCircleView.swift; sourceTree = "<group>"; };
 		1A86CC0A2ACE5D5100CDD0B5 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -112,6 +121,7 @@
 		1A86CC1E2ACEADE900CDD0B5 /* CoinCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCard.swift; sourceTree = "<group>"; };
 		1AB67C762AF8F25600AC77AB /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		1AB67C792AF8F79D00AC77AB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		1AB67C7C2AFA9EDB00AC77AB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1AB6AC262ACC1B1700A0A6E2 /* CryptoTracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB6AC2B2ACC1B1700A0A6E2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1AB6AC2D2ACC1B1A00A0A6E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -246,6 +256,14 @@
 			path = WithdrawView;
 			sourceTree = "<group>";
 		};
+		1A747ED12AFC7664006BF445 /* Parameter */ = {
+			isa = PBXGroup;
+			children = (
+				1A86CC1C2ACEA09600CDD0B5 /* CoinMarketParam.swift */,
+			);
+			path = Parameter;
+			sourceTree = "<group>";
+		};
 		1A86CBFC2ACD044F00CDD0B5 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,8 +324,12 @@
 		1A86CC192ACE9AAF00CDD0B5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1A747ED12AFC7664006BF445 /* Parameter */,
 				1A86CC1A2ACE9BC300CDD0B5 /* CoinMarket.swift */,
-				1A86CC1C2ACEA09600CDD0B5 /* CoinMarketParam.swift */,
+				1A747ED22AFC7824006BF445 /* CoinÌnfo.swift */,
+				1A747ED42AFC7DA8006BF445 /* AssetPlatform.swift */,
+				1A747ED62AFC8064006BF445 /* NFTInfo.swift */,
+				1A747ED82AFC83D5006BF445 /* NFT.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +340,14 @@
 				1AB67C792AF8F79D00AC77AB /* OnboardingView.swift */,
 			);
 			path = OnboardingView;
+			sourceTree = "<group>";
+		};
+		1AB67C7B2AFA9EC600AC77AB /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				1AB67C7C2AFA9EDB00AC77AB /* LoginView.swift */,
+			);
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 		1AB6AC1D2ACC1B1700A0A6E2 = {
@@ -381,6 +411,7 @@
 		1AB6AC3F2ACC1D9200A0A6E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1AB67C7B2AFA9EC600AC77AB /* LoginView */,
 				1AB67C782AF8F78700AC77AB /* OnboardingView */,
 				1A4827B92AF4A15A00DDCC81 /* PersonalView */,
 				1A609A622AE8D1490089C8FF /* WithdrawView */,
@@ -567,6 +598,7 @@
 				1A86CC1D2ACEA09600CDD0B5 /* CoinMarketParam.swift in Sources */,
 				1A609A5B2AE6D0390089C8FF /* HomeViewModel.swift in Sources */,
 				1A4827C32AF7E1DB00DDCC81 /* PersonalViewModel.swift in Sources */,
+				1A747ED92AFC83D5006BF445 /* NFT.swift in Sources */,
 				1A4827AC2AF39B5400DDCC81 /* AppDelegate.swift in Sources */,
 				1A5FBA3F2AD40D5E00BD339A /* SearchField.swift in Sources */,
 				1AB6AC4A2ACC208000A0A6E2 /* SettingView.swift in Sources */,
@@ -574,14 +606,17 @@
 				1A4827C12AF7648D00DDCC81 /* CoreDataController.swift in Sources */,
 				1AB6AC3E2ACC1C6C00A0A6E2 /* Color+.swift in Sources */,
 				1AE1AF6C2AEF4227002AAC7D /* BottomSheetCustom.swift in Sources */,
+				1A747ED72AFC8064006BF445 /* NFTInfo.swift in Sources */,
 				1AB6AC2C2ACC1B1700A0A6E2 /* ContentView.swift in Sources */,
 				1AB6AC442ACC1FB000A0A6E2 /* HistoryView.swift in Sources */,
 				1A2A2AA72AD92D64003AAFA1 /* BuyView.swift in Sources */,
 				1A4827B82AF4921000DDCC81 /* WithdrawViewExtDeposit.swift in Sources */,
 				1A5FBA432AD40DE400BD339A /* ListCoinPageView.swift in Sources */,
+				1A747ED32AFC7824006BF445 /* CoinÌnfo.swift in Sources */,
 				1AD2BFBB2AE42D82006711FB /* BuyViewModel.swift in Sources */,
 				1A86CC0F2ACE711900CDD0B5 /* CategoryListView.swift in Sources */,
 				1A86CC1B2ACE9BC300CDD0B5 /* CoinMarket.swift in Sources */,
+				1A747ED52AFC7DA8006BF445 /* AssetPlatform.swift in Sources */,
 				1A86CC0D2ACE70DC00CDD0B5 /* HomeHeaderView.swift in Sources */,
 				1A86CC0B2ACE5D5100CDD0B5 /* Home.swift in Sources */,
 				1AB6AC422ACC1F0400A0A6E2 /* HomeView.swift in Sources */,
@@ -608,6 +643,7 @@
 				1A86CC132ACE714400CDD0B5 /* MyAssetsView.swift in Sources */,
 				1A2A2AA92AD92FDA003AAFA1 /* LoadImage.swift in Sources */,
 				1AB6AC482ACC207600A0A6E2 /* MarketView.swift in Sources */,
+				1AB67C7D2AFA9EDB00AC77AB /* LoginView.swift in Sources */,
 				1AB6AC4C2ACD02E000A0A6E2 /* TabBarCustom.swift in Sources */,
 				1AE1AF722AF20727002AAC7D /* CustomTextField.swift in Sources */,
 			);
@@ -745,6 +781,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CryptoTracking/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need FaceID to unlock";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -783,6 +820,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CryptoTracking/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need FaceID to unlock";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
