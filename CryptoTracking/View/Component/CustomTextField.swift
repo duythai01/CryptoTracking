@@ -11,11 +11,12 @@ import SwiftUI
 struct CustomTextField: View {
     @Binding var text: String
     @Binding var onEditingChanged: Bool
+    let placeHolderStr: String
     var body: some View {
         ZStack(alignment: .leading) {
             if text == "" {
 
-                Text("0")
+                Text(placeHolderStr)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(Color.gray.opacity(0.5))
             }

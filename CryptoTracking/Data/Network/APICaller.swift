@@ -28,11 +28,12 @@ struct APIService {
     private init() {}
 
     func request<T: Decodable>(endpoint: String, parameters: [String: Any], method: HTTPMethod, completion: @escaping (Result<T, Error>) -> Void) {
-        guard let url = URL(string: "\(BaseUrl.coinGekko.rawValue)\(endpoint)") else {
+        guard let url = URL(string: "\(BaseUrl.mock.rawValue)\(endpoint)") else {
             completion(.failure(NetworkError.invalidURl))
             return
         }
 
+        print("@@@url: \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -90,6 +91,49 @@ struct APIService {
     }
 
 
+//    func request<T: Decodable>(endpoint: String, parameters: [String: Any], method: HTTPMethod) -> AnyPublisher<T, Error> {
+//           guard let url = URL(string: "\(BaseUrl.mock.rawValue)\(endpoint)") else {
+//               return Fail(error: NetworkError.invalidURl).eraseToAnyPublisher()
+//           }
+//
+//           var request = URLRequest(url: url)
+//           request.httpMethod = method.rawValue
+//           request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//           if method == .get {
+//               var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+//               components?.queryItems = parameters.map { key, value in
+//                   URLQueryItem(name: key, value: "\(value)")
+//               }
+//
+//               if let urlWithQuery = components?.url {
+//                   request.url = urlWithQuery
+//               }
+//           } else if method == .post {
+//               do {
+//                   let jsonData = try JSONSerialization.data(withJSONObject: parameters)
+//                   request.httpBody = jsonData
+//               } catch {
+//                   return Fail(error: error).eraseToAnyPublisher()
+//               }
+//           }
+//
+//           return URLSession.shared.dataTaskPublisher(for: request)
+//               .tryMap { data, response in
+//                   guard let httpResponse = response as? HTTPURLResponse else {
+//                       throw NetworkError.invalidResponse
+//                   }
+//
+//                   guard (200..<300).contains(httpResponse.statusCode) else {
+//                       throw NetworkError.httpError(code: httpResponse.statusCode)
+//                   }
+//
+//                   return data
+//               }
+//               .decode(type: T.self, decoder: JSONDecoder())
+//               .eraseToAnyPublisher()
+//       }
+
     func requestArray<T: Decodable>(endpoint: String, parameters: [String: Any], method: HTTPMethod, completion: @escaping (Result<[T], Error>) -> Void) {
 
         guard let url = URL(string: "\(BaseUrl.mock.rawValue)\(endpoint)") else {
@@ -139,33 +183,14 @@ struct APIService {
             }
         }.resume()
     }
+
+
 }
 
 
 
 
 class APIClient {
-    static let shared = APIClient() // Singleton để sử dụng chung API Client
-
-    private init() {} // Đảm bảo không thể tạo thể hiện mới
-
-    func fetchData<T: Decodable>(_ endpoint: String, parameters: [String: String], responseType: T.Type) -> AnyPublisher<T, Error> {
-
-        var components = URLComponents(string: "https://your-api-url.com/\(endpoint)")!
-        components.queryItems = parameters.map { key, value in
-            URLQueryItem(name: key, value: value)
-        }
-
-        guard let url = components.url else {
-            return Fail(error: NetworkError.invalidResponse).eraseToAnyPublisher()
-        }
-
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: responseType, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
 }
 
 

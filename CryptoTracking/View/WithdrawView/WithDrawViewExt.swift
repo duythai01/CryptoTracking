@@ -107,7 +107,7 @@ extension WithdrawView {
                     HStack {
                         HStack {
                             // TextField
-                            CustomTextField(text: $amountStr, onEditingChanged: $onEditingChangedAmounTextField)
+                            CustomTextField(text: $amountStr, onEditingChanged: $onEditingChangedAmounTextField, placeHolderStr: "0")
                                 .padding(.leading, 8)
 
                             // Select coin

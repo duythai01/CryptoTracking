@@ -24,7 +24,7 @@ class BuyViewModel: ObservableObject {
     @Published var filterHoldingStatus: StatusFilter = .off
     @Published var filterPriceStatus: StatusFilter = .off
     @Published var filterType: FilterCoinType = .rank(statusFilter: .off)
-    @Published var showLoadingCoins: Bool = true
+    @Published var isHiddenLoadCoin: Bool = false
 
     private let coinServices = CoinDataService.shared
     private var cancellables = Set<AnyCancellable>()
@@ -60,9 +60,11 @@ class BuyViewModel: ObservableObject {
                 DispatchQueue.main.async {
                 self?.allCoins = coins
                 self?.allCoinsDisplay = coins
-                self?.showLoadingCoins = false
 
                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self?.isHiddenLoadCoin = true
+                }
             })
             .store(in: &cancellables)
 
@@ -100,6 +102,8 @@ class BuyViewModel: ObservableObject {
     }
 
     func filterCoins(type: FilterCoinType) {
+        self.isHiddenLoadCoin = false
+
         switch type {
         case .rank(let statusFilter):
             switch statusFilter {
@@ -110,6 +114,7 @@ class BuyViewModel: ObservableObject {
             case .off:
                 allCoinsDisplay = allCoins
             }
+            self.isHiddenLoadCoin = true
 
         case .price(let statusFilter):
             switch statusFilter {
@@ -120,6 +125,8 @@ class BuyViewModel: ObservableObject {
             case .off:
                 allCoinsDisplay = allCoins
             }
+            self.isHiddenLoadCoin = true
+
         case .holding(let statusFilter):
             log() 
             switch statusFilter {
@@ -130,6 +137,7 @@ class BuyViewModel: ObservableObject {
             case .off:
                 allCoinsDisplay = allCoins
             }
+            self.isHiddenLoadCoin = true
 
         case .percent(let statusFilter):
             switch statusFilter {
@@ -140,8 +148,7 @@ class BuyViewModel: ObservableObject {
             case .off:
                 allCoinsDisplay = allCoins
             }
-
-
+            self.isHiddenLoadCoin = true
         }
     }
 

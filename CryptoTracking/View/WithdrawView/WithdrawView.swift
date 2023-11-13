@@ -40,16 +40,6 @@ struct WithdrawView: View {
     let filter = CIFilter.qrCodeGenerator()
     let depositNework = ["ETH/ERC20", "BSC/BEP20", "Arabitrum One", "Arabitrum Nova", "ZkSync Era", "Optimism"]
 
-    init() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white,]
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 22, weight: .bold)] // Set the text
-//        appearance.backgroundColor = UIColor(#colorLiteral(red: 0.003328499288, green: 0.02456522346, blue: 0.1299790061, alpha: 1))
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().tintColor = .white
-
-    }
 
     var body: some View {
         ZStack {
@@ -58,12 +48,6 @@ struct WithdrawView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(spacing: 16) {
-//                            if $bottomSheetMode.wrappedValue != .custom(heightRatio: 0.7) {
-//                                currenceAssets
-//                                    .animation(.easeIn(duration: 0.2))
-//                                    .transition(.scale)
-//                                    .id("currenceAssets")
-//                            }
                             switchButton
                                 .id("switchButton")
 

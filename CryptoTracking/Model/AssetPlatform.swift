@@ -6,15 +6,15 @@
 //
 
 import Foundation
-struct AssetPlatformElement: Codable {
-    let id: String?
+struct AssetPlatformElement: Codable, Identifiable {
+    let id: String
     let chainIdentifier: Int?
     let name, shortname: String?
-
+    let img: String?
     enum CodingKeys: String, CodingKey {
         case id
         case chainIdentifier = "chain_identifier"
-        case name, shortname
+        case name, shortname, img
     }
 }
 

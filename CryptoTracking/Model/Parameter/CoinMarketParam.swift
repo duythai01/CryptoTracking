@@ -66,3 +66,14 @@ extension CoinMarketParam {
         return dict
     }
 }
+
+
+struct AssetPlatformParam {
+    let filter: String
+
+    func toDict() -> [String: Any] {
+        var dict: [String: Any] =  ["filter": filter]
+        return dict
+    }
+
+}

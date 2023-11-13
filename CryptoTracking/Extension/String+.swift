@@ -32,4 +32,5 @@ extension String {
 
 extension String {
     static let coinMarket = "coins/markets"
+    static let assetPlatform = "asset_platforms?filter=nft"
 }

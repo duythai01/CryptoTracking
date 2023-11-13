@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MarketView: View {
-    @State var searchQuery: String = ""
-    @State var paddingBottom: CGFloat = 200
+    @StateObject private var viewModel = MarketViewModel()
+    
     let testListMarket = [
         MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
         MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
@@ -23,59 +23,65 @@ struct MarketView: View {
                     Text("NFT Market")
                         .foregroundColor(.white)
                         .font(.system(size: 24, weight: .bold))
-                    SearchField(searchQuery: $searchQuery,  texSize: 16, iconSize: 20)
-                    ScrollView(.vertical) {
-                        LazyVStack(alignment: .center, spacing: 20) {
-                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
-                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
-                            buildMarketList(sectionLabel: "Top NFT Marketplace", markets: testListMarket)
+                    SearchField(searchQuery: $viewModel.searchText, texSize: 16, iconSize: 20)
+                        .padding(.horizontal, 16)
+                    LoadingView(isHidden: $viewModel.isHiddenLoading, content:
+                        ScrollView(.vertical) {
+                            LazyVStack(alignment: .center, spacing: 20) {
+                                buildMarketList(sectionLabel: "Top NFT Marketplace", assetPlatforms: viewModel.assetPlatformDisplay)
+                                buildMarketList(sectionLabel: "Other", assetPlatforms: viewModel.assetPlatformDisplay)
 
-                        }
-                    }
+                            }
+                        })
+                    Spacer()
+
             }
 
         }
         .ignoresSafeArea(.keyboard)
+        .onAppear{
+            viewModel.getAssetPlatForm()
+        }
         .onTapGesture {
-                // End editing mode when tapping outside of the text field
             UIApplication.shared.dismissKeyboard()
-            }
+        }
     }
 
-    func buildMarketList(sectionLabel: String, markets: [MarketViewItem]) -> some View {
+    func buildMarketList(sectionLabel: String, assetPlatforms: [AssetPlatformElement]) -> some View {
         return VStack (spacing: 16){
-            HStack {
-            Text(sectionLabel)
-                .foregroundColor(.white)
-                .font(.system(size: 18, weight: .bold))
-            Spacer()
-            Button(action: {
-
-            }, label: {
-                Image(systemName: "arrow.right")
-                    .resizable()
-                    .font(.system(size: 16, weight: .bold))
-                    .frame(width: 20, height: 14)
-                    .foregroundColor(.white)
-            })
-        }
-            ForEach(markets) { market in
+            if !assetPlatforms.isEmpty {
+                HStack {
+                    Text(sectionLabel)
+                        .foregroundColor(.white)
+                        .font(.system(size: 18, weight: .bold))
+                    Spacer()
+                    Button(action: {
+                        
+                    }, label: {
+                        Image(systemName: "arrow.right")
+                            .resizable()
+                            .font(.system(size: 16, weight: .bold))
+                            .frame(width: 20, height: 14)
+                            .foregroundColor(.white)
+                    })
+                }}
+            ForEach(assetPlatforms) { platform in
                 HStack {
                     Circle()
                         .frame(width: 46, height: 46)
                         .overlay(
-                            market.image
+                            Image(platform.img ?? "")
                                 .resizable()
                                 .scaledToFit()
                         )
                         .padding(.vertical, 8)
                         .padding(.leading, 8)
                     VStack(alignment: .leading) {
-                        Text(market.name)
+                        Text(platform.name ?? "")
                             .foregroundColor(.white)
                         Spacer(minLength: 6)
                             .font(.system(size: 16, weight: .bold))
-                        Text(market.link)
+                        Text(platform.shortname ?? "")
                             .foregroundColor(.white.opacity(0.5))
                             .font(.system(size: 14))
 
@@ -118,3 +124,5 @@ extension UIApplication {
            self.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
         }
 }
+
+

@@ -18,7 +18,7 @@ struct BuyView: View {
     @State private var coinDefaultSelected: CoinDefault  = .usdt
 
     var body: some View {
-        //        NavigationView {
+//        NavigationView {
 
         ZStack {
             Color.theme.mainColor.ignoresSafeArea()
@@ -31,13 +31,13 @@ struct BuyView: View {
 
                 categoryBuy
                 filterCoins
-                lisCoinView
+
+                LoadingView(isHidden: $viewModel.isHiddenLoadCoin, content: listCoinView)
+
                 Spacer()
             }
         }
-        .onAppear {
-            viewModel.showLoadingCoins = true
-        }
+
         .navigationTitle(Text("BUY"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(action: {
@@ -189,7 +189,7 @@ extension BuyView {
 
         }
 
-        private var lisCoinView: some View {
+        private var listCoinView: some View {
             VStack {
                 ZStack(alignment: .center) {
                     ScrollView(.vertical) {
@@ -258,13 +258,6 @@ extension BuyView {
                         .listStyle(.plain)
                         .fixedSize(horizontal: false, vertical: true)
                     }
-
-
-                    if viewModel.showLoadingCoins {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                    }
-
                 }
             }
             .padding(.horizontal, 8)

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import LocalAuthentication
+import FirebaseCore
+import FirebaseAuth
 
 struct LoginView: View {
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
@@ -17,8 +19,12 @@ struct LoginView: View {
     @State var userName: String = ""
     @State var heightSwitchButton: CGFloat = 0
     @State var isShowAlertEnableBiometric: Bool = false
+    @State var isHiddenPopupNotice: Bool = true
+
+    private let userManager = UserManager.shared
+
     var body: some View {
-        ZStack {
+        NoticeView(isHidden: $isHiddenPopupNotice, type: .warning, title: "Error", description: "This func is devloping") {
             Color.theme.mainColor.ignoresSafeArea()
             VStack(spacing: 32){
                 Image("ic_launchscreen")
@@ -32,20 +38,25 @@ struct LoginView: View {
 
                         // Enter phone number
                         TextFieldLogin(text: $phoneNumber,
-                                       placeHolder: "Phone number",
+                                       placeHolder: "Phone number or mail",
                                        image: Image(systemName: "phone.circle.fill"),
-                                       textView: TextField("", text: $phoneNumber) {
-                            UIApplication.shared.dismissKeyboard()
-                        })
+                                       textView:
+                                        TextField("", text: $phoneNumber)
+                                        .font(.system(size: 16, weight: .medium))
+                                        .foregroundColor(.white)
+                                        .accentColor(.white)
+                        )
 
                         //Enter password
                         TextFieldLogin(text: $pin,
                                        placeHolder: isLogin ? "Pin" : "Create your Pin",
                                        image: Image(systemName: "lock.circle.fill"),
-                                       textView: TextField("", text: $pin) {
-                            UIApplication.shared.dismissKeyboard()
-                        })
-
+                                       textView:
+                                        SecureField("", text: $pin)
+                                        .font(.system(size: 16, weight: .medium))
+                                        .foregroundColor(.white)
+                                        .accentColor(.white).keyboardType(.numberPad)
+                        )
                         if isLogin {
                             // Reset password
                             Button(action: {}, label: {
@@ -57,9 +68,15 @@ struct LoginView: View {
 
                         } else {
                             //Enter username
-                            TextFieldLogin(text: $userName, placeHolder: "Enter user name", image: Image(systemName: "person.circle.fill"), textView:  TextField("", text: $phoneNumber) {
+                            TextFieldLogin(text: $userName, placeHolder: "Enter user name", image: Image(systemName: "person.circle.fill"), textView:
+                                            TextField("", text: $userName) {
                                 UIApplication.shared.dismissKeyboard()
-                            })
+                            }
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white)
+                                .accentColor(.white)
+                            )
+                            
                                 .padding(.bottom, 32)
                         }
 
@@ -79,11 +96,16 @@ struct LoginView: View {
 
 
                 Button(action: {
-                    checkFaceID()
+                    if isLogin {
+                        checkFaceID()
+                        login()
+                    } else {
+                        register()
+                    }
                 }, label: {
                     HStack{
                         Spacer()
-                        Text("LOGIN")
+                        Text(isLogin ? "LOGIN" : "REGISTER")
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.white)
                         Spacer()
@@ -91,26 +113,25 @@ struct LoginView: View {
                 })
                 .padding(.all, 16)
                 .background(RoundedCorner(radius: 8).foregroundColor(.purple))
-
-                VStack(spacing: 16){
-                    Button(action: {
-                        authenticateFaceID()
-                    }, label: {
-                        Image(systemName: "faceid")
-                            .font(.system(size: 32))
-                            .foregroundColor(.purple)
-                    })
-                    Text("Or sign in with fingerprint/FaceID")
-                        .font(.system(size: 16))
-                        .foregroundColor(.white)
+                if isLogin {
+                    VStack(spacing: 16){
+                        Button(action: {
+                            authenticateFaceID()
+                        }, label: {
+                            Image(systemName: "faceid")
+                                .font(.system(size: 32))
+                                .foregroundColor(.purple)
+                        })
+                        Text("Or sign in with fingerprint/FaceID")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                    }
                 }
-
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 32)
 
         }
-        
         .alert(isPresented: $isShowAlertEnableBiometric, content: {
             Alert(
                 title: Text("Do you want to enable biometric login at the next login"),
@@ -121,44 +142,14 @@ struct LoginView: View {
                 secondaryButton: .cancel()
             )
     })
-    }
-
-    func authenticateFaceID() {
-        let context = LAContext()
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "We need your FaceID to unlock"
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticError in
-                if success {
-
-                    DispatchQueue.main.async {
-                        coordinator.show(.appView)
-
-                    }
-                } else {
-                    print("@@@ERRor in evlate")
-                }
-            }
-        } else {
+        .onTapGesture {
+            UIApplication.shared.dismissKeyboard()
         }
     }
-
-    func checkFaceID() {
-            let context = LAContext()
-
-            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
-                // Biometric authentication is available
-                if context.biometryType == .faceID || context.biometryType == .touchID {
-                    isShowAlertEnableBiometric = false
-                } else {
-                    isShowAlertEnableBiometric = true
-                }
-            } else {
-                // Biometric authentication is not available
-                isShowAlertEnableBiometric = true
-            }
-        }
 }
+
+
+// View
 extension LoginView {
     var switchButton: some View {
         GeometryReader { geometryH in
@@ -218,60 +209,169 @@ extension LoginView {
         .frame(height: heightSwitchButton)
     }
 }
+
+
+// Auth
+extension LoginView {
+    func authenticateFaceID() {
+        let context = LAContext()
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "We need your FaceID to unlock"
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticError in
+                if success {
+
+                    DispatchQueue.main.async {
+                        coordinator.show(.appView)
+
+                    }
+                } else {
+                    print("@@@ERRor in evlate")
+                }
+            }
+        } else {
+        }
+    }
+
+    func checkFaceID() {
+            let context = LAContext()
+
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
+                // Biometric authentication is available
+                if context.biometryType == .faceID || context.biometryType == .touchID {
+                    isShowAlertEnableBiometric = false
+                } else {
+                    isShowAlertEnableBiometric = true
+                }
+            } else {
+                // Biometric authentication is not available
+                isShowAlertEnableBiometric = true
+            }
+        }
+
+    func register() {
+
+        Auth.auth().createUser(withEmail: phoneNumber, password: pin) { result, error in
+            if let error = error {
+                print("Notice loi: \(error.localizedDescription)")
+                return
+            }
+            if let result = result {
+                print(result)
+                isLogin = true
+
+            }
+        }
+    }
+
+    func login() {
+        Auth.auth().signIn(withEmail: phoneNumber, password: pin) { result, error in
+            if let error = error {
+                print("Notice loi: \(error.localizedDescription)")
+                return
+            }
+            if let result = result {
+                userManager.saveLoggedInUser(currentUser: result)
+                coordinator.show(.appView)
+                print(result)
+            }
+        }
+
+    }
+}
+
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
     }
 }
 
-struct TextFieldLogin<Label>: View where Label: View  {
-    @Binding var text: String
-    let placeHolder: String
-    let image: Image
-    let textView: TextField<Label>
+enum NoticeType {
+    case success
+    case warning
+    case error
+}
+
+struct NoticeView<Content>: View where Content: View   {
+    let type: NoticeType
+    let color: Color
+    let title: String
+    let description: String
+    let content: Content
+
+    @Binding var isHiddenNotice: Bool
+
+    init( isHidden: Binding<Bool>, type: NoticeType, title: String, description: String, @ViewBuilder content: @escaping () -> Content) {
+        self._isHiddenNotice = isHidden
+
+        self.type = type
+        switch type {
+        case .success:
+            self.color = Color(#colorLiteral(red: 0.2536941767, green: 0.779199183, blue: 0.003175185528, alpha: 1))
+        case .warning:
+            self.color = Color(#colorLiteral(red: 0.9903402925, green: 0.6474537253, blue: 0.01725636609, alpha: 1))
+        case .error:
+            self.color = Color(#colorLiteral(red: 0.8449876904, green: 0.3313968182, blue: 0.4077254534, alpha: 1))
+        }
+        self.title = title
+        self.description = description
+        self.content = content()
+    }
+
     var body: some View {
-        HStack {
-                image
-                .font(.system(size: 22, weight: .bold))
-                .foregroundColor(.purple)
-                .background(Circle().foregroundColor(.white).padding(.all, 3))
-            VStack {
-                ZStack(alignment: .leading) {
-                    if text == "" {
-
-                        Text(placeHolder)
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(Color.gray.opacity(0.7))
-                    }
-
-
-                    textView
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.white)
-                    .accentColor(.white)
-
+        ZStack{
+            content
+            if !isHiddenNotice {
+                Color.black.opacity(0.3).ignoresSafeArea()
+                VStack {
                     HStack {
                         Spacer()
-                        if text != "" {
-                            Button(action: {
-                                text = ""
-                            }, label: {
-                                Image(systemName: "multiply.circle.fill")
-                                    .font(.system(size: 16, weight: .medium))
-                                    .foregroundColor(.purple)
+                        Image(systemName: type == .error ? "exclamationmark.triangle.fill" : (type == .success ?  "checkmark.circle.fill" : "exclamationmark.triangle.fill"))
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.vertical, 8)
+                        Text("Error!")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.vertical, 8)
 
-                            })
-                            .padding(.horizontal, 16)
-
-                        }
-
+                        Spacer()
                     }
+                    .background(
+                        Color(#colorLiteral(red: 0.8449876904, green: 0.3313968182, blue: 0.4077254534, alpha: 1))
+                            .cornerRadius(8, corners: [.topLeft, .topRight])
+                    )
+                    HStack {
+                        Text("This func is not support")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.black)
+                            .padding(.leading, 8)
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
 
+                    Button(action: {
+                        isHiddenNotice = true
+                    }, label: {
+                        Text("CLOSE")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(Color(#colorLiteral(red: 0.8449876904, green: 0.3313968182, blue: 0.4077254534, alpha: 1)))
+                            )
 
+                    })
+                    .padding(.vertical, 8)
                 }
-                Color.white.frame(height: 2 / UIScreen.main.scale)
+                .background(RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(Color.white))
+                .padding(.horizontal, 32)
             }
-            .padding(.horizontal, 6)
         }
     }
+
+
 }

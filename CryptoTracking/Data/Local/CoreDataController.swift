@@ -76,7 +76,7 @@ class CoreDataController: ObservableObject {
     func deleteEntity(id: String) {
         let context = persistentContainer.viewContext
 
-        if var entity = getEntityByID(id: id) {
+        if let entity = getEntityByID(id: id) {
             context.delete(entity)
             saveContext(type: .deleteDone)
         } else {

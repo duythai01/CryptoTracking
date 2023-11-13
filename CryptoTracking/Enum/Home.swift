@@ -13,7 +13,7 @@ enum HomeCategory: String, CaseIterable, Identifiable {
 
     case buy
     case withdraw
-    case send
+    case p2p
     case receive
     case exchange
     var displayName: String {
@@ -22,8 +22,8 @@ enum HomeCategory: String, CaseIterable, Identifiable {
             return "Buy"
         case .withdraw:
             return "Withdraw"
-        case .send:
-            return "Send"
+        case .p2p:
+            return "P2P"
         case .receive:
             return "Receive"
         case .exchange:
@@ -36,8 +36,8 @@ enum HomeCategory: String, CaseIterable, Identifiable {
         switch self {
         case .buy:
             return Image(systemName: "cart.fill")
-        case .send:
-            return Image("ic_withdraw")
+        case .p2p:
+            return Image(systemName: "person.2.fill")
         case .withdraw:
             return Image(systemName:"square.and.arrow.up.fill")
         case .receive:

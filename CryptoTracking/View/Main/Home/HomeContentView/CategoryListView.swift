@@ -29,20 +29,15 @@ extension HomeView {
                         .onTapGesture(){
                             switch category {
                             case .buy:
-                                coordinator.navigationController.isNavigationBarHidden = false
-                                coordinator.show(.buy)
+                                coordinator.show(.buy, isNavigationBarHidden: false)
                             case .exchange:
-                                coordinator.navigationController.isNavigationBarHidden = false
-                                coordinator.show(.exchange)
+                                coordinator.show(.exchange, isNavigationBarHidden: false)
                             case .receive:
-                                coordinator.navigationController.isNavigationBarHidden = false
-                                coordinator.show(.receive)
+                                coordinator.show(.receive, isNavigationBarHidden: false)
                             case .withdraw:
-                                coordinator.navigationController.isNavigationBarHidden = false
-                                coordinator.show(.withdraw)
-                            case .send:
-                                coordinator.navigationController.isNavigationBarHidden = false
-                                coordinator.show(.send)
+                                coordinator.show(.withdraw, isNavigationBarHidden: false)
+                            case .p2p:
+                                coordinator.show(.send, isNavigationBarHidden: false)
                             }
                                 categoryAnimations[index] = true
                                 categoryAnimations[index] = false
