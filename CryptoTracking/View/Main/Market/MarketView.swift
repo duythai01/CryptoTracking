@@ -9,13 +9,8 @@ import SwiftUI
 
 struct MarketView: View {
     @StateObject private var viewModel = MarketViewModel()
-    
-    let testListMarket = [
-        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-        MarketViewItem(name: "Pancake swap", image: Image("ic_bitcoin"), link: "https://www.youtube.com/watch?v=j__Q13iAxNk"),
-    ]
+    @EnvironmentObject var coordinator: Coordinator<AppRouter>
+
     var body: some View {
         ZStack {
                 Color.theme.mainColor.ignoresSafeArea()
@@ -98,6 +93,9 @@ struct MarketView: View {
                         .stroke(.purple, lineWidth: 0)
                 )
                 .shadow(color: .white,radius: 2)
+                .onTapGesture {
+                    coordinator.show(.marketDetailView(url: platform.url ?? "", title: platform.name ?? ""), isNavigationBarHidden: false)
+                }
 
             }
         }

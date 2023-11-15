@@ -12,12 +12,13 @@ public enum AppRouter: NavigationRouter {
     case appView
     case buy
     case withdraw
-    case send
+    case p2p
     case receive
     case exchange
     case personal
     case onboarding
     case login
+    case marketDetailView(url: String, title: String)
 
     public var transition: NavigationTranisitionStyle {
         switch self {
@@ -25,7 +26,7 @@ public enum AppRouter: NavigationRouter {
             return .push
         case .withdraw:
             return .push
-        case .send:
+        case .p2p:
             return .push
         case .receive:
             return .push
@@ -39,6 +40,8 @@ public enum AppRouter: NavigationRouter {
             return .push
         case .login:
             return .push
+        case .marketDetailView(let url, let title):
+            return .push
         }
     }
 
@@ -49,8 +52,8 @@ public enum AppRouter: NavigationRouter {
              BuyView()
         case .withdraw:
              WithdrawView()
-        case .send:
-            BuyView()
+        case .p2p:
+            P2PView()
         case .receive:
             BuyView()
         case .exchange:
@@ -63,6 +66,8 @@ public enum AppRouter: NavigationRouter {
             OnboardingView()
         case .login:
             LoginView()
+        case .marketDetailView(let url, let title):
+            MarketDetailView(url: url, tilte: title)
         }
     }
 }

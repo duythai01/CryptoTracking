@@ -48,6 +48,9 @@ enum WithdrawSheetSelection {
     case depositMethod
     case depositCoin
     case depositNetwork
+    case flag
+    case payment
+    case filter
     case none
 
     var sectionTitle: String {
@@ -66,6 +69,12 @@ enum WithdrawSheetSelection {
             return "Select Network"
         case .none:
             return ""
+        case .flag:
+            return "Select fiat"
+        case .payment:
+            return ""
+        case .filter:
+            return "Filter"
         }
     }
 }

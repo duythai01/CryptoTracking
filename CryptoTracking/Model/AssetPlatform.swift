@@ -11,10 +11,11 @@ struct AssetPlatformElement: Codable, Identifiable {
     let chainIdentifier: Int?
     let name, shortname: String?
     let img: String?
+    let url: String?
     enum CodingKeys: String, CodingKey {
         case id
         case chainIdentifier = "chain_identifier"
-        case name, shortname, img
+        case name, shortname, img, url
     }
 }
 

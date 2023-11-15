@@ -17,7 +17,7 @@ struct CustomTextField: View {
             if text == "" {
 
                 Text(placeHolderStr)
-                    .font(.system(size: 16, weight: .medium))
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundColor(Color.gray.opacity(0.5))
             }
 

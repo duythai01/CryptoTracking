@@ -37,7 +37,7 @@ extension HomeView {
                             case .withdraw:
                                 coordinator.show(.withdraw, isNavigationBarHidden: false)
                             case .p2p:
-                                coordinator.show(.send, isNavigationBarHidden: false)
+                                coordinator.show(.p2p, isNavigationBarHidden: false)
                             }
                                 categoryAnimations[index] = true
                                 categoryAnimations[index] = false

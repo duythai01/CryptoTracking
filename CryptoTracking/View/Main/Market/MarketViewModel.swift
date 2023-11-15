@@ -20,6 +20,14 @@ class MarketViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let apiCaller = APIService .shared
     private let imgs = ["BNB Smart Chain", "Arbitrum One", "Ethereum", "Avalanche", "Optimism", "Solana", "Polygon POS", "Klaytn"]
+    private let links = ["https://www.bnbchain.org/en/smartChain",
+                         "https://arbitrum.io/",
+                         "https://ethereum.org/en/",
+                         "https://www.avax.network/",
+                         "https://www.optimism.io/apps/all",
+                         "https://solana.com/",
+                         "https://polygon.technology/polygon-pos",
+                         "https://klaytn.foundation/ecosystem/"]
 
     init() {
         addSubscriber()
@@ -51,7 +59,7 @@ class MarketViewModel: ObservableObject {
             switch result {
             case .success(let success):
                 print(success)
-                self.generateAssetWithImg (success: success, imgs: self.imgs)
+                self.generateAssetWithImg (success: success, imgs: self.imgs, links: self.links)
 
             case .failure(let failure):
                 self.error = failure
@@ -81,25 +89,30 @@ class MarketViewModel: ObservableObject {
 //            .store(in: &cancellables)
 //    }
 
-    private func generateAssetWithImg(success: [AssetPlatformElement], imgs: [String]) {
+    private func generateAssetWithImg(success: [AssetPlatformElement], imgs: [String], links: [String]) {
         var assetWithImg: [AssetPlatformElement] = []
 
-            for element in success {
-                for img in imgs {
-                    if element.name == img {
-                        assetWithImg.append(AssetPlatformElement(id: element.id, chainIdentifier: element.chainIdentifier, name: element.name, shortname: element.shortname, img: img))
-                    }
-                }
+        for element in success {
+            if let index = imgs.firstIndex(of: element.name ?? "") {
+                assetWithImg.append(
+                    AssetPlatformElement(
+                        id: element.id,
+                        chainIdentifier: element.chainIdentifier,
+                        name: element.name,
+                        shortname: element.shortname,
+                        img: imgs[index],
+                        url: links[index]
+                    )
+                )
             }
+        }
 
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.assetPlatformDisplay = assetWithImg
-                self.assetPlatform = assetWithImg
-
-
-                self.isHiddenLoading = true
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.assetPlatformDisplay = assetWithImg
+            self.assetPlatform = assetWithImg
+            self.isHiddenLoading = true
+        }
     }
 
 }

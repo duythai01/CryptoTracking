@@ -233,6 +233,9 @@ extension WithdrawView {
                 .background( depositNetworkName == name ? Color.blue.opacity(0.4).cornerRadius(12) :  Color.theme.mainColor.cornerRadius(12))
 
             }
+
+        default:
+            EmptyView()
         }
     }
 }
@@ -279,6 +282,8 @@ extension WithdrawView {
 
             case .depositNetwork:
                 bottomSheetMode = .custom(heightRatio: 0.7)
+            default:
+                bottomSheetMode = .none
             }
     }
 
