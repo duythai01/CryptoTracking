@@ -28,6 +28,13 @@ extension String {
 
        }
     }
+
+    func formatDateTo(type: String, date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = type
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate
+    }
 }
 
 extension String {
