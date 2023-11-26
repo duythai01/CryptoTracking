@@ -25,7 +25,6 @@ struct MarketView: View {
                             LazyVStack(alignment: .center, spacing: 20) {
                                 buildMarketList(sectionLabel: "Top NFT Marketplace", assetPlatforms: viewModel.assetPlatformDisplay)
                                 buildMarketList(sectionLabel: "Other", assetPlatforms: viewModel.assetPlatformDisplay)
-
                             }
                         })
                     Spacer()
@@ -33,7 +32,6 @@ struct MarketView: View {
             }
 
         }
-        .ignoresSafeArea(.keyboard)
         .onAppear{
             viewModel.getAssetPlatForm()
         }

@@ -126,14 +126,12 @@ struct QrView: View {
                 .padding(.vertical, 120)
             }
             .onAppear {
-                print("@@@: QrView appear")
                 DispatchQueue.global(qos: .background).async {
                     session.startRunning()
 
                 }
             }
             .onDisappear {
-                print("@@@: QrView disappear")
                 session.stopRunning()
             }
             .alert(isPresented: $isShowAlert, content: {

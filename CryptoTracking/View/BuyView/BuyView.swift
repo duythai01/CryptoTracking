@@ -35,7 +35,6 @@ struct BuyView: View {
                 Spacer()
             }
         }
-
         .navigationTitle(Text("BUY"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(action: {
@@ -57,10 +56,10 @@ struct BuyView: View {
             // End editing mode when tapping outside of the text field
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
-        .onAppear{
-            coordinator.navigationController.navigationItem.backButtonTitle = ""
-
-        }
+//        .onAppear{
+//            coordinator.navigationController.navigationItem.backButtonTitle = ""
+//
+//        }
     }
 
     func configPriceChangePercent(percent: Double?) -> String {

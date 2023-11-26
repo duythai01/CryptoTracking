@@ -9,11 +9,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-class APICaller {
-}
-enum EndPoint {
-
-}
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -21,6 +16,7 @@ enum HTTPMethod: String {
     case patch = "PATCH"
     case delete = "DELETE"
 }
+
 struct APIService {
     static let shared = APIService()
     private let apiKey = "F926ZY2E61PNJIBFBGXYWIRSSPKI6WPE4C"
@@ -28,7 +24,10 @@ struct APIService {
     private init() {}
 
     func request<T: Decodable>(endpoint: String, parameters: [String: Any], method: HTTPMethod, completion: @escaping (Result<T, Error>) -> Void) {
-        guard let url = URL(string: "\(BaseUrl.mock.rawValue)\(endpoint)") else {
+
+        let urlA = endpoint.contains("http") ? endpoint : "\(BaseUrl.mock.rawValue)\(endpoint)"
+
+        guard let url = URL(string: urlA) else {
             completion(.failure(NetworkError.invalidURl))
             return
         }
@@ -44,8 +43,11 @@ struct APIService {
                 URLQueryItem(name: key, value: "\(value)")
             }
 
+
             if let urlWithQuery = components?.url {
                 request.url = urlWithQuery
+                print("@@@: urlWithQuery: \(urlWithQuery)")
+                print("@@@: requestURl: \(request.url)")
             }
         } else if method == .post {
             // Nếu có tham số và phương thức là POST, hãy mã hóa tham số thành dữ liệu JSON và đặt nó làm phần thân của yêu cầu
@@ -74,6 +76,7 @@ struct APIService {
                     do {
                         let decoder = JSONDecoder()
                         let model = try decoder.decode(T.self, from: data)
+                        print("@@@Model: \(model)")
                         completion(.success(model))
                     } catch {
                         completion(.failure(error))
@@ -187,11 +190,6 @@ struct APIService {
 
 }
 
-
-
-
-class APIClient {
-}
 
 
 enum NetworkError: Error {

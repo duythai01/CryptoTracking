@@ -8,11 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct CreditCardView: View {
-    @State private var selectedTabBanner: Int = 0
-    let advertismentBanner = ["banner1", "banner2", "banner3", "banner4"]
-    let timer = Timer.publish(every: 6, on: .main, in: .common).autoconnect()
-    var body: some View {
+extension HomeView {
+
+    var balanceAndNews: some View {
         HStack {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
@@ -101,6 +99,9 @@ struct CreditCardView: View {
                             .padding(.bottom, 16)
 
                     }
+                }
+                .onTapGesture {
+                    coordinator.show(.newsView, isNavigationBarHidden: false)
                 }
                 }
 

@@ -62,7 +62,7 @@ class BuyViewModel: ObservableObject {
                 self?.allCoinsDisplay = coins
 
                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                     self?.isHiddenLoadCoin = true
                 }
             })

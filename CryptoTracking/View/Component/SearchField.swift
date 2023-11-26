@@ -37,6 +37,8 @@ struct SearchField: View {
                 }
                 .font(.system(size: texSize, weight: .medium))
                 .foregroundColor(.white)
+                .accentColor(.white.opacity(0.8))
+
                 HStack {
                     Spacer()
                     if searchQuery != "" {

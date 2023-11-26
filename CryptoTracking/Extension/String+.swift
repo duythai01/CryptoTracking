@@ -35,9 +35,18 @@ extension String {
         let formattedDate = dateFormatter.string(from: date)
         return formattedDate
     }
-}
 
-extension String {
-    static let coinMarket = "coins/markets"
-    static let assetPlatform = "asset_platforms?filter=nft"
+    func isoFormatDateString() -> String {
+        let dateString = self
+        let isoDateFormatter = ISO8601DateFormatter()
+        if let date = isoDateFormatter.date(from: dateString) {
+            let outputDateFormatter = DateFormatter()
+            outputDateFormatter.dateFormat = "yyyy-MM-dd"
+
+            let formattedDate = outputDateFormatter.string(from: date)
+            return formattedDate
+            } else {
+                return ""
+        }
+    }
 }

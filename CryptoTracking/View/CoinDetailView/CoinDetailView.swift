@@ -41,6 +41,7 @@ enum DetailInfoType: CaseIterable {
     }
 }
 
+
 struct CoinDetailView: View {
     let coinID: String
 
@@ -48,28 +49,20 @@ struct CoinDetailView: View {
     @State var isUp: Bool = true
     @State var isBuy: Bool = true
     @State var isCurrentMarket: Bool = false
-    @State private var sliderValuePercent: Double = 0.0 //{
-//        didSet {
-//            if let doubleValue = Decimal(string: amount), let bal = Decimal(string: balance) {
-//                let inCrease = (NSDecimalNumber(decimal: doubleValue).doubleValue * sliderValuePercent * NSDecimalNumber(decimal: bal).doubleValue)
-//                amount = "\(inCrease)"
-//            }
-//        }
-//    }
-    @State var typeDetail: DetailInfoType = .trade
+    @State var typeDetail: DetailInfoType = .openOrder
     @State private var transactionInforHeight: CGFloat = 0.0
-    @State var detailInfoType: (DetailInfoType, String) = (.trade, "All Trades")
-    @State var amount: String = "0"
-    @State var ratioCurrency: String = "37400"
-    @State var balance: String = "3.960000"
+    @State var detailInfoType: (DetailInfoType, String) = (.openOrder, "Limit/Market")
     @State var total: String = "0"
-
+    @State var bottomSheetMode: BottomSheetViewMode = .none
+    @State var dataAllTrade: [RealTimeAllTrade] = []
+    @State var orderType: String = "Limit"
 
     @StateObject var viewModel = CoinViewModel()
 
 
-    var randomValue: Double { sliderValuePercent > 50 ? Double.random(in: 10...35) : Double.random(in: 55...90) }
+    var randomValue: Double { viewModel.sliderValuePercent > 50 ? Double.random(in: 10...35) : Double.random(in: 55...90) }
     let highValue = 100.0
+
     let dataTransaction: [RealTimeOrder] = [
         RealTimeOrder(amount: 0.1234, currencyVs: "USDT", currency: "BTC", rate: 36337.2),
         RealTimeOrder(amount: 0.01423, currencyVs: "USDT", currency: "BTC", rate: 36337.3),
@@ -82,8 +75,7 @@ struct CoinDetailView: View {
 
     ]
 
-    @State var dataAllTrade: [RealTimeAllTrade] = []
-
+    let orderTypes = ["Limit", "Market", "Conditional", "Time Condition"]
 
     var body: some View {
         ZStack{
@@ -91,47 +83,115 @@ struct CoinDetailView: View {
             GeometryReader { geometry in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
-                    headerView
+                        headerView
 
-                    if isDisplayChart {
-                        CoinCandleStickChart(entries: CandleStickCoin.entryies.map {
-                            CandleChartDataEntry(x: Double($0.day), shadowH: $0.highPrice, shadowL: $0.lowPrice, open: $0.openPrice, close: $0.closePrice)
-                        }, chartColor: .blue)
-                        .frame(height: UIScreen.main.bounds.height / 4)
-                    }
-                    //Transaction
-                    HStack(alignment: .top) {
-                        tableTransactionView
-                            .frame(maxWidth: geometry.size.width / 2 - 16)
-                        Spacer()
-                        buildTransactionInfoView(geometry: geometry)
-                    }
-
-                    //List orders
-                    VStack(spacing: 8) {
-                        HStack {
-                            ForEach(DetailInfoType.allCases, id: \.self) { type in
-                                Text(type.name)
-                                    .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(typeDetail == type ? .white : .gray)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            typeDetail = type
-                                        }
-                                    }
-                            }
-                            Spacer()
+                        if isDisplayChart {
+                            CoinCandleStickChart(entries: CandleStickCoin.entryies.map {
+                                CandleChartDataEntry(x: Double($0.day), shadowH: $0.highPrice, shadowL: $0.lowPrice, open: $0.openPrice, close: $0.closePrice)
+                            }, chartColor: .blue)
+                            .frame(height: UIScreen.main.bounds.height / 4)
                         }
-                        Color.white.opacity(0.1).frame(height: 2)
-                        buildDetailInfo()
-                            .padding(.bottom, 12)
-                    }
-                    .frame(maxHeight: UIScreen.main.bounds.height * 0.85)
-                    .padding(.top, 8)
+                        //Transaction
+                        HStack(alignment: .top) {
+                            tableTransactionView
+                                .frame(maxWidth: geometry.size.width / 2 - 16)
+                            Spacer()
+                            buildTransactionInfoView(geometry: geometry)
+                        }
+
+                        //List orders
+                        VStack(spacing: 8) {
+                            HStack {
+                                ForEach(DetailInfoType.allCases, id: \.self) { type in
+                                    Text(type.name)
+                                        .font(.system(size: 15, weight: .bold))
+                                        .foregroundColor(typeDetail == type ? .white : .gray)
+                                        .onTapGesture {
+                                            withAnimation {
+                                                typeDetail = type
+                                            }
+                                        }
+                                }
+                                Spacer()
+                            }
+                            Color.white.opacity(0.1).frame(height: 2)
+                            buildDetailInfo()
+                                .padding(.bottom, 12)
+                        }
+                        .frame(maxHeight: UIScreen.main.bounds.height * 0.85)
+                        .padding(.top, 8)
                     }
                 }
             }
             .padding(.horizontal, 10)
+
+            //Modal layer
+            if bottomSheetMode != .none {
+                Color.black.opacity(0.4).ignoresSafeArea()
+                    .onTapGesture {
+                        bottomSheetMode = .none
+                    }
+            }
+
+
+            BottomSheetView(mode: $bottomSheetMode) {
+                ZStack {
+                    Color(#colorLiteral(red: 0.1598833799, green: 0.1648724079, blue: 0.2934403419, alpha: 1))
+                        .cornerRadius(16, corners: [.topLeft, .topRight])
+                    VStack {
+
+                        VStack(spacing: 8) {
+                            ForEach(orderTypes, id: \.self) { type in
+                                HStack {
+                                    Spacer()
+                                    Text(type)
+                                        .font(.system(size: 18, weight:  .bold))
+                                        .foregroundColor(.white.opacity(orderType == type ?  1 : 0.7))
+                                        .padding(.vertical, 8)
+                                    Spacer()
+                                }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .foregroundColor( Color.purple.opacity(orderType == type ? 0.6 : 0)
+                                    )
+                                )
+                                .onTapGesture {
+                                    orderType = type
+                                }
+                            }
+                        }
+                        .padding(.top, 16)
+                        .padding(.horizontal, 16)
+
+                        Spacer()
+                      Button(action: {
+                          bottomSheetMode = .none
+
+                      }, label: {
+                          HStack {
+                              Spacer()
+                              Text("Cancel")
+                                  .font(.system(size: 18, weight:  .bold))
+                                  .foregroundColor(.white)
+                                  .padding(.vertical, 8)
+                              Spacer()
+                          }
+                      })
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .foregroundColor( Color.red.opacity(0.7)
+                            )
+                        )
+                        .padding(.bottom, 24)
+                        .padding(.horizontal, 16)
+
+
+
+                    }
+                    .padding(.horizontal, 16)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .navigationTitle(Text(coinID.uppercased()))
         .navigationBarTitleDisplayMode(.inline)
@@ -139,10 +199,8 @@ struct CoinDetailView: View {
             UIApplication.shared.dismissKeyboard()
         }
         .onAppear{
-            amount = "\((NSDecimalNumber(decimal: Decimal(string: amount) ?? 0).doubleValue * sliderValuePercent * NSDecimalNumber(decimal: Decimal(string: balance) ?? 0).doubleValue))"
-
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                                // Update the counter every second
+                // Update the counter every second
                 let latestTrade = RealTimeAllTrade(price: Double.random(in: 36466.7...36479.7),
                                                    vsCurrency: "USDT",
                                                    currency: "BTC",
@@ -151,13 +209,14 @@ struct CoinDetailView: View {
                 if Bool.random() {
                     dataAllTrade.insert(latestTrade, at: 0)
 
-                  if let lastTimestamp = dataAllTrade.last?.time,
-                 Int(latestTrade.time.timeIntervalSince(lastTimestamp)) > 59 {
-                   dataAllTrade.removeLast()
-               }
+                    if let lastTimestamp = dataAllTrade.last?.time,
+                       Int(latestTrade.time.timeIntervalSince(lastTimestamp)) > 59 {
+                        dataAllTrade.removeLast()
+                    }
 
                 }
-                }
+            }
+            viewModel.checkIsEixstCoreData(coinID: coinID)
         }
     }
 }
@@ -189,11 +248,14 @@ extension CoinDetailView {
                     }
                 })
 
-                Button(action: {  }, label: {
+                Button(action: {
+                    viewModel.switchSaveToCoreDate(coinID: coinID)
+                }, label: {
                     HStack(alignment: .bottom, spacing: 4) {
-                        Image(systemName: "distribute.horizontal.center.fill")
+                        Image(systemName: "star.fill")
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white.opacity(0.5))
+                            .foregroundColor(
+                                viewModel.isStar ? .yellow : .white.opacity(0.5))
                     }
                 })
 
@@ -264,21 +326,21 @@ extension CoinDetailView {
                         .foregroundColor(viewModel.filterType == .rank(statusFilter: .down) ? .yellow : .gray)
                 }
             }.onTapGesture {
-                    switch viewModel.filterType {
-                    case .rank(let status):
-                        switch status {
-                        case .up:
-                            viewModel.filterType = .rank(statusFilter: .down)
-                        case .down:
-                            viewModel.filterType = .rank(statusFilter: .off)
-                        case .off:
-                            viewModel.filterType = .rank(statusFilter: .up)
-
-                        }
-                    default:
+                switch viewModel.filterType {
+                case .rank(let status):
+                    switch status {
+                    case .up:
+                        viewModel.filterType = .rank(statusFilter: .down)
+                    case .down:
+                        viewModel.filterType = .rank(statusFilter: .off)
+                    case .off:
                         viewModel.filterType = .rank(statusFilter: .up)
 
                     }
+                default:
+                    viewModel.filterType = .rank(statusFilter: .up)
+
+                }
             }
 
             Spacer()
@@ -300,20 +362,20 @@ extension CoinDetailView {
                 }
             }
             .onTapGesture {
-                    switch viewModel.filterType {
-                    case .holding(let status):
-                        switch status {
-                        case .up:
-                            viewModel.filterType = .holding(statusFilter: .off)
-                        case .down:
-                            viewModel.filterType = .holding(statusFilter: .up)
-                        case .off:
-                            viewModel.filterType = .holding(statusFilter: .down)
-                        }
-                    default:
+                switch viewModel.filterType {
+                case .holding(let status):
+                    switch status {
+                    case .up:
+                        viewModel.filterType = .holding(statusFilter: .off)
+                    case .down:
+                        viewModel.filterType = .holding(statusFilter: .up)
+                    case .off:
                         viewModel.filterType = .holding(statusFilter: .down)
-
                     }
+                default:
+                    viewModel.filterType = .holding(statusFilter: .down)
+
+                }
             }
 
             Spacer()
@@ -335,20 +397,20 @@ extension CoinDetailView {
                 }
             }
             .onTapGesture {
-                    switch viewModel.filterType {
-                    case .price(let status):
-                        switch status {
-                        case .up:
-                            viewModel.filterType = .price(statusFilter: .off)
-                        case .down:
-                            viewModel.filterType = .price(statusFilter: .up)
-                        case .off:
-                            viewModel.filterType = .price(statusFilter: .down)
-                        }
-                    default:
+                switch viewModel.filterType {
+                case .price(let status):
+                    switch status {
+                    case .up:
+                        viewModel.filterType = .price(statusFilter: .off)
+                    case .down:
+                        viewModel.filterType = .price(statusFilter: .up)
+                    case .off:
                         viewModel.filterType = .price(statusFilter: .down)
                     }
+                default:
+                    viewModel.filterType = .price(statusFilter: .down)
                 }
+            }
         }
 
     }
@@ -362,25 +424,25 @@ extension CoinDetailView {
         VStack(spacing: 8) {
             //Switch button
             HStack {
-               Text("Buy")
+                Text("Buy")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.white.opacity(isBuy ? 1 : 0.6))
                     .frame(width: geometry.size.width / 4.2)
-                .onTapGesture {
-                    withAnimation {
-                        isBuy = true
+                    .onTapGesture {
+                        withAnimation {
+                            isBuy = true
+                        }
                     }
-                }
                 Spacer()
                 Text("Sell")
-                     .font(.system(size: 15, weight: .bold))
-                     .foregroundColor(.white.opacity(isBuy ? 0.6 : 1))
-                     .frame(width: geometry.size.width / 4.2)
-                 .onTapGesture {
-                     withAnimation {
-                         isBuy = false
-                     }
-                 }
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(.white.opacity(isBuy ? 0.6 : 1))
+                    .frame(width: geometry.size.width / 4.2)
+                    .onTapGesture {
+                        withAnimation {
+                            isBuy = false
+                        }
+                    }
             }
             .padding(.vertical, 4)
             .background(
@@ -390,7 +452,8 @@ extension CoinDetailView {
                     }
                     RoundedRectangle(cornerRadius: 6)
                         .foregroundColor(isBuy ? .green : .red)
-                        .frame(width: geometry.size.width / 4.2)
+                        .frame(width: geometry.size.width / 4.2 - 8)
+                        .padding(.horizontal, 8)
                     if isBuy {
                         Spacer()
                     }
@@ -403,7 +466,7 @@ extension CoinDetailView {
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(.white.opacity(0.6))
                 Spacer()
-                Text("\(balance) USDT")
+                Text("\(viewModel.balance) USDT")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.white)
 
@@ -417,7 +480,7 @@ extension CoinDetailView {
                     .padding(.leading, 8)
 
                 Spacer()
-                Text("Limit")
+                Text(orderType)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white)
                 Spacer()
@@ -430,86 +493,117 @@ extension CoinDetailView {
             .padding(.vertical, 6)
             .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
             .padding(.top, 6)
+            .onTapGesture {
+                bottomSheetMode = .half
+            }
+
+
+            if orderType == "Time Condition" {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Trigger Interval")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white.opacity(0.7))
+                    HStack {
+                        Spacer()
+                        TextField("", text: $viewModel.amount)
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                            .multilineTextAlignment(.center)
+                            .keyboardType(.decimalPad)
+                        Spacer()
+                        Text("Min(s)")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.trailing, 8)
+                    }
+                    .padding(.vertical, 6)
+                    .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
+                .padding(.top, 8)
+                }
+                .padding(.top, 8)
+            }
 
             VStack(alignment: .leading, spacing: 2) {
                 HStack{Spacer()}
-                HStack {
-                    Text("-")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.gray)
-                        .padding(.leading, 8)
-                        .onTapGesture {
-                            if let doubleValue = Decimal(string: ratioCurrency) {
-                                ratioCurrency = "\(doubleValue >= 0.1 ? doubleValue - 0.1 : 0)"
-                                let updateTotal: String = (NSDecimalNumber(decimal: doubleValue >= 0.1 ? doubleValue - 0.1 : 0).doubleValue * (Double(amount) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
-                                total = updateTotal
+
+                if true {
+                    HStack {
+                        Text("-")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(.gray)
+                            .padding(.leading, 8)
+                            .onTapGesture {
+                                if let doubleValue = Decimal(string: viewModel.ratioCurrency) {
+                                    viewModel.ratioCurrency = "\(doubleValue >= 0.1 ? doubleValue - 0.1 : 0)"
+                                    let updateTotal: String = (NSDecimalNumber(decimal: doubleValue >= 0.1 ? doubleValue - 0.1 : 0).doubleValue * (Double(viewModel.amount) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
+                                    total = updateTotal
+                                }
+
                             }
 
-                        }
+                        Spacer()
+                        TextField("", text: $viewModel.ratioCurrency)
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                            .multilineTextAlignment(.center)
+                            .keyboardType(.decimalPad)
 
-                    Spacer()
-                    TextField("", text: $ratioCurrency)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white)
-                        .lineLimit(1)
-                        .multilineTextAlignment(.center)
-                        .keyboardType(.decimalPad)
-//                    Text("37400")
-//                        .font(.system(size: 16, weight: .bold))
-//                        .foregroundColor(.white)
-                    Spacer()
-                    Text("+")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.gray)
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            if let doubleValue = Decimal(string: ratioCurrency) {
-                                ratioCurrency = "\(doubleValue + 0.1)"
-                                let updateTotal: String = (NSDecimalNumber(decimal: doubleValue + 0.1).doubleValue * (Double(amount) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
-                                total = updateTotal
+                        Spacer()
+                        Text("+")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(.gray)
+                            .padding(.trailing, 8)
+                            .onTapGesture {
+                                if let doubleValue = Decimal(string: viewModel.ratioCurrency) {
+                                    viewModel.ratioCurrency = "\(doubleValue + 0.1)"
+                                    let updateTotal: String = (NSDecimalNumber(decimal: doubleValue + 0.1).doubleValue * (Double(viewModel.amount) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
+                                    total = updateTotal
+                                }
                             }
-                        }
-                }
-                .padding(.vertical, 6)
-                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
-
-                Text("≈36300.2")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(.white.opacity(0.6))
-
-                HStack {
-                    Text("-")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.gray)
-                        .padding(.leading, 8)
-                        .onTapGesture {
-                            if let doubleValue = Decimal(string: amount) {
-                                amount = "\(doubleValue >= 0.1 ? doubleValue - 0.1 : 0)"
-                                let updateTotal: String = (NSDecimalNumber(decimal: doubleValue >= 0.1 ? doubleValue - 0.1 : 0).doubleValue * (Double(ratioCurrency) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
-                                total = updateTotal
-                            }
-                        }
-
-                    Spacer()
-                    TextField("", text: $amount)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white)
-                        .lineLimit(1)
-                        .multilineTextAlignment(.center)
-                        .keyboardType(.decimalPad)
-                    Spacer()
-                    Text("+")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.gray)
-                        .padding(.trailing, 8)
-                    .onTapGesture {
-                        if let doubleValue = Decimal(string: amount) {
-                            let inCrease = doubleValue + 0.1
-                            amount = "\(inCrease)"
-                            let updateTotal: String = (NSDecimalNumber(decimal: inCrease).doubleValue * (Double(ratioCurrency) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
-                            total = updateTotal
-                        }
                     }
+                    .padding(.vertical, 6)
+                    .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
+
+                    Text("≈36300.2")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.white.opacity(0.6))
+                }
+
+                HStack {
+                    Text("-")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundColor(.gray)
+                        .padding(.leading, 8)
+                        .onTapGesture {
+                            if let doubleValue = Decimal(string: viewModel.amount) {
+                                viewModel.amount = "\(doubleValue >= 0.00001 ? doubleValue - 0.00001 : 0)"
+                                let updateTotal: String = (NSDecimalNumber(decimal: doubleValue >= 0.00001 ? doubleValue - 0.00001 : 0).doubleValue * (Double(viewModel.ratioCurrency) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
+                                total = updateTotal
+                            }
+                        }
+
+                    Spacer()
+                    TextField("", text: $viewModel.amount)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .multilineTextAlignment(.center)
+                        .keyboardType(.decimalPad)
+                    Spacer()
+                    Text("+")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundColor(.gray)
+                        .padding(.trailing, 8)
+                        .onTapGesture {
+                            if let doubleValue = Decimal(string: viewModel.amount) {
+                                let inCrease = doubleValue + 0.00001
+                                viewModel.amount = "\(inCrease)"
+                                let updateTotal: String = (NSDecimalNumber(decimal: inCrease).doubleValue * (Double(viewModel.ratioCurrency) ?? 0)).formatTwoNumbeAfterDot(minimumFractionDigits: 0)
+                                total = updateTotal
+                            }
+                        }
                 }
                 .padding(.vertical, 6)
                 .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
@@ -522,10 +616,10 @@ extension CoinDetailView {
                              customSliderHeight: 12,
                              customSliderWidth: 12,
                              customSlider: Circle()
-                                            .stroke(lineWidth: 3)
-                                            .foregroundColor(.purple)
-                                            .background(Circle().foregroundColor(.theme.mainColor)),
-                             percentProgress: $sliderValuePercent)
+                .stroke(lineWidth: 3)
+                .foregroundColor(.purple)
+                .background(Circle().foregroundColor(.theme.mainColor)),
+                             percentProgress: $viewModel.sliderValuePercent)
 
 
             HStack {
@@ -606,7 +700,7 @@ extension CoinDetailView {
                                                 .white.opacity(0.1))
                                     )
                                     .onTapGesture {
-                                            detailInfoType = (typeDetail, text)
+                                        detailInfoType = (typeDetail, text)
                                     }
                             }
                         }
@@ -712,13 +806,13 @@ extension CoinDetailView {
                                                 Spacer()
                                                 Text(trade.amount.formatTwoNumbeAfterDot(minimumFractionDigits: 1) )
                                                     .font(.system(size: 13, weight: .bold))
-                                                .foregroundColor(.white)
+                                                    .foregroundColor(.white)
                                             }
                                             HStack {
                                                 Spacer()
                                                 Text(trade.valueVs.formatTwoNumbeAfterDot(minimumFractionDigits: 1) + " USD")
                                                     .font(.system(size: 12, weight: .bold))
-                                                .foregroundColor(.white.opacity(0.3))
+                                                    .foregroundColor(.white.opacity(0.3))
                                             }
                                         }
                                     }
@@ -775,10 +869,10 @@ extension CoinDetailView {
                         .frame(height: 6)
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                            .foregroundColor(.red)
-                            .frame(height: 6)
-                            .padding(.trailing, geo.size.width * 0.2)
-                    )
+                                .foregroundColor(.red)
+                                .frame(height: 6)
+                                .padding(.trailing, geo.size.width * 0.2)
+                        )
                     HStack{
                         Spacer()
                         Text("80 %")

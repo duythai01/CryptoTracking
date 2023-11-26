@@ -58,8 +58,8 @@ struct CustomSliderView<Content>: View where Content: View {
                     customSlider
                         .frame(width: customSliderWidth, height: customSliderHeight)
                 }
-                .offset(x: CGFloat(slider), y: sliderWidth / 2)
-                .padding(.horizontal, sliderPadding)
+                .offset(x: CGFloat(slider ), y: sliderWidth / 2)
+//                .padding(.horizontal, sliderPadding)
                 .gesture(DragGesture(minimumDistance: 0)
                     .onChanged({ dragValue in
                         let translation = dragValue.translation

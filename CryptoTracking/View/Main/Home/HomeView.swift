@@ -15,13 +15,17 @@ struct HomeView: View {
     @State var mockCoinData = [1, 2]
     @State var isNavigate: Bool = false
     @State var destinationView: AnyView = AnyView(BuyView())
+    @State  var selectedTabBanner: Int = 0
+    let advertismentBanner = ["banner1", "banner2", "banner3", "banner4"]
+    let timer = Timer.publish(every: 6, on: .main, in: .common).autoconnect()
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color.theme.mainColor.ignoresSafeArea()
                 VStack(spacing: 16) {
                     headerView.padding(.horizontal, 16)
-                    CreditCardView()
+                    balanceAndNews
                     categoryListView.padding(.horizontal, 16)
                         .fixedSize(horizontal: false, vertical: true)
                     MyAssetsView(coins: $mockCoinData)

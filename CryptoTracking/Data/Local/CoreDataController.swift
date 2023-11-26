@@ -10,7 +10,7 @@ import CoreData
 
 enum CoreDataState {
     case getEntitySucces([CoinHoldedEntity])
-    case failure(String)
+    case error(String)
     case saveDone
     case updateDone
     case deleteDone
@@ -26,7 +26,7 @@ struct CoinHolded {
 
 class CoreDataController: ObservableObject {
     static let shared = CoreDataController()
-    let persistentContainer: NSPersistentContainer = NSPersistentContainer(name: "CoinHoldedEntity")
+    let persistentContainer: NSPersistentContainer = NSPersistentContainer(name: "CryptoTracking")
     private var corDataState: CoreDataState? {
         didSet { stateHandler?(corDataState) }
     }
@@ -37,68 +37,76 @@ class CoreDataController: ObservableObject {
         persistentContainer.loadPersistentStores {decription, error in
             if let error = error {
                 print ("Fail to load coredate: \(decription)")
-                self.corDataState = .failure("Fail to load coredata: \(error.localizedDescription)")
+                self.corDataState = .error("Failed to load coredata: \(error.localizedDescription)")
             }
         }
     }
 
-    private func saveContext(type: CoreDataState) {
+    private func saveContext(type: CoreDataState) -> Bool {
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
                 corDataState = type
+                return true
             } catch {
                 print("Failed to save context: \(error)")
-                corDataState = .failure("Failed to save context: \(error.localizedDescription)")
+                corDataState = .error("Failed to save context: \(error.localizedDescription)")
+                return false
+
             }
         }
+        return false
     }
 
-    func insert(element: CoinHolded) {
+    func insert(element: CoinHolded) -> Bool {
         let context = persistentContainer.viewContext
         let newEntity = CoinHoldedEntity(context: context)
         newEntity.id = element.id
         newEntity.currencyHold = element.currencyHold
-        saveContext(type: .insertDone)
+        return saveContext(type: .insertDone)
     }
 
-    func updateEntity(id: String, newCurrencyHold: Double) {
-        if var entity = getEntityByID(id: id) {
+    func updateEntity(id: String, newCurrencyHold: Double) -> Bool {
+        if let entity = getEntityByID(id: id) {
             entity.currencyHold = newCurrencyHold
-            saveContext(type: .updateDone)
+            return saveContext(type: .updateDone)
         } else {
-            self.corDataState = .failure("Not found id")
+            self.corDataState = .error("Not found id")
+            return false
         }
 
     }
 
-    func deleteEntity(id: String) {
+    func deleteEntity(id: String)  -> Bool {
         let context = persistentContainer.viewContext
 
         if let entity = getEntityByID(id: id) {
             context.delete(entity)
-            saveContext(type: .deleteDone)
+            return saveContext(type: .deleteDone)
         } else {
-            self.corDataState = .failure("Not found id")
+            self.corDataState = .error("Not found id")
+            return false
         }
     }
 
-    func fetchAllEntities() {
+    func fetchAllEntities() -> [CoinHolded] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<CoinHoldedEntity> = CoinHoldedEntity.fetchRequest()
         do {
             let entities =  try context.fetch(fetchRequest)
             self.corDataState = .getEntitySucces(entities)
+            return entities.map {
+                coinHoldedEntityToCoinHolded(entity: $0)
+            }
         } catch {
-            self.corDataState = .failure("Failed to fetch entities: \(error)")
+           return []
         }
     }
 
     func coinHoldedEntityToCoinHolded(entity: CoinHoldedEntity) -> CoinHolded {
         return CoinHolded(id: entity.id ?? "N/A", currencyHold: entity.currencyHold)
     }
-
 
     func getEntityByID(id: String) -> CoinHoldedEntity? {
            let context = persistentContainer.viewContext
@@ -108,8 +116,122 @@ class CoreDataController: ObservableObject {
            do {
                return try context.fetch(fetchRequest).first
            } catch {
-               self.corDataState = .failure("Failed to fetch entities: \(error)")
+               self.corDataState = .error("Failed to fetch entities: \(error)")
                return nil
            }
        }
+}
+
+
+class CoreDataOrderController: ObservableObject {
+    static let shared = CoreDataController()
+    let persistentContainer: NSPersistentContainer = NSPersistentContainer(name: "CryptoTracking")
+
+    init () {
+        persistentContainer.loadPersistentStores {decription, error in
+            if let error = error {
+                print ("Fail to load coredate: \(decription)")
+            }
+        }
+    }
+
+    private func saveContext(type: CoreDataState) -> Bool {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+                return true
+            } catch {
+                print("Failed to save context: \(error)")
+                return false
+
+            }
+        }
+        return false
+    }
+
+    func insert(element: OrderHolded) -> Bool {
+        let context = persistentContainer.viewContext
+        let newEntity = OrderEntity(context: context)
+
+        newEntity.id = element.id
+        newEntity.rate = element.rate
+        newEntity.progress = element.progress
+        newEntity.rateTitle = element.rateTitle
+        newEntity.type = element.type
+        newEntity.createdDate = element.createdDate
+        newEntity.amount = element.amount
+        return saveContext(type: .insertDone)
+    }
+
+    func updateEntity(element: OrderHolded) -> Bool {
+        if let entity = getEntityByID(id: element.id) {
+            entity.id = element.id
+            entity.rate = element.rate
+            entity.progress = element.progress
+            entity.rateTitle = element.rateTitle
+            entity.type = element.type
+            entity.createdDate = element.createdDate
+            entity.amount = element.amount
+            return saveContext(type: .updateDone)
+        } else {
+            return false
+        }
+
+    }
+
+    func deleteEntity(id: String)  -> Bool {
+        let context = persistentContainer.viewContext
+
+        if let entity = getEntityByID(id: id) {
+            context.delete(entity)
+            return saveContext(type: .deleteDone)
+        } else {
+            return false
+        }
+    }
+
+    func fetchAllEntities() -> [OrderHolded] {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<OrderEntity> = OrderEntity.fetchRequest()
+        do {
+            let entities =  try context.fetch(fetchRequest)
+            return entities.map {
+                OrdeEntityToOrderHolded(entity: $0)
+            }
+        } catch {
+           return []
+        }
+    }
+
+
+    func getEntityByID(id: String) -> OrderEntity? {
+           let context = persistentContainer.viewContext
+           let fetchRequest: NSFetchRequest<OrderEntity> = OrderEntity.fetchRequest()
+           fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+           do {
+               return try context.fetch(fetchRequest).first
+           } catch {
+               return nil
+           }
+       }
+
+    func OrdeEntityToOrderHolded(entity: OrderEntity) ->OrderHolded {
+        return OrderHolded(id: entity.id, rate: entity.rate, progress: entity.progress, rateTitle: entity.rateTitle, type: entity.type, createdDate: entity.createdDate, amount: entity.amount)
+    }
+
+    func OrderHoldedToOrdeEntity(model: OrderHolded) ->OrderHolded {
+        return OrderEntity(id: model.id, rate: model.rate, progress: model.progress, rateTitle: model.rateTitle, type: model.type, createdDate: model.createdDate, amount: model.amount)
+    }
+}
+
+struct OrderHolded {
+    let id: String
+    let rate: Double
+    let progress: Double
+    let rateTitle: String
+    let type: String
+    let createdDate: Date
+    let amount: Double
 }
