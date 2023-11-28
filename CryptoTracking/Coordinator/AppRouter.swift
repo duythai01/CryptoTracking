@@ -19,9 +19,10 @@ public enum AppRouter: NavigationRouter {
     case onboarding
     case login
     case marketDetailView(url: String, title: String)
-    case coinDetail(id: String)
+    case coinDetail(id: String, currency: String)
     case newsView
     case newsDetail(url: String)
+    case afterScan(url: String)
 
     public var transition: NavigationTranisitionStyle {
         switch self {
@@ -45,9 +46,9 @@ public enum AppRouter: NavigationRouter {
             return .push
         case .marketDetailView(_, _):
             return .push
-        case .coinDetail(_):
+        case .coinDetail(_, _):
             return .push
-        case .newsDetail(_):
+        case .newsDetail(_), .afterScan(_):
             return .push
         }
     }
@@ -75,12 +76,14 @@ public enum AppRouter: NavigationRouter {
             LoginView()
         case .marketDetailView(let url, let title):
             MarketDetailView(url: url, tilte: title)
-        case .coinDetail(id: let id):
-            CoinDetailView(coinID: id)
+        case .coinDetail(id: let id, let currency):
+            CoinDetailView(coinID: id, currency: currency )
         case .newsView:
             NewsView()
         case .newsDetail(let url):
             NewsDetailView(url: url, tilte: "")
+        case .afterScan(let url):
+            AfterScanView(url: url, tilte: "PAYMENT")
         }
     }
 }

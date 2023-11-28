@@ -251,7 +251,7 @@ extension BuyView {
                                 .listRowInsets(EdgeInsets())
                                 .padding(.all, 8)
                                 .onTapGesture {
-                                    coordinator.show(.coinDetail(id: coin.id ?? ""), isNavigationBarHidden: false)
+                                    coordinator.show(.coinDetail(id: coin.id ?? "", currency: coin.symbol ?? "btc"), isNavigationBarHidden: false)
                                 }
                             }
                         }

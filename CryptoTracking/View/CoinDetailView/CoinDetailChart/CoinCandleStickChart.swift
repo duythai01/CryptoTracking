@@ -68,7 +68,7 @@ struct CoinCandleStickChart: UIViewRepresentable {
 //        uiView.legend.form = .circle
         uiView.leftAxis.enabled = false
         uiView.rightAxis.enabled = false
-        uiView.xAxis.enabled = true
+        uiView.xAxis.enabled = false
         uiView.legend.form = .none
         formatRightAxis(rightAxis: uiView.rightAxis)
         formatLeftAxis(leftAxis: uiView.leftAxis)
@@ -90,7 +90,7 @@ struct CoinCandleStickChart: UIViewRepresentable {
         dataSet.increasingColor = .green
         dataSet.increasingFilled = true
         dataSet.neutralColor = .blue
-        dataSet.valueTextColor = .white
+        dataSet.valueTextColor = .clear
         dataSet.drawVerticalHighlightIndicatorEnabled = false
         dataSet.label = .none
 
@@ -104,8 +104,8 @@ struct CoinCandleStickChart: UIViewRepresentable {
     }
 
     func formatXAxis(xAxis: XAxis) {
-        xAxis.valueFormatter = IndexAxisValueFormatter(values: CandleStickCoin.entryies.map {
-            "\($0.day)"
+        xAxis.valueFormatter = IndexAxisValueFormatter(values: entries.map {
+            "\($0.x)"
         })
         xAxis.labelPosition = .bottom
 //        xAxis.labelRotationAngle = 90
@@ -118,6 +118,6 @@ struct CoinCandleStickChart_Previews: PreviewProvider {
     static var previews: some View {
         CoinCandleStickChart(entries: CandleStickCoin.entryies.map {
             CandleChartDataEntry(x: Double($0.day), shadowH: $0.highPrice, shadowL: $0.lowPrice, open: $0.openPrice, close: $0.closePrice)
-        }, chartColor: .blue)
+        }, chartColor: .red)
     }
 }

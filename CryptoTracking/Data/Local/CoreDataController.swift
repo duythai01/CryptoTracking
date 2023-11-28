@@ -124,7 +124,7 @@ class CoreDataController: ObservableObject {
 
 
 class CoreDataOrderController: ObservableObject {
-    static let shared = CoreDataController()
+    static let shared = CoreDataOrderController()
     let persistentContainer: NSPersistentContainer = NSPersistentContainer(name: "CryptoTracking")
 
     init () {
@@ -155,7 +155,7 @@ class CoreDataOrderController: ObservableObject {
         let newEntity = OrderEntity(context: context)
 
         newEntity.id = element.id
-        newEntity.rate = element.rate
+        newEntity.rateValue = element.rate
         newEntity.progress = element.progress
         newEntity.rateTitle = element.rateTitle
         newEntity.type = element.type
@@ -167,7 +167,7 @@ class CoreDataOrderController: ObservableObject {
     func updateEntity(element: OrderHolded) -> Bool {
         if let entity = getEntityByID(id: element.id) {
             entity.id = element.id
-            entity.rate = element.rate
+            entity.rateValue = element.rate
             entity.progress = element.progress
             entity.rateTitle = element.rateTitle
             entity.type = element.type
@@ -218,15 +218,12 @@ class CoreDataOrderController: ObservableObject {
        }
 
     func OrdeEntityToOrderHolded(entity: OrderEntity) ->OrderHolded {
-        return OrderHolded(id: entity.id, rate: entity.rate, progress: entity.progress, rateTitle: entity.rateTitle, type: entity.type, createdDate: entity.createdDate, amount: entity.amount)
+        return OrderHolded(id: entity.id ?? "N/A", rate: entity.rateValue, progress: entity.progress, rateTitle: entity.rateTitle ?? "BTC/USD" , type: entity.type ?? "Buy", createdDate: entity.createdDate ?? Date(), amount: entity.amount)
     }
 
-    func OrderHoldedToOrdeEntity(model: OrderHolded) ->OrderHolded {
-        return OrderEntity(id: model.id, rate: model.rate, progress: model.progress, rateTitle: model.rateTitle, type: model.type, createdDate: model.createdDate, amount: model.amount)
-    }
 }
 
-struct OrderHolded {
+struct OrderHolded: Identifiable {
     let id: String
     let rate: Double
     let progress: Double

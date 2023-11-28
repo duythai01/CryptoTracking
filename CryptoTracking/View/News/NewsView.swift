@@ -17,7 +17,7 @@ struct NewsView: View {
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
     @State var openSideMenu: Bool = true
     @State var newsType: String = "Lattest News"
-
+    
     var body: some View {
         ZStack {
             Color.theme.mainColor.ignoresSafeArea()

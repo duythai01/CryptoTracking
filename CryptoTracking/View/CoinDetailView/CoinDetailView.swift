@@ -44,7 +44,7 @@ enum DetailInfoType: CaseIterable {
 
 struct CoinDetailView: View {
     let coinID: String
-
+    let currency: String
     @State var isDisplayChart: Bool = false
     @State var isUp: Bool = true
     @State var isBuy: Bool = true
@@ -63,18 +63,7 @@ struct CoinDetailView: View {
     var randomValue: Double { viewModel.sliderValuePercent > 50 ? Double.random(in: 10...35) : Double.random(in: 55...90) }
     let highValue = 100.0
 
-    let dataTransaction: [RealTimeOrder] = [
-        RealTimeOrder(amount: 0.1234, currencyVs: "USDT", currency: "BTC", rate: 36337.2),
-        RealTimeOrder(amount: 0.01423, currencyVs: "USDT", currency: "BTC", rate: 36337.3),
-        RealTimeOrder(amount: 0.01223, currencyVs: "USDT", currency: "BTC", rate: 36348.4),
-        RealTimeOrder(amount: 0.1277, currencyVs: "USDT", currency: "BTC", rate: 36320.5),
-        RealTimeOrder(amount: 0.02441, currencyVs: "USDT", currency: "BTC", rate: 36339.2),
-        RealTimeOrder(amount: 0.02421, currencyVs: "USDT", currency: "BTC", rate: 36331.1),
-        RealTimeOrder(amount: 0.04342, currencyVs: "USDT", currency: "BTC", rate: 36335.9),
-        RealTimeOrder(amount: 0.01242, currencyVs: "USDT", currency: "BTC", rate: 36337.6),
-
-    ]
-
+ 
     let orderTypes = ["Limit", "Market", "Conditional", "Time Condition"]
 
     var body: some View {
@@ -90,6 +79,9 @@ struct CoinDetailView: View {
                                 CandleChartDataEntry(x: Double($0.day), shadowH: $0.highPrice, shadowL: $0.lowPrice, open: $0.openPrice, close: $0.closePrice)
                             }, chartColor: .blue)
                             .frame(height: UIScreen.main.bounds.height / 4)
+
+//                            CoinCandleStickChart(entries: viewModel.chartEntries, chartColor: .blue)
+//                            .frame(height: UIScreen.main.bounds.height / 4)
                         }
                         //Transaction
                         HStack(alignment: .top) {
@@ -199,6 +191,7 @@ struct CoinDetailView: View {
             UIApplication.shared.dismissKeyboard()
         }
         .onAppear{
+            viewModel.getInfoCoin(id: coinID)
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                 // Update the counter every second
                 let latestTrade = RealTimeAllTrade(price: Double.random(in: 36466.7...36479.7),
@@ -224,7 +217,7 @@ struct CoinDetailView: View {
 extension CoinDetailView {
     var headerView: some View {
         HStack {
-            Text("BTC / USDT")
+            Text("\(currency.uppercased()) / USDT")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.white)
             Text("+2.873%")
@@ -281,7 +274,7 @@ extension CoinDetailView {
                 HStack {
                     VStack(alignment: .leading){
                         HStack(spacing: 6) {
-                            Text("36355.9")
+                            Text(((viewModel.high24hUSD + viewModel.low24hUSD) / 2).formatTwoNumbeAfterDot(maximumFractionDigits: 1))
                                 .font(.system(size: 16, weight: .bold))
                                 .foregroundColor(isUp ? .green : .red)
                             Image(systemName: "play.fill")
@@ -633,17 +626,29 @@ extension CoinDetailView {
             .padding(.vertical, 6)
             .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.white.opacity(0.1)))
             .padding(.top, 16)
-            HStack {
-                Spacer()
-                Text(isBuy ? "Buy BTC" : "Sell BTC")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.white)
-                Spacer()
+            Button(action: {
+                let order = OrderHolded(id: UUID().uuidString,
+                                        rate: Double(viewModel.ratioCurrency) ?? 0,
+                                        progress:  Double.random(in: 0.01...1.00),
+                                        rateTitle: "\(currency.uppercased())/USDT",
+                                        type: isBuy ? "Buy" : "Sell",
+                                        createdDate: Date(),
+                                        amount: Double(viewModel.amount) ?? 0)
+                viewModel.createOrder(order: order)
+            }, label:  {
+                HStack {
+                    Spacer()
+                    Text(isBuy ? "Buy \(currency.uppercased())" : "Sell \(currency.uppercased())")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                    Spacer()
 
-            }
-            .padding(.vertical, 6)
-            .background(RoundedRectangle(cornerRadius: 6).foregroundColor(isBuy ? .green.opacity(0.8) : .red.opacity(0.8)))
+                }
+                .padding(.vertical, 6)
+                .background(RoundedRectangle(cornerRadius: 6).foregroundColor(isBuy ? .green.opacity(0.8) : .red.opacity(0.8)))
+            })
             .padding(.top, 16)
+
         }
         .frame(maxWidth: geometry.size.width / 2 - 16)
 
@@ -652,7 +657,7 @@ extension CoinDetailView {
     @ViewBuilder
     func buildBuySellAmountView(isSell: Bool) -> some View {
         VStack {
-            ForEach(dataTransaction, id: \.self) { data in
+            ForEach(viewModel.dataTransaction, id: \.self) { data in
                 let randomValue = Double.random(in: 0.0...1.0)
                 HStack {
                     Text("\(data.rate.formatTwoNumbeAfterDot(maximumFractionDigits: 1))")
@@ -677,6 +682,9 @@ extension CoinDetailView {
                             }
                         )
 
+                }
+                .onTapGesture {
+                    viewModel.ratioCurrency = "\(data.rate )"
                 }
             }
         }
@@ -741,8 +749,8 @@ extension CoinDetailView {
                     //Order list
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            ForEach(0..<6, id: \.self) { id in
-                                buildOrderBill()
+                            ForEach(viewModel.orders.filter {$0.id == currency.uppercased()}) { order in
+                                buildOrderBill(order: order)
                             }
                         }
                     }
@@ -833,18 +841,18 @@ extension CoinDetailView {
     }
 
     @ViewBuilder
-    func buildOrderBill() -> some View {
+    func buildOrderBill(order: OrderHolded) -> some View {
         VStack {
             HStack {
-                Text("BTC/USD")
+                Text(order.rateTitle)
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.white)
 
-                Text("Buy")
+                Text(order.type)
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.green)
+                    .foregroundColor(order.type == "Buy" ? .green : .red)
                     .padding(.all, 2)
-                    .background(RoundedRectangle(cornerRadius: 2).foregroundColor(.green.opacity(0.1)))
+                    .background(RoundedRectangle(cornerRadius: 2).foregroundColor(order.type == "Buy" ? .green.opacity(0.1) : .red.opacity(0.1)))
                 Spacer()
                 Text("Cancel")
                     .font(.system(size: 14, weight: .semibold))
@@ -852,10 +860,13 @@ extension CoinDetailView {
                     .padding(4)
                     .background(RoundedRectangle(cornerRadius: 4)
                         .foregroundColor(.red))
+                    .onTapGesture {
+                        viewModel.removeOrder(id: order.id)
+                    }
             }
 
             HStack {
-                Text(Date().formatDateTo(type: "yyyy-MM-dd HH:mm:ss"))
+                Text(order.createdDate.formatDateTo(type: "yyyy-MM-dd HH:mm:ss"))
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(.white.opacity(0.6))
                 Spacer()
@@ -869,19 +880,19 @@ extension CoinDetailView {
                         .frame(height: 6)
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                                .foregroundColor(.red)
+                                .foregroundColor(order.type == "Buy" ? .green : .red)
                                 .frame(height: 6)
                                 .padding(.trailing, geo.size.width * 0.2)
                         )
                     HStack{
                         Spacer()
-                        Text("80 %")
+                        Text((order.progress * 100).formatTwoNumbeAfterDot(maximumFractionDigits: 2) + "%")
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundColor(.white)
                             .padding(.all, 4)
                             .background(
-                                RoundedRectangle(cornerRadius: 4).foregroundColor(.red.opacity(0.7)))
-                            .padding(.trailing, geo.size.width * 0.2)
+                                RoundedRectangle(cornerRadius: 4).foregroundColor(order.type == "Buy" ? .green : .red.opacity(0.7)))
+                            .padding(.trailing, geo.size.width * (1 - order.progress))
                     }
                 }
 
@@ -893,7 +904,7 @@ extension CoinDetailView {
                     Text("Price(USDT)")
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.white.opacity(0.6))
-                    Text("30255 / 36255.9")
+                    Text((order.rate * order.progress * order.amount).formatTwoNumbeAfterDot(maximumFractionDigits: 2) + " / " + (order.rate * order.amount).formatTwoNumbeAfterDot(maximumFractionDigits: 2))
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(.white)
                 }
@@ -902,7 +913,7 @@ extension CoinDetailView {
                     Text("Amount(BTC)")
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(.white.opacity(0.6))
-                    Text("0.00015 / 0.0002")
+                    Text((order.progress * order.amount).formatTwoNumbeAfterDot(maximumFractionDigits: 6) + " / " + (order.amount).formatTwoNumbeAfterDot(maximumFractionDigits: 6))
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(.white)
                 }
@@ -1005,7 +1016,7 @@ extension CoinDetailView {
 
 struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CoinDetailView(coinID: "bitcoin")
+        CoinDetailView(coinID: "bitcoin", currency: "BTC")
     }
 }
 

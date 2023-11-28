@@ -12,4 +12,5 @@ extension String {
     static let assetPlatform = "asset_platforms?filter=nft"
     static let news = "news"
     static let article = "https://newsdata.io/api/1/news?apikey=pub_334005fea8c3e4f4d6a29bc4cef335875d35d&country=au,us"
+    static let detailCoin = "coins/"
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import AVFoundation
 import AVKit
+import Combine
 
 struct QrView: View {
     let test = ["sdadasdasdas", "sdaaaa", "asdadada", "asdaasaa"]
@@ -19,13 +20,21 @@ struct QrView: View {
     @State var session: AVCaptureSession = .init()
     @State var qrOutput: AVCaptureMetadataOutput = .init()
     @State var openFlash: Bool = false
+    @State private var isNavigationActive = false
+
+    private var cancellables = Set<AnyCancellable>()
+    @EnvironmentObject var coordinator: Coordinator<AppRouter>
 
     @Environment(\.openURL) private var openURL
 
-    let viewModel = QRScannerViewModel()
+    @StateObject var viewModel = QRScannerViewModel()
+    @State private var selectedImage: UIImage?
 
     init() {
         checkCameraPermission()
+//        viewModel.hasChange = { newValue in
+//            print("@@@: newValue: \(newValue)")
+//        }
     }
     var body: some View {
         GeometryReader { geometryEntire in
@@ -74,7 +83,10 @@ struct QrView: View {
 
                     HStack(alignment: .center) {
                         Spacer()
-                        Button(action: { openFlash.toggle() }, label: {
+                        Button(action: { openFlash.toggle()
+
+                            coordinator.show(.afterScan(url: "https://www.gate.io/buy_crypto?type=buy&fiat=USD&crypto=USDT"), isNavigationBarHidden: false)
+                        }, label: {
                             VStack {
                                 VStack(spacing: 0) {
                                     Image(systemName: openFlash ? "light.max" : "light.min")
@@ -99,7 +111,7 @@ struct QrView: View {
                             }
                         })
                         Spacer(minLength: 8)
-                        Button(action: { openFlash.toggle() }, label: {
+                        Button(action: {  openPhotoLibrary() }, label: {
                             VStack {
                                 VStack(spacing: 0) {
                                     Image(systemName: "photo.fill")
@@ -124,6 +136,13 @@ struct QrView: View {
 
                 }
                 .padding(.vertical, 120)
+//                    if viewModel.qrcodeValue != "" {
+//
+//                        Text("Show")
+//                            .onAppear {
+//                                coordinator.show(.afterScan(url: "https://www.gate.io/buy_crypto?type=buy&fiat=USD&crypto=USDT"), isNavigationBarHidden: false)
+//                            }
+//                    }
             }
             .onAppear {
                 DispatchQueue.global(qos: .background).async {
@@ -148,8 +167,44 @@ struct QrView: View {
                     secondaryButton: .cancel()
                 )
         })
+            .onReceive(viewModel.$qrcodeValue) { newValue in
+                       // Respond to changes in qrcodeValue
+                       print("QR Code Value changed: \(newValue)")
+                   }
         }
     }
+
+    func openPhotoLibrary() {
+         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+             print("Photo library is not available")
+             return
+         }
+
+         let imagePicker = UIImagePickerController()
+         imagePicker.sourceType = .photoLibrary
+         imagePicker.delegate = Coordinatorqq(parent: self)
+         UIApplication.shared.windows.first?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+     }
+
+    class Coordinatorqq: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+            var parent: QrView
+
+            init(parent: QrView) {
+                self.parent = parent
+            }
+
+            func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+                if let selectedImage = info[.originalImage] as? UIImage {
+                    parent.selectedImage = selectedImage
+                }
+
+                picker.dismiss(animated: true, completion: nil)
+            }
+
+            func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+                picker.dismiss(animated: true, completion: nil)
+            }
+        }
 }
 
 struct QrView_Previews: PreviewProvider {

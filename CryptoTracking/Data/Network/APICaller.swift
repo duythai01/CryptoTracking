@@ -76,7 +76,6 @@ struct APIService {
                     do {
                         let decoder = JSONDecoder()
                         let model = try decoder.decode(T.self, from: data)
-                        print("@@@Model: \(model)")
                         completion(.success(model))
                     } catch {
                         completion(.failure(error))
@@ -139,7 +138,9 @@ struct APIService {
 
     func requestArray<T: Decodable>(endpoint: String, parameters: [String: Any], method: HTTPMethod, completion: @escaping (Result<[T], Error>) -> Void) {
 
-        guard let url = URL(string: "\(BaseUrl.mock.rawValue)\(endpoint)") else {
+        let urlA = endpoint.contains("http") ? endpoint : "\(BaseUrl.mock.rawValue)\(endpoint)"
+
+        guard let url = URL(string: urlA) else {
             completion(.failure(NetworkError.invalidURl))
             return
         }

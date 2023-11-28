@@ -412,7 +412,7 @@ extension WithdrawView {
             }
             .padding(16)
             .background(Color.gray.opacity(0.2).cornerRadius(12))
-            .redacted(reason: isLoadPaymentDetailDone ? [] : .placeholder)
+//            .redacted(reason: isLoadPaymentDetailDone ? [] : .placeholder)
 
         }
     }

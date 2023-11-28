@@ -8,18 +8,18 @@
 import Foundation
 
 // MARK: - CoinInfo
-struct CoinInfo: Codable {
-    let id: ID?
+struct CoinInfo: Codable, Identifiable {
+    let id: String
     let symbol, name: String?
-    let assetPlatformID: JSONNull?
+    let assetPlatformID: String?
     let platforms: Platforms?
     let detailPlatforms: DetailPlatforms?
     let blockTimeInMinutes: Int?
     let hashingAlgorithm: String?
     let categories: [String]?
     let previewListing: Bool?
-    let publicNotice: JSONNull?
-    let additionalNotices: [JSONAny]?
+    let publicNotice: String?
+    let additionalNotices: [String]?
     let description: Description?
     let links: Links?
     let image: ImageCoin?
@@ -72,10 +72,10 @@ struct CoinInfo: Codable {
 
 // MARK: - CommunityData
 struct CommunityData: Codable {
-    let facebookLikes: JSONNull?
-    let twitterFollowers, redditAveragePosts48H, redditAverageComments48H, redditSubscribers: Int?
+    let facebookLikes: Double?
+    let twitterFollowers, redditAveragePosts48H, redditAverageComments48H, redditSubscribers: Double?
     let redditAccountsActive48H: Int?
-    let telegramChannelUserCount: JSONNull?
+    let telegramChannelUserCount: Double?
 
     enum CodingKeys: String, CodingKey {
         case facebookLikes = "facebook_likes"
@@ -221,12 +221,12 @@ struct MarketData: Codable {
     let totalVolume, high24H, low24H: [String: Double]?
     let priceChange24H, priceChangePercentage24H, priceChangePercentage7D, priceChangePercentage14D: Double?
     let priceChangePercentage30D, priceChangePercentage60D, priceChangePercentage200D, priceChangePercentage1Y: Double?
-    let marketCapChange24H: Int?
+    let marketCapChange24H: Double?
     let marketCapChangePercentage24H: Double?
     let priceChange24HInCurrency, priceChangePercentage1HInCurrency, priceChangePercentage24HInCurrency, priceChangePercentage7DInCurrency: [String: Double]?
     let priceChangePercentage14DInCurrency, priceChangePercentage30DInCurrency, priceChangePercentage60DInCurrency, priceChangePercentage200DInCurrency: [String: Double]?
     let priceChangePercentage1YInCurrency, marketCapChange24HInCurrency, marketCapChangePercentage24HInCurrency: [String: Double]?
-    let totalSupply, maxSupply, circulatingSupply: Int?
+    let totalSupply, maxSupply, circulatingSupply: Double?
     let sparkline7D: SparklineIn7D?
     let lastUpdated: String?
 
@@ -289,7 +289,7 @@ struct Platforms: Codable {
 // MARK: - PublicInterestStats
 struct PublicInterestStats: Codable {
     let alexaRank: Int?
-    let bingMatches: JSONNull?
+    let bingMatches: Double?
 
     enum CodingKeys: String, CodingKey {
         case alexaRank = "alexa_rank"
@@ -299,19 +299,19 @@ struct PublicInterestStats: Codable {
 
 // MARK: - Ticker
 struct Ticker: Codable {
-    let base: Base?
-    let target: Target?
+    let base: String?
+    let target: String?
     let market: Market?
     let last, volume: Double?
     let convertedLast, convertedVolume: [String: Double]?
-    let trustScore: TrustScore?
+    let trustScore: String?
     let bidAskSpreadPercentage: Double?
-    let timestamp, lastTradedAt, lastFetchAt: Date?
+    let timestamp, lastTradedAt, lastFetchAt: String?
     let isAnomaly, isStale: Bool?
     let tradeURL: String?
     let tokenInfoURL: String?
-    let coinID: ID?
-    let targetCoinID: TargetCoinID?
+    let coinID: String?
+    let targetCoinID: String?
 
     enum CodingKeys: String, CodingKey {
         case base, target, market, last, volume
@@ -329,18 +329,6 @@ struct Ticker: Codable {
         case coinID = "coin_id"
         case targetCoinID = "target_coin_id"
     }
-}
-
-enum Base: String, Codable {
-    case atom = "ATOM"
-    case bnb = "BNB"
-    case btc = "BTC"
-    case eth = "ETH"
-    case link = "LINK"
-    case sol = "SOL"
-    case wbtc = "WBTC"
-    case xrp = "XRP"
-    case zec = "ZEC"
 }
 
 // MARK: - Market
@@ -366,17 +354,7 @@ enum Target: String, Codable {
     case xbt = "XBT"
 }
 
-enum TargetCoinID: String, Codable {
-    case binanceUsd = "binance-usd"
-    case bitcoin = "bitcoin"
-    case tether = "tether"
-    case trueUsd = "true-usd"
-    case usdCoin = "usd-coin"
-}
 
-enum TrustScore: String, Codable {
-    case green = "green"
-}
 
 // MARK: - Encode/decode helpers
 
