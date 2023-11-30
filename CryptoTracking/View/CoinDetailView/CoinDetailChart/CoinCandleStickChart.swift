@@ -64,11 +64,12 @@ struct CoinCandleStickChart: UIViewRepresentable {
     func updateUIView(_ uiView: CandleStickChartView, context: Context) {
         let dataSet = CandleChartDataSet(entries: entries)
         formatDataSet(dataSet: dataSet)
-        uiView.backgroundColor = .clear
+//        uiView.backgroundColor = .black
 //        uiView.legend.form = .circle
         uiView.leftAxis.enabled = false
         uiView.rightAxis.enabled = false
-        uiView.xAxis.enabled = false
+        uiView.xAxis.enabled = true
+        uiView.xAxis.labelTextColor = .white
         uiView.legend.form = .none
         formatRightAxis(rightAxis: uiView.rightAxis)
         formatLeftAxis(leftAxis: uiView.leftAxis)
@@ -82,7 +83,7 @@ struct CoinCandleStickChart: UIViewRepresentable {
         dataSet.drawHorizontalHighlightIndicatorEnabled = false
 
         dataSet.drawIconsEnabled = false
-        dataSet.shadowColor = .black
+//        dataSet.shadowColor = .black
         dataSet.shadowWidth = 1
         dataSet.shadowColorSameAsCandle = true
         dataSet.decreasingColor = .red

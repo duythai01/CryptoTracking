@@ -57,7 +57,23 @@ struct HomeView: View {
 
     private var listCoinView: some View {
         VStack {
-            ZStack(alignment: .center) {
+            if viewModel.allCoinsDisplay.isEmpty {
+                VStack {
+                    Spacer()
+                    Image("ic-bitcoin_stack")
+                        .resizable()
+                        .frame(width: 80, height: 70)
+                        .scaledToFit()
+                    Text("Your list tracking is empty, discover and add more")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(Color.white.opacity(0.6))
+                        .lineLimit(2)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 26)
+                        .padding(.top, 8)
+                    Spacer()
+                }
+            } else {
                 ScrollView(.vertical) {
                     LazyVStack {
                         ForEach(viewModel.allCoinsDisplay) { coin in

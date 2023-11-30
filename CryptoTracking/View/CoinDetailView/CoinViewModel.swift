@@ -23,6 +23,7 @@ class CoinViewModel: ObservableObject {
     @Published var high24hUSD: Double = 36339.2
     @Published var low24hUSD: Double = 36320.5
     @Published var currentPrice: Double = 0
+    @Published var priceChange1hPercent: Double = 0
 
     @Published var dataTransaction: [RealTimeOrder] = [
    RealTimeOrder(amount: 0.1234, currencyVs: "USDT", currency: "BTC", rate: 36337.2),
@@ -68,6 +69,7 @@ class CoinViewModel: ObservableObject {
                     self.low24hUSD = success.marketData?.low24H?["usd"] ?? 0
                     self.ratioCurrency = "\(success.marketData?.low24H?["usd"] ?? 0)"
                     self.chartEntries = self.updateChartEntry(coin: success)
+                    self.priceChange1hPercent = success.marketData?.marketCapChangePercentage24H ?? 0
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.updateRealTimeOrder(coin: success)

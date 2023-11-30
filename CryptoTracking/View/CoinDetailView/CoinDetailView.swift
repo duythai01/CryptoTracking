@@ -8,40 +8,6 @@
 import SwiftUI
 import Charts
 
-enum DetailInfoType: CaseIterable {
-    case openOrder
-    case trade
-    case asset
-    case strategy
-
-    var name: String {
-        switch self {
-        case .openOrder:
-            return "Open Orders"
-        case .trade:
-            return "Trades"
-        case .asset:
-            return "Assets"
-        case .strategy:
-            return "Strategy"
-        }
-    }
-
-    var type: [String] {
-        switch self {
-        case .openOrder:
-            return ["Limit/Market", "Conditional", "Time Condition"]
-        case .trade:
-            return ["My Trades", "All Trades"]
-        case .asset:
-            return []
-        case .strategy:
-            return ["Recommendations", "Most Profitable", "Most copied", "Return", "Follow's Funding", "Profits for Copy Trader"]
-        }
-    }
-}
-
-
 struct CoinDetailView: View {
     let coinID: String
     let currency: String
@@ -56,7 +22,9 @@ struct CoinDetailView: View {
     @State var bottomSheetMode: BottomSheetViewMode = .none
     @State var dataAllTrade: [RealTimeAllTrade] = []
     @State var orderType: String = "Limit"
-
+    @State var noticeText: String = ""
+    @State var displayNoticeText: Bool = false
+    @State private var opacityNoticeText: Double = 1.0
     @StateObject var viewModel = CoinViewModel()
 
 
@@ -125,7 +93,7 @@ struct CoinDetailView: View {
                     }
             }
 
-
+            //BottomSheetView
             BottomSheetView(mode: $bottomSheetMode) {
                 ZStack {
                     Color(#colorLiteral(red: 0.1598833799, green: 0.1648724079, blue: 0.2934403419, alpha: 1))
@@ -184,6 +152,30 @@ struct CoinDetailView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            if noticeText != "" {
+                Text(noticeText)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.purpleView))
+                    .opacity(opacityNoticeText)
+                    .transition(.opacity.animation(.easeInOut(duration: 1)))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation(.easeIn(duration: 1.2)) {
+                                opacityNoticeText = 0.0
+                            }
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+                                noticeText = ""
+                                opacityNoticeText = 1.0 // Reset opacity for the next appearance
+                            }
+
+                        }
+                    }
+            }
+
         }
         .navigationTitle(Text(coinID.uppercased()))
         .navigationBarTitleDisplayMode(.inline)
@@ -194,10 +186,10 @@ struct CoinDetailView: View {
             viewModel.getInfoCoin(id: coinID)
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                 // Update the counter every second
-                let latestTrade = RealTimeAllTrade(price: Double.random(in: 36466.7...36479.7),
+                let latestTrade = RealTimeAllTrade(price: Double.random(in: viewModel.low24hUSD...viewModel.high24hUSD),
                                                    vsCurrency: "USDT",
                                                    currency: "BTC",
-                                                   amount: Double.random(in: 0.000001...1.00000),
+                                                   amount: Double(Float.random(in: 0.000001...1.00000)),
                                                    isBuy: Bool.random())
                 if Bool.random() {
                     dataAllTrade.insert(latestTrade, at: 0)
@@ -214,15 +206,22 @@ struct CoinDetailView: View {
     }
 }
 
+// View element
 extension CoinDetailView {
+    func configPriceChangePercent(percent: Double?) -> String {
+        guard let percent = percent else { return "0"}
+
+        return percent >= 0 ? "+\(percent)%" : "\(percent)%"
+    }
     var headerView: some View {
         HStack {
             Text("\(currency.uppercased()) / USDT")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.white)
-            Text("+2.873%")
+            Text( configPriceChangePercent(percent: viewModel.priceChange1hPercent))
+
                 .font(.system(size: 14, weight: .bold))
-                .foregroundColor(.green)
+                .foregroundColor(configPriceChangePercent(percent: viewModel.priceChange1hPercent).checkIsIncrease() ? .green : .red)
                 .padding(.all, 4)
                 .background(RoundedRectangle(cornerRadius: 6).foregroundColor(.green.opacity(0.2)))
             Spacer()
@@ -410,6 +409,7 @@ extension CoinDetailView {
 
 }
 
+//Func viewbuilder
 extension CoinDetailView {
     
     @ViewBuilder
@@ -634,7 +634,11 @@ extension CoinDetailView {
                                         type: isBuy ? "Buy" : "Sell",
                                         createdDate: Date(),
                                         amount: Double(viewModel.amount) ?? 0)
-                viewModel.createOrder(order: order)
+                if (total == "0") {
+                    noticeText = "Please enter amount."
+                }  else {
+                    viewModel.createOrder(order: order)
+                }
             }, label:  {
                 HStack {
                     Spacer()
@@ -749,7 +753,7 @@ extension CoinDetailView {
                     //Order list
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            ForEach(viewModel.orders.filter {$0.id == currency.uppercased()}) { order in
+                            ForEach(viewModel.orders) { order in
                                 buildOrderBill(order: order)
                             }
                         }
@@ -927,7 +931,7 @@ extension CoinDetailView {
                 .shadow(color: .white.opacity(0.2), radius: 2, x: 0, y: 4)
 
         )
-        .padding(.horizontal, 8)
+        .padding([.horizontal, .bottom], 8)
     }
 
     @ViewBuilder
@@ -1017,46 +1021,5 @@ extension CoinDetailView {
 struct CoinDetailView_Previews: PreviewProvider {
     static var previews: some View {
         CoinDetailView(coinID: "bitcoin", currency: "BTC")
-    }
-}
-
-struct RealTimeOrder: Hashable {
-    let amount: Double
-    let currencyVs: String
-    let currency: String
-    let rate: Double
-
-    var valueVs: Double {
-        return amount * rate
-    }
-
-    // Implement Hashable
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(amount)
-        hasher.combine(currencyVs)
-        hasher.combine(currency)
-        hasher.combine(rate)
-    }
-}
-
-extension Date {
-    func formatDateTo(type: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = type
-        let formattedDate = dateFormatter.string(from: self)
-        return formattedDate
-    }
-}
-
-struct RealTimeAllTrade: Identifiable {
-    let id = UUID().uuidString
-    let time = Date()
-    let price: Double
-    let vsCurrency: String
-    let currency: String
-    let amount: Double
-    let isBuy: Bool
-    var valueVs: Double {
-        return amount * price
     }
 }

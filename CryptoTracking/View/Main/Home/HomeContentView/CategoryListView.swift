@@ -33,7 +33,7 @@ extension HomeView {
                             case .exchange:
                                 coordinator.show(.exchange, isNavigationBarHidden: false)
                             case .receive:
-                                coordinator.show(.receive, isNavigationBarHidden: false)
+                                coordinator.show(.afterScan(url: "https://www.gate.io/web3"), isNavigationBarHidden: false)
                             case .withdraw:
                                 coordinator.show(.withdraw, isNavigationBarHidden: false)
                             case .p2p:

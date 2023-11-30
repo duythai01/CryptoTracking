@@ -27,13 +27,14 @@ extension Double {
         return self >= 0 ? "+\(self)%" : "\(self)%"
     }
 
-    func formatTwoNumbeAfterDot(minimumFractionDigits: Int = 2, maximumFractionDigits: Int = 2) -> String {
+    func formatTwoNumbeAfterDot(minimumFractionDigits: Int = 2, maximumFractionDigits: Int = 2, isGroupSeperator: Bool = true) -> String {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
         formatter.minimumFractionDigits = minimumFractionDigits
         formatter.maximumFractionDigits = maximumFractionDigits
         formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ","
+        formatter.groupingSeparator = isGroupSeperator ? "," : ""
+
         formatter.groupingSize = 3
         return formatter.string(from: NSNumber(value: self)) ?? ""
     }

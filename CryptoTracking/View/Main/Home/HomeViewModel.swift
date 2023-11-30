@@ -41,7 +41,7 @@ class HomeViewModel: ObservableObject {
 
 
     func getListCoinsInfo() {
-        print("@@@@ corelist: \(getIdSFromCoreData())")
+//        print("@@@@ corelist: \(getIdSFromCoreData())")
         let ids = formatString()
         var  param: [String : Any] =  ["vs_currency" : "usd",
                           "ids" : ids,

@@ -38,16 +38,20 @@ struct APIService {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         if method == .get {
-            var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            components?.queryItems = parameters.map { key, value in
-                URLQueryItem(name: key, value: "\(value)")
-            }
+            if parameters.isEmpty{
+                request.url = url
+            } else {
+                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                components?.queryItems = parameters.map { key, value in
+                    URLQueryItem(name: key, value: "\(value)")
+                }
 
 
-            if let urlWithQuery = components?.url {
-                request.url = urlWithQuery
-                print("@@@: urlWithQuery: \(urlWithQuery)")
-                print("@@@: requestURl: \(request.url)")
+                if let urlWithQuery = components?.url {
+                    request.url = urlWithQuery
+                    print("@@@: urlWithQuery: \(urlWithQuery)")
+                    print("@@@: requestURl: \(request.url)")
+                }
             }
         } else if method == .post {
             // Nếu có tham số và phương thức là POST, hãy mã hóa tham số thành dữ liệu JSON và đặt nó làm phần thân của yêu cầu

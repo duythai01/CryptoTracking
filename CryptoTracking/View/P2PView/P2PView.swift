@@ -17,8 +17,8 @@ struct P2PView: View {
     @State var amountWantToChange: String = ""
     @State var onEditingChanged: Bool = false
     @State var buyCoin: Coin? = DeveloperPreview.shared.conins15[0]
-    @State var showBottomSheetType: WithdrawSheetSelection = .payment
-    @State var bottomSheetMode: BottomSheetViewMode = .custom(heightRatio: 0.6)
+    @State var showBottomSheetType: WithdrawSheetSelection = .none
+    @State var bottomSheetMode: BottomSheetViewMode = .none
     @State var searchFiat: String = ""
     @State var merchantType: String = ""
     @State var orderType: String = ""

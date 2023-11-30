@@ -25,7 +25,7 @@ enum HomeCategory: String, CaseIterable, Identifiable {
         case .p2p:
             return "P2P"
         case .receive:
-            return "Receive"
+            return "Web3"
         case .exchange:
             return "Exchange"
 

@@ -25,6 +25,6 @@ struct AfterScanView: View {
 
 struct AfterScanView_Previews: PreviewProvider {
     static var previews: some View {
-        AfterScanView(url: "https://www.gate.io/buy_crypto?type=buy&fiat=USD&crypto=USDT", tilte: "PAYMENT")
+        AfterScanView(url: "https://www.gate.io/web3", tilte: "PAYMENT")
     }
 }

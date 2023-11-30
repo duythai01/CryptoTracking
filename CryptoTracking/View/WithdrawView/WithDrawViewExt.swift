@@ -393,7 +393,9 @@ extension WithdrawView {
                         .foregroundColor(.white)
                     Spacer()
                 }
-                Button(action: {}, label: {
+                Button(action: {
+                    coordinator.show(.afterScan(url: "https://www.gate.io/crypto/buy?fiat=VND&crypto=USDT"))
+                }, label: {
                     HStack {
                         Spacer()
                         Text("Continue")

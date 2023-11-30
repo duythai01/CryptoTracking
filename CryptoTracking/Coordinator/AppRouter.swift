@@ -65,7 +65,7 @@ public enum AppRouter: NavigationRouter {
         case .receive:
             BuyView()
         case .exchange:
-            BuyView()
+            ExchangeView()
         case .appView:
             ContentView()
         case .personal:
