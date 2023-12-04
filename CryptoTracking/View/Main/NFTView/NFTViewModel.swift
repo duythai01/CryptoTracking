@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class MarketViewModel: ObservableObject {
+class NFTViewModel: ObservableObject {
     @Published var assetPlatform: [AssetPlatformElement] = []
     @Published var assetPlatformDisplay: [AssetPlatformElement] = []
     @Published var searchText: String = ""

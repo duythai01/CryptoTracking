@@ -39,14 +39,22 @@ extension HomeView {
             }) {
                 Button(action: {
                 }) {
-                    Circle()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.white.opacity(0.1))
-                        .overlay(
-                            Image(systemName: "bell")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(Color.white))
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white.opacity(0.1))
+                            .overlay(
+                                Image(systemName: "bell")
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(Color.white)
+                        )
+
+                            Circle()
+                            .frame(width: 13, height: 13)
+                            .foregroundColor(.red)
+                            .padding([.bottom, .leading], 22)
+                    }
                 }
             }
 

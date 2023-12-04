@@ -1,5 +1,5 @@
 //
-//  BuyViewModel.swift
+//  MarketViewModel.swift
 //  CryptoTracking
 //
 //  Created by DuyThai on 21/10/2023.
@@ -16,7 +16,7 @@ enum FilterCoinType: Equatable {
     case percent(statusFilter: StatusFilter)
 }
 
-class BuyViewModel: ObservableObject {
+class MarketViewModel: ObservableObject {
     @Published var allCoins: [Coin] = []
     @Published var allCoinsDisplay: [Coin] = []
     @Published var searchText: String = ""

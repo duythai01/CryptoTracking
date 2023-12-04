@@ -15,7 +15,6 @@ struct HomeView: View {
     @State var categoryAnimations: [Bool] = Array(repeating: false, count: HomeCategory.allCases.count)
     @State var mockCoinData = [1, 2]
     @State var isNavigate: Bool = false
-    @State var destinationView: AnyView = AnyView(BuyView())
     @State  var selectedTabBanner: Int = 0
     let advertismentBanner = ["banner1", "banner2", "banner3", "banner4"]
     let timer = Timer.publish(every: 6, on: .main, in: .common).autoconnect()
@@ -57,7 +56,7 @@ struct HomeView: View {
 
     private var listCoinView: some View {
         VStack {
-            if viewModel.allCoinsDisplay.isEmpty {
+            if !viewModel.allCoinsDisplay.isEmpty {
                 VStack {
                     Spacer()
                     Image("ic-bitcoin_stack")
@@ -76,7 +75,7 @@ struct HomeView: View {
             } else {
                 ScrollView(.vertical) {
                     LazyVStack {
-                        ForEach(viewModel.allCoinsDisplay) { coin in
+                        ForEach(DeveloperPreview.shared.coins5) { coin in
                             HStack(alignment: .center) {
                                 Text("\(coin.marketCapRank ?? 1)")
                                     .font(.system(size: 16, weight: .medium))

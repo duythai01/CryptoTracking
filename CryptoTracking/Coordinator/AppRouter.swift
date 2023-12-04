@@ -18,7 +18,7 @@ public enum AppRouter: NavigationRouter {
     case personal
     case onboarding
     case login
-    case marketDetailView(url: String, title: String)
+    case nftDetailView(url: String, title: String)
     case coinDetail(id: String, currency: String)
     case newsView
     case newsDetail(url: String)
@@ -44,7 +44,7 @@ public enum AppRouter: NavigationRouter {
             return .push
         case .login, .newsView:
             return .push
-        case .marketDetailView(_, _):
+        case .nftDetailView(_, _):
             return .push
         case .coinDetail(_, _):
             return .push
@@ -57,13 +57,13 @@ public enum AppRouter: NavigationRouter {
     public func view() -> some View {
         switch self {
         case .buy:
-             BuyView()
+            MarketView()
         case .withdraw:
              WithdrawView()
         case .p2p:
             P2PView()
         case .receive:
-            BuyView()
+            MarketView()
         case .exchange:
             ExchangeView()
         case .appView:
@@ -74,8 +74,8 @@ public enum AppRouter: NavigationRouter {
             OnboardingView()
         case .login:
             LoginView()
-        case .marketDetailView(let url, let title):
-            MarketDetailView(url: url, tilte: title)
+        case .nftDetailView(let url, let title):
+            NFTDetailView(url: url, tilte: title)
         case .coinDetail(id: let id, let currency):
             CoinDetailView(coinID: id, currency: currency )
         case .newsView:

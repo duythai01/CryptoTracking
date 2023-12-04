@@ -28,7 +28,7 @@ extension HomeView {
                                 .foregroundColor(Color.white))
                         .onTapGesture(){
                             switch category {
-                            case .buy:
+                            case .market:
                                 coordinator.show(.buy, isNavigationBarHidden: false)
                             case .exchange:
                                 coordinator.show(.exchange, isNavigationBarHidden: false)

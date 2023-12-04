@@ -43,10 +43,11 @@ class NewsViewModel: ObservableObject {
 
     func getArticles() {
         self.isHiddenLoadNews = false
-        APIService.shared.request(endpoint: "https://newsdata.io/api/1/news",
-                                  parameters: ["apikey" : "pub_33530946da719ceefac5401fee664a13482a8",
-                                               "country" : "us"],
+        APIService.shared.request(endpoint: "https://6c7ea76e-47ae-430d-bcfe-648ea3f827b7.mock.pstmn.io//news",
+                                  parameters: [:],
                                   method: .get) { (result: Result<Article, Error>) in
+            //                                    ["apikey" : "pub_33530946da719ceefac5401fee664a13482a8",
+            //                                               "country" : "us"],
                 switch result {
                 case .success(let success):
                     DispatchQueue.main.async { [weak self] in

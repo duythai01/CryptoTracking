@@ -1,5 +1,5 @@
 //
-//  MarketDetailView.swift
+//  NFTDetailView.swift
 //  CryptoTracking
 //
 //  Created by DuyThai on 14/11/2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 import WebKit
 
-struct MarketDetailView: View {
+struct NFTDetailView: View {
     let url: String
     let tilte: String
     var body: some View {
@@ -22,9 +22,9 @@ struct MarketDetailView: View {
     }
 }
 
-struct MarketDetailView_Previews: PreviewProvider {
+struct NFTDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MarketDetailView(url: "https://polygon.technology/polygon-pos", tilte: "Klaytn")
+        NFTDetailView(url: "https://polygon.technology/polygon-pos", tilte: "Klaytn")
     }
 }
 

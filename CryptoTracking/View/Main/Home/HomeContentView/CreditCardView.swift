@@ -46,7 +46,7 @@ extension HomeView {
 
                 HStack {
                     Text("Last 24h")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.white)
                         .padding(.all, 4)
                         .background(
@@ -55,13 +55,15 @@ extension HomeView {
                             .cornerRadius(6))
                     Spacer()
                     Text("15 minutes ago")
-                        .font(.system(size: 12, weight: .medium))
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundColor(.gray)
                 }
                 .padding(.horizontal, 12)
                 .padding(.bottom, 16)
 
             }
+            .frame(height: UIScreen.main.bounds.size.height / 5.8)
+
             .background(
                 Color.black)
             .cornerRadius(16)
@@ -104,6 +106,7 @@ extension HomeView {
                     coordinator.show(.newsView, isNavigationBarHidden: false)
                 }
                 }
+            .frame(height: UIScreen.main.bounds.size.height / 5.8)
 
             .background(
                 Color.black)
@@ -112,7 +115,6 @@ extension HomeView {
 
         }
 
-        .frame(maxHeight: UIScreen.main.bounds.size.height / 6)
         .padding(.horizontal, 16)
 
     }

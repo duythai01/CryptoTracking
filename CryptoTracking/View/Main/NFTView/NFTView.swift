@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct MarketView: View {
-    @StateObject private var viewModel = MarketViewModel()
+struct NFTView: View {
+    @StateObject private var viewModel = NFTViewModel()
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
 
     var body: some View {
@@ -92,7 +92,7 @@ struct MarketView: View {
                 )
                 .shadow(color: .white,radius: 2)
                 .onTapGesture {
-                    coordinator.show(.marketDetailView(url: platform.url ?? "", title: platform.name ?? ""), isNavigationBarHidden: false)
+                    coordinator.show(.nftDetailView(url: platform.url ?? "", title: platform.name ?? ""), isNavigationBarHidden: false)
                 }
 
             }
@@ -102,9 +102,9 @@ struct MarketView: View {
     }
 }
 
-struct MarketView_Previews: PreviewProvider {
+struct NFTView_Previews: PreviewProvider {
     static var previews: some View {
-        MarketView()
+        NFTView()
     }
 }
 

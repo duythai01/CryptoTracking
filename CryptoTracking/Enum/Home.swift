@@ -11,15 +11,15 @@ import SwiftUI
 enum HomeCategory: String, CaseIterable, Identifiable {
     var id: Int { self.hashValue }
 
-    case buy
+    case market
     case withdraw
     case p2p
     case receive
     case exchange
     var displayName: String {
         switch self {
-        case .buy:
-            return "Buy"
+        case .market:
+            return "Market"
         case .withdraw:
             return "Withdraw"
         case .p2p:
@@ -34,7 +34,7 @@ enum HomeCategory: String, CaseIterable, Identifiable {
 
     var image: Image {
         switch self {
-        case .buy:
+        case .market:
             return Image(systemName: "cart.fill")
         case .p2p:
             return Image(systemName: "person.2.fill")

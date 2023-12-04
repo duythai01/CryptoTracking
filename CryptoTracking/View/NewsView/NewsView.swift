@@ -17,22 +17,94 @@ struct NewsView: View {
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
     @State var openSideMenu: Bool = true
     @State var newsType: String = "Lattest News"
-    
+    @State var widthSlideBarMin: CGFloat = 0
+    @State var menuSelected: String = "Home"
     var body: some View {
         ZStack {
-            Color.theme.mainColor.ignoresSafeArea()
-            VStack (spacing: 16){
-                HStack{
-                    Button(action: {}, label: {
-                        Image(systemName: "line.3.horizontal.decrease")
-                            .font(.system(size: 22, weight: .bold))
-                            .foregroundColor(.white)
-                    })
-                    Spacer()
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(.white)
+
+            SlideMenuView(selectedTab: $menuSelected, widthSlideBarMin: $widthSlideBarMin)
+            ZStack {
+                Color.theme.mainColor.ignoresSafeArea()
+                VStack {
+                    TabView(selection: $menuSelected) {
+                        homeNewsView
+                            .tag("Home")
+                        markNewsView
+                            .tag("Mark")
+                        continueNewsView
+                            .tag("Continue")
+                        noteNewsView
+                            .tag("Note")
+                        settingNewsView
+                            .tag("Setting")
+                    }
+
                 }
+            }
+            .offset(x: openSideMenu ? UIScreen.main.bounds.width / 3 + 16 : 0)
+        }
+        .navigationTitle(Text("NEWS"))
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            withAnimation() {
+                openSideMenu.toggle()
+            }
+        },
+         label: {
+            VStack(spacing: 6) {
+                Capsule()
+                    .font(.system(size: 22, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 3)
+                    .rotationEffect(Angle(degrees: openSideMenu ? -50 : 0))
+                    .offset(x: openSideMenu ? 3 : 0, y: openSideMenu ? 10 : 0)
+
+                VStack(spacing: 6){
+                    Capsule()
+                        .font(.system(size: 22, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 3)
+                    Capsule()
+                        .font(.system(size: 22, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 3)
+                    .offset(y: openSideMenu ? -9 : 0)
+                }
+                .rotationEffect(Angle(degrees: openSideMenu ? 50 : 0))
+
+            }
+        }))
+        .onTapGesture {
+            UIApplication.shared.dismissKeyboard()
+        }
+        .onAppear {
+            viewModel.getArticles()
+        }
+    }
+}
+
+extension NewsView {
+    var listNews: some View {
+        ScrollView(.vertical) {
+            VStack {
+                ForEach(viewModel.articlesDisplay) { article in
+
+                    ArticleView(article: article)
+                        .onTapGesture {
+                            coordinator.show(.newsDetail(url: article.link ?? ""), isNavigationBarHidden: false)
+                        }
+                }
+            }
+        }
+    }
+
+    var homeNewsView: some View {
+        ZStack {
+            Color.theme.mainColor.ignoresSafeArea()
+
+            VStack (spacing: 16){
+
 
                 HStack {
                     VStack(alignment: .leading) {
@@ -120,35 +192,67 @@ struct NewsView: View {
                 }
 
 
-                LoadingView(isHidden: $viewModel.isHiddenLoadNews, content: listNews) 
+                LoadingView(isHidden: $viewModel.isHiddenLoadNews, content: listNews)
                 Spacer()
             }
             .padding(.horizontal, 16)
-
-        }
-        .navigationTitle(Text("NEWS"))
-        .navigationBarTitleDisplayMode(.inline)
-        .onTapGesture {
-            UIApplication.shared.dismissKeyboard()
-        }
-        .onAppear {
-            viewModel.getArticles()
+            .padding(.top, 32)
         }
     }
-}
 
-extension NewsView {
-    var listNews: some View {
-        ScrollView(.vertical) {
+
+    var markNewsView: some View {
+        ZStack {
+            Color.theme.mainColor.ignoresSafeArea()
+
             VStack {
-                ForEach(viewModel.articlesDisplay) { article in
-
-                    ArticleView(article: article)
-                        .onTapGesture {
-                            coordinator.show(.newsDetail(url: article.link ?? ""), isNavigationBarHidden: false)
-                        }
-                }
+                Text("markNewsView")
+                            .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
             }
+            .padding(.top, 32)
+        }
+    }
+
+
+    var continueNewsView: some View {
+        ZStack {
+            Color.theme.mainColor.ignoresSafeArea()
+
+            VStack {
+                Text("continueNewsView")
+                        .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .padding(.top, 32)
+        }
+    }
+
+
+    var noteNewsView: some View {
+        ZStack {
+            Color.theme.mainColor.ignoresSafeArea()
+
+            VStack {
+                Text("noteNewsView")
+                        .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .padding(.top, 32)
+        }
+    }
+
+
+    var settingNewsView: some View {
+        ZStack {
+            Color.theme.mainColor.ignoresSafeArea()
+
+            VStack {
+                Text("notesettingNewsViewNewsView")
+                        .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .padding(.top, 32)
         }
     }
 }
@@ -156,62 +260,9 @@ extension NewsView {
 }
 
 struct NewsView_Previews: PreviewProvider {
+
     static var previews: some View {
         NewsView()
-    }
-}
-
-struct ArticleView: View {
-    var article: ResultArticles
-    var body: some View {
-        var author = (article.pubDate ?? "") + ", by" + (article.creator?[0] ?? "")
-
-        return HStack {
-            ArticleImage(url: article.imageURL ?? "")
-            ArticleDetailsView(article: article, author: author)
-            Spacer()
-        }
-        .fixedSize(horizontal: false, vertical: true)
-    }
-}
-
-
-struct ArticleImage: View {
-    let url: String
-    var body: some View {
-        WebImage(url: URL(string: url))
-            .resizable()
-            .frame(width: UIScreen.main.bounds.width / 4.6, height: UIScreen.main.bounds.width / 4.6)
-            .scaledToFill()
-            .cornerRadius(12)
-    }
-}
-
-struct ArticleDetailsView: View {
-    var article: ResultArticles
-    var author: String
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(article.title ?? "")
-                .font(.system(size: 12, weight: .bold))
-                .foregroundColor(.white)
-                .lineLimit(1)
-
-            Text(author)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundColor(.white.opacity(0.8))
-                .lineLimit(1)
-
-            Text(article.description ?? "")
-                .font(.system(size: 11, weight: .medium))
-                .foregroundColor(.white.opacity(0.7))
-                .padding(.top, 2)
-                .lineLimit(3)
-
-            Spacer()
-        }
-        Spacer()
     }
 }
 
@@ -237,3 +288,96 @@ enum DragState {
         }
     }
 }
+
+struct SlideMenuView: View {
+    @Binding var selectedTab: String
+    @Binding var widthSlideBarMin: CGFloat
+    @Namespace var animation
+    var body: some View {
+        ZStack {
+            Color(#colorLiteral(red: 0.3899378609, green: 0.1823446642, blue: 0.5, alpha: 1)).ignoresSafeArea()
+            HStack {
+                VStack(alignment: .leading, spacing: 15) {
+                    VStack {
+                        Image("ic_batman")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 70, height: 70)
+                        .cornerRadius(35, corners: .allCorners)
+
+                        VStack (alignment: .leading, spacing: 6) {
+                            Text("Duy Thai")
+                                .font(.title)
+                                .fontWeight(.heavy)
+                                .foregroundColor(.white)
+                            Button(action: {}, label: {
+                                Text("View profile")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .opacity(0.7)
+                            })
+                        }
+
+                    }
+                    .padding()
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        TabButtonView(image: Image(systemName: "house.fill"), title: "Home", selectedTab: $selectedTab, animation: animation)
+                        TabButtonView(image: Image(systemName: "star.fill"), title: "Mark", selectedTab: $selectedTab, animation: animation)
+                        TabButtonView(image: Image(systemName: "newspaper.fill"), title: "Continue", selectedTab: $selectedTab, animation: animation)
+                        TabButtonView(image: Image(systemName: "note.text"), title: "Note", selectedTab: $selectedTab, animation: animation)
+                        TabButtonView(image: Image(systemName: "gearshape.fill"), title: "Setting", selectedTab: $selectedTab, animation: animation)
+                        Spacer()
+                        TabButtonView(image: Image(systemName: "rectangle.portrait.and.arrow.forward.fill"), title: "Out", selectedTab: $selectedTab, animation: animation)
+                    }
+                }
+                .frame( maxHeight: .infinity, alignment: .topLeading)
+                Spacer()
+            }
+        }
+
+    }
+}
+
+struct TabButtonView: View {
+    var image: Image
+    var title: String
+    @EnvironmentObject var coordinator: Coordinator<AppRouter>
+
+    @Binding var selectedTab: String
+
+    var animation: Namespace.ID
+    var body: some View {
+        Button(action: {
+            withAnimation(.easeInOut){
+                if title == "Out" {
+                    coordinator.pop()
+                } else {
+                    selectedTab = title
+                }
+            }
+        }, label: {
+            HStack(spacing: 10){
+                image
+                    .font(.title2)
+
+                Text(title)
+                    .fontWeight(.semibold)
+            }
+            .foregroundColor(selectedTab == title ? .purple : .white)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .background(
+                ZStack {
+                    if selectedTab == title {
+                        Color.white.opacity(selectedTab == title ? 1 : 0)
+                            .cornerRadius(12, corners: [.topRight, .bottomRight])
+                            .matchedGeometryEffect(id: "TAB", in: animation)
+                    }
+                }
+            )
+        })
+    }
+}
+
+

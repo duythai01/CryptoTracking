@@ -1,5 +1,5 @@
 //
-//  BuyView.swift
+//  MarketView.swift
 //  CryptoTracking
 //
 //  Created by DuyThai on 13/10/2023.
@@ -8,8 +8,8 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct BuyView: View {
-    @StateObject private var viewModel = BuyViewModel()
+struct MarketView: View {
+    @StateObject private var viewModel = MarketViewModel()
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
 
     @State private var searchQuerry = ""
@@ -70,7 +70,7 @@ struct BuyView: View {
 }
 
 
-extension BuyView {
+extension MarketView {
 
         private var filterCoins: some View {
             HStack{
@@ -311,8 +311,8 @@ extension BuyView {
         }
     }
 
-struct BuyView_Previews: PreviewProvider {
+struct MarketView_Previews: PreviewProvider {
     static var previews: some View {
-        BuyView()
+        MarketView()
     }
 }
