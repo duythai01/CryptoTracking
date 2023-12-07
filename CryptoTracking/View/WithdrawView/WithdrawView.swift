@@ -89,6 +89,8 @@ struct WithdrawView: View {
         }
         .navigationTitle(Text("WITHDRAW"))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(false)
+
         .onTapGesture {
             UIApplication.shared.dismissKeyboard()
         }

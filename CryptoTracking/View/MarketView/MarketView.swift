@@ -35,8 +35,9 @@ struct MarketView: View {
                 Spacer()
             }
         }
-        .navigationTitle(Text("BUY"))
+        .navigationTitle(Text("Market"))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(false)
         .navigationBarItems(trailing: Button(action: {
             withAnimation() {
                 showSearchField.toggle()

@@ -30,7 +30,6 @@ struct ExchangeView: View {
                             }
                             HStack {
                                 TextField("", text: $viewModel.payAmount){ change in
-                                    print("@@@Textfiel: \(change)")
                                     viewModel.isPayAmounEdit = change
                                 }
                                     .font(.system(size: 22, weight: .bold))
@@ -207,6 +206,7 @@ struct ExchangeView: View {
         }
         .navigationTitle(Text("EXCHANGE"))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(false)
         .onTapGesture {
             UIApplication.shared.dismissKeyboard()
         }

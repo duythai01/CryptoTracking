@@ -46,6 +46,7 @@ struct NewsView: View {
         .navigationTitle(Text("NEWS"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(false)
         .navigationBarItems(leading: Button(action: {
             withAnimation() {
                 openSideMenu.toggle()

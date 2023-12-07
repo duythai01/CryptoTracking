@@ -23,6 +23,7 @@ public enum AppRouter: NavigationRouter {
     case newsView
     case newsDetail(url: String)
     case afterScan(url: String)
+    case kyc
 
     public var transition: NavigationTranisitionStyle {
         switch self {
@@ -42,7 +43,7 @@ public enum AppRouter: NavigationRouter {
             return .push
         case .onboarding:
             return .push
-        case .login, .newsView:
+        case .login, .newsView, .kyc:
             return .push
         case .nftDetailView(_, _):
             return .push
@@ -84,6 +85,8 @@ public enum AppRouter: NavigationRouter {
             NewsDetailView(url: url, tilte: "")
         case .afterScan(let url):
             AfterScanView(url: url, tilte: "PAYMENT")
+        case .kyc:
+            KYCView()
         }
     }
 }

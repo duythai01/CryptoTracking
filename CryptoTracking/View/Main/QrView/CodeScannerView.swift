@@ -113,7 +113,8 @@ public struct CodeScannerView: UIViewControllerRepresentable {
             isTorchOn: isTorchOn,
             isGalleryPresented: isGalleryPresented.wrappedValue,
             isManualCapture: scanMode == .manual,
-            isManualSelect: manualSelect
+            isManualSelect: manualSelect,
+            showViewfinder: self.showViewfinder
         )
     }
 

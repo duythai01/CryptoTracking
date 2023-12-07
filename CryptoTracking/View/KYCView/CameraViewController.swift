@@ -1,31 +1,31 @@
 //
-//  ScannerMainViewController.swift
+//  CameraViewController.swift
 //  CryptoTracking
 //
-//  Created by DuyThai on 28/11/2023.
+//  Created by DuyThai on 05/12/2023.
 //
 
-import UIKit
+import Foundation
 import AVFoundation
+import UIKit
+import SwiftUI
 
-public class ScannerMainViewController: UIViewController, UINavigationControllerDelegate, UIAdaptivePresentationControllerDelegate {
-    @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var openPhotoLib: UIButton!
-    @IBOutlet weak var flashButton: UIButton!
-    @IBOutlet weak var manualCaptureButton: UIButton!
-    @IBOutlet weak var viewFinder: UIImageView!
+public class CameraViewController: UIViewController, UINavigationControllerDelegate, UIAdaptivePresentationControllerDelegate {
+
 
     private let photoOutput = AVCapturePhotoOutput()
     private var isCapturing = false
     private var handler: ((UIImage) -> Void)?
-    var parentView: CodeScannerView!
+    var parentView: CameraView!
     var codesFound = Set<String>()
     var didFinishScanning = false
     var lastTime = Date(timeIntervalSince1970: 0)
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer!
     let fallbackVideoCaptureDevice = AVCaptureDevice.default(for: .video)
+
     var completion: ((Result<ScanResult, ScanError>) -> Void)?
+    
     override public var prefersStatusBarHidden: Bool {
         true
     }
@@ -42,7 +42,7 @@ public class ScannerMainViewController: UIViewController, UINavigationController
         }
     }
 
-    public init(showViewfinder: Bool = false, parentView: CodeScannerView) {
+    public init(showViewfinder: Bool = false, parentView: CameraView) {
         self.parentView = parentView
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,7 +53,6 @@ public class ScannerMainViewController: UIViewController, UINavigationController
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        print("@@@ viewdidLoad")
         self.addOrientationDidChangeObserver()
         self.setBackgroundColor()
         self.handleCameraPermission()
@@ -63,13 +62,10 @@ public class ScannerMainViewController: UIViewController, UINavigationController
 
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-
     }
 
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         setupSession()
 
     }
@@ -86,17 +82,19 @@ public class ScannerMainViewController: UIViewController, UINavigationController
     }
 
     private func configView() {
-        flashButton.setTitle("", for: .normal)
-        openPhotoLib.setTitle("", for: .normal)
-        manualCaptureButton.setTitle("", for: .normal)
 
-        flashButton.layer.masksToBounds = true
-        openPhotoLib.layer.masksToBounds = true
-        manualCaptureButton.layer.masksToBounds = true
+    }
 
-        flashButton.layer.cornerRadius = flashButton.frame.width / 2
-        openPhotoLib.layer.cornerRadius = openPhotoLib.frame.width / 2
-        manualCaptureButton.layer.cornerRadius = manualCaptureButton.frame.width / 2
+    func captureCamera() {
+        guard let photoOutputConnection = photoOutput.connection(with: .video) else {
+                print("Unable to get connection with video.")
+                return
+            }
+
+            let photoSettings = AVCapturePhotoSettings()
+            photoSettings.flashMode = parentView.videoCaptureDevice?.torchMode == .on ? .on : .off
+
+            photoOutput.capturePhoto(with: photoSettings, delegate: self)
     }
 
     private func handleCameraPermission() {
@@ -131,9 +129,9 @@ public class ScannerMainViewController: UIViewController, UINavigationController
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         }
 
-        previewLayer.frame = videoView.layer.bounds
+        previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
-        videoView.layer.addSublayer(previewLayer)
+        view.layer.addSublayer(previewLayer)
 
         reset()
 
@@ -226,15 +224,15 @@ public class ScannerMainViewController: UIViewController, UINavigationController
         present(imagePicker, animated: true, completion: nil)
     }
 
-    
-    @IBAction func openGalleryFromButton(_ sender: Any) {
+
+    func openGalleryFromButton() {
         openGallery()
     }
 
-    @IBAction func manualCapturePress(_ sender: Any) {
+    func manualCapturePress() {
         self.readyManualCapture()
     }
-    @IBAction func flashPressed(_ sender: Any) {
+     func flashPressed() {
         guard let videoCaptureDevice = parentView.videoCaptureDevice ?? fallbackVideoCaptureDevice else {
             return
         }
@@ -253,7 +251,7 @@ public class ScannerMainViewController: UIViewController, UINavigationController
         guard let videoCaptureDevice = parentView.videoCaptureDevice ?? fallbackVideoCaptureDevice else {
             return
         }
-
+//        print("@@@: updateViewControllerCameraViewController")
         if videoCaptureDevice.hasTorch {
             try? videoCaptureDevice.lockForConfiguration()
             videoCaptureDevice.torchMode = isTorchOn ? .on : .off
@@ -263,13 +261,7 @@ public class ScannerMainViewController: UIViewController, UINavigationController
         if isGalleryPresented && !isGalleryShowing {
             openGallery()
         }
-
-        manualCaptureButton.isHidden = !isManualCapture
-        openPhotoLib.isHidden = !isManualSelect
-        viewFinder.isHidden = !showViewfinder
-        flashButton.isHidden = !isTorchOn
     }
-
     public func reset() {
         codesFound.removeAll()
         didFinishScanning = false
@@ -305,88 +297,19 @@ public class ScannerMainViewController: UIViewController, UINavigationController
     }
 }
 
-extension ScannerMainViewController: UIImagePickerControllerDelegate {
+extension CameraViewController: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         isGalleryShowing = false
-
-        if let qrcodeImg = info[.originalImage] as? UIImage {
-            let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])!
-            let ciImage = CIImage(image:qrcodeImg)!
-            var qrCodeLink = ""
-
-            let features = detector.features(in: ciImage)
-            for feature in features as! [CIQRCodeFeature] {
-                qrCodeLink = feature.messageString!
-                if qrCodeLink == "" {
-                    didFail(reason: .badOutput)
-                } else {
-                    let corners = [
-                        feature.bottomLeft,
-                        feature.bottomRight,
-                        feature.topRight,
-                        feature.topLeft
-                    ]
-                    let result = ScanResult(string: qrCodeLink, type: .qr, image: qrcodeImg, corners: corners)
-                    found(result)
-                }
-
-            }
-
-        } else {
-            print("Something went wrong")
-        }
 
         dismiss(animated: true, completion: nil)
     }
 
 }
 
-extension ScannerMainViewController: AVCaptureMetadataOutputObjectsDelegate {
-    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        if let metadataObject = metadataObjects.first {
-            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            print("@@@: \(stringValue)")
-
-            guard didFinishScanning == false else { return }
-
-            let photoSettings = AVCapturePhotoSettings()
-            guard !isCapturing else { return }
-            isCapturing = true
-
-            handler = { [self] image in
-                let result = ScanResult(string: stringValue, type: readableObject.type, image: image, corners: readableObject.corners)
-
-                switch parentView.scanMode {
-                case .once:
-                    found(result)
-                    // make sure we only trigger scan once per use
-                    didFinishScanning = true
-
-                case .manual:
-                    if !didFinishScanning, isWithinManualCaptureInterval() {
-                        found(result)
-                        didFinishScanning = true
-                    }
-
-                case .oncePerCode:
-                    if !codesFound.contains(stringValue) {
-                        codesFound.insert(stringValue)
-                        found(result)
-                    }
-
-                case .continuous:
-                    if isPastScanInterval() {
-                        found(result)
-                    }
-                }
-            }
-            photoOutput.capturePhoto(with: photoSettings, delegate: self)
-        }
-    }
+extension CameraViewController: AVCaptureMetadataOutputObjectsDelegate {
 }
 
-extension ScannerMainViewController: AVCapturePhotoCaptureDelegate {
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
     public func photoOutput(
         _ output: AVCapturePhotoOutput,
@@ -402,7 +325,9 @@ extension ScannerMainViewController: AVCapturePhotoCaptureDelegate {
             print("Unable to generate UIImage from image data.");
             return
         }
+        
         handler?(qrImage)
+        parentView.completion(.success(ScanResult(string: "", type: .qr, image: qrImage, corners: [])))
     }
 
     public func photoOutput(
@@ -417,15 +342,6 @@ extension ScannerMainViewController: AVCapturePhotoCaptureDelegate {
         didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
     ) {
         AudioServicesDisposeSystemSoundID(1108)
-    }
-
-}
-
-public extension AVCaptureDevice {
-    /// This returns the Ultra Wide Camera on capable devices and the default Camera for Video otherwise.
-    static var bestForVideo: AVCaptureDevice? {
-        let deviceHasUltraWideCamera = !AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInUltraWideCamera], mediaType: .video, position: .back).devices.isEmpty
-        return deviceHasUltraWideCamera ? AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) : AVCaptureDevice.default(for: .video)
     }
 
 }

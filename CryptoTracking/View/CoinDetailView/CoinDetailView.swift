@@ -179,6 +179,8 @@ struct CoinDetailView: View {
         }
         .navigationTitle(Text(coinID.uppercased()))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(false)
+
         .onTapGesture {
             UIApplication.shared.dismissKeyboard()
         }

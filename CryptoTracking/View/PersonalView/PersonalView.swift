@@ -56,6 +56,9 @@ struct PersonalView: View {
             }
             .padding(.horizontal, 16)
         }
+        .navigationBarHidden(false)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(Text("Personal"))
     }
 
     @ViewBuilder
@@ -109,7 +112,9 @@ extension PersonalView {
                 }
                 Spacer()
 
-                Button(action: {}, label: {
+                Button(action: {
+                    coordinator.show(.kyc, isNavigationBarHidden: false)
+                }, label: {
                     HStack {
                         Image(systemName: "person.badge.shield.checkmark.fill")
                             .font(.system(size: 16, weight: .bold))

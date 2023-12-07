@@ -11,6 +11,7 @@ import CoreData
 struct ContentView: View {
     @State var tabBarSelected: MainTabBar = .home
     @EnvironmentObject var coordinator: Coordinator<AppRouter>
+
     init () {
     }
     var body: some View {
@@ -24,8 +25,8 @@ struct ContentView: View {
                                 HistoryView().tag(tab)
                             case .qr:
                                 QrView().tag(tab)
-                            case .market:
-                                 MarketView().tag(tab)
+                            case .nft:
+                                 NFTView().tag(tab)
                             case .setting:
                                  SettingView().tag(tab)
                             }

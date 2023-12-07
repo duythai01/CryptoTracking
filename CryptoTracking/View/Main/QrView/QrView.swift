@@ -35,7 +35,7 @@ struct QrView: View {
         GeometryReader { geometryEntire in
                 ZStack {
 //                    CameraViewRepresentable(session: $session, frameSize: CGSize(width: geometryEntire.size.width, height: geometryEntire.size.height)).edgesIgnoringSafeArea(.bottom)
-                    CodeScannerView(codeTypes: [.qr], scanMode: .continuous ,manualSelect: true, showViewfinder: true,isTorchOn: false){ response in
+                    CodeScannerView(codeTypes: [.qr], scanMode: .manual ,manualSelect: true, showViewfinder: true, isTorchOn: true){ response in
                         switch response {
                         case .success(let result):
                             print("@@@QrRs: \(result)")

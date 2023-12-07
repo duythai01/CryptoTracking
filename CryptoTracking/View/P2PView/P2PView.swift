@@ -64,6 +64,8 @@ struct P2PView: View {
                 bottomSheet
             }
         }
+        .navigationBarHidden(false)
+
         .onTapGesture {
             UIApplication.shared.dismissKeyboard()
         }
